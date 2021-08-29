@@ -27,6 +27,7 @@ import Createbuilding from './page/STBuilding/Createbuilding';
 import CreateFeetype from './page/STFeetype/CreateFeetype';
 
 
+
 function App2() {
 
   // const [ word , setWord] = useState('Bob')
@@ -70,10 +71,12 @@ function App2() {
           <Route path="/rooms" exact={true} render={(props) => <Roompage isOpened = {word} {...props} />}/>
           <Route path="/personinfo" exact={true}  render={(props) => <Personalinfopage isOpened = {word} {...props} />} />
           <Route path="/dashpage" exact={true}  render={(props) => <Dashpage isOpened = {word} {...props} />} />
-          <Route path="/petitionpage" exact={true}  render={(props) => <Petitionpage isOpened = {word} {...props} />} />
+          {/* <Route path="/petitionpage" exact={true}  render={(props) => <Petitionpage isOpened = {word} {...props} />} /> */}
           <Route path="/building_sp" exact={true}  render={(props) => <STBuildingpage isOpened = {word} {...props} />} />
           <Route path="/addbuilding" exact={true}  render={(props) => <Createbuilding isOpened = {word} {...props} />} />
           <Route path="/feetype_sp" exact={true}  render={(props) => <CreateFeetype isOpened = {word} {...props} />} />
+          <Route path="/detailpage" exact={true}  render={(props) => <Detailpage isOpened = {word} {...props} />} />
+          <Route path="/petitionpage" exact={true}  render={(props) => <Detailpage isOpened = {word} {...props} />} />
 
           
 

@@ -13,6 +13,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import "./../../Css/Announcement/detail.css"
 import { Divider } from '@material-ui/core';
+import Comment from './Comment';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -125,6 +126,7 @@ export default function Detail() {
           </Grid>
         </Grid>
       </Paper>
+
     </div>
 
 

@@ -107,14 +107,13 @@ export default function CreateFeetype(props) {
   const handleClickOpen =() =>{
     setOpen(true)
   };
-  
+
   const handleClose = () => {
     setOpen(false);
   };
 
   const [feetype, setFeetype] =useState([]);
   const [userId, setUserId]=useState("");
-
   const [addFeetypename, setAddfeetypename]= useState("");
   const [addFeeprice, setAddfeeprice]= useState("");
   const [modalEdit, setModalEdit]=useState(false);

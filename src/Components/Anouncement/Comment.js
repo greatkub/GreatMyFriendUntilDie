@@ -77,7 +77,7 @@ export default function Comment() {
   const [allData, setAllData] = useState([]);
   useEffect(() => {
   
-    axios('/comment/comments')
+    axios('/comment/comments/2') //changewithpostID
       .then(response => {
         console.log("hi"+response.data)
         setAllData(response.data);

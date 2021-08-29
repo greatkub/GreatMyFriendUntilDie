@@ -373,7 +373,7 @@ function Social() {
             </Typography>
             {allData.map((value, index) => {
               return value.type !== "Important News" ?
-
+              
                 <General
                   key={index}
                   Name={value.title}
