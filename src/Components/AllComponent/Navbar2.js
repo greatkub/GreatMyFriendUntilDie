@@ -43,6 +43,16 @@ const Navbar2 = (props) => {
                 {/* <span class="tooltip">Dashboard</span> */}
 
                 {/* </li> */}
+                <li className={currentTag == 5 ? 'selected' : 'unselected'} onClick={() => isClicked(5)}>
+                    <Link to='/dashpage'>
+                        <i className='bx bx-pie-chart-alt-2'></i>
+                        <span className="links_name">Dashboard</span>
+                    </Link>
+
+                    {/* <span class="tooltip">Dashboard</span> */}
+
+                </li>
+
                 <li className={currentTag == 1 ? 'selected' : 'unselected'} onClick={() => isClicked(1)} >
                     <Link to='/expense'>
                         <i class='bx bx-grid-alt'></i>
@@ -79,15 +89,7 @@ const Navbar2 = (props) => {
                     {/* <span class="tooltip">Dashboard</span> */}
 
                 </li>
-                <li className={currentTag == 5 ? 'selected' : 'unselected'} onClick={() => isClicked(5)} >
-                    <Link to='/dashpage'>
-                        <i class='bx bx-pie-chart-alt-2'></i>
-                        <span class="links_name">Dashboard</span>
-                    </Link>
 
-                    {/* <span class="tooltip">Dashboard</span> */}
-
-                </li>
                 <li className={currentTag == 6 ? 'selected' : 'unselected'} onClick={() => isClicked(6)} >
                     <Link to='/announce'>
                         <i class='bx bx-cart-alt'></i>
@@ -97,14 +99,6 @@ const Navbar2 = (props) => {
 
                 </li>
 
-                <li className={currentTag == 7 ? 'selected' : 'unselected'} onClick={() => isClicked(7)} >
-                    <Link to='/setting2'>
-                        <i class='bx bx-heart'></i>
-                        <span class="links_name">Setting</span>
-                    </Link>
-                    {/* <span class="tooltip">Dashboard</span> */}
-                    
-                </li>
                 <li className={currentTag == 8 ? 'selected' : 'unselected'} onClick={() => isClicked(8)} >
                     <Link to='/petitionpage'>
                         <i class='bx bx-heart'></i>
@@ -119,6 +113,15 @@ const Navbar2 = (props) => {
                     </a>
 
                 </li> */}
+
+                <li className={currentTag == 7 ? 'selected' : 'unselected'} onClick={() => isClicked(7)}>
+                    <Link to='/setting2'>
+                        <i className='bx bx-heart'></i>
+                        <span className="links_name">Setting</span>
+                    </Link>
+                    {/* <span class="tooltip">Dashboard</span> */}
+
+                </li>
             </ul>
             {/* <div className="profile_content">
                 <div class="profile">
