@@ -85,3 +85,31 @@
     width: 78%;
     margin-left: 11%;
   }
+
+
+
+
+
+body {
+  background-color: #000;
+}
+
+.block {
+  height: 38px;
+  width: 391px;
+  display: grid;
+  grid-template-columns: 1fr 20px 1fr;
+  grid-template-rows: 1fr;
+  background-color: rgb(255, 255, 255);
+}
+
+hr {
+  margin: auto 20px;
+  border: 1.5px solid rgb(150, 150, 150);
+}
+
+.text {
+  margin: auto 0;
+  font-size: 22px;
+  color: rgb(175, 175, 175);
+}
