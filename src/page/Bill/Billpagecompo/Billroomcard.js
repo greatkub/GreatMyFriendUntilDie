@@ -41,33 +41,32 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Billroomcard(props) {
     const classes = useStyles();
-
     return (
         <Paper className={classes.paperrow}>
             <div className={classes.newdetext} style={{ left: 45 }}>
                 {/* {props.roomid} */}
-                101
+                {props.roomnum}
             </div>
             <div className={classes.newdetext} style={{ left: 170 }}>
-                27/04/2021
+                {props.date}
             </div>
             <div className={classes.newdetext} style={{ right: 815 }}>
-                4,700.00
+               {props.rent}
             </div>
             <div className={classes.newdetext} style={{ right: 666 }}>
-                575.00
+               {props.electric}
             </div>
             <div className={classes.newdetext} style={{ right: 542 }}>
-                90.00
+               {props.water}
             </div>
             <div className={classes.newdetext} style={{ right: 414 }}>
-                0.00
+               {props.other}
             </div>
             <div className={classes.newdetext} style={{ right: 297.5 }}>
-                5,366.00
+               {props.totals}
             </div>
             <div className={classes.newdetext} style={{ right: 170 }}>
-                Unpaid
+                {props.status}
             </div>
 
             <Link  to='/billdetails'>
@@ -75,9 +74,6 @@ export default function Billroomcard(props) {
                     <InfoOutlinedIcon />
                 </IconButton>
             </Link>
-
-
-
         </Paper>
     );
 }

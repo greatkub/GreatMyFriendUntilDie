@@ -51,6 +51,8 @@ const Navbar2 = (props) => {
                     {/* <span class="tooltip">Dashboard</span> */}
 
                 </li>
+
+
                 <li className={currentTag == 2 ? 'selected' : 'unselected'} onClick={() => isClicked(2)} >
                     <Link to='/bill'>
                         <i class='bx bx-user'></i>
@@ -60,6 +62,8 @@ const Navbar2 = (props) => {
                     {/* <span class="tooltip">Dashboard</span> */}
 
                 </li>
+
+
                 <li className={currentTag == 3 ? 'selected' : 'unselected'} onClick={() => isClicked(3)} >
                     <Link to='/rooms'>
                         <i class='bx bx-chat'></i>
@@ -70,6 +74,7 @@ const Navbar2 = (props) => {
 
                 </li>
 
+
                 <li className={currentTag == 4 ? 'selected' : 'unselected'} onClick={() => isClicked(4)} >
                     <Link to='/expensehistory'>
                         <i class='bx bx-folder'></i>
@@ -79,6 +84,8 @@ const Navbar2 = (props) => {
                     {/* <span class="tooltip">Dashboard</span> */}
 
                 </li>
+
+
                 <li className={currentTag == 5 ? 'selected' : 'unselected'} onClick={() => isClicked(5)} >
                     <Link to='/dashpage'>
                         <i class='bx bx-pie-chart-alt-2'></i>
@@ -88,6 +95,8 @@ const Navbar2 = (props) => {
                     {/* <span class="tooltip">Dashboard</span> */}
 
                 </li>
+
+                
                 <li className={currentTag == 6 ? 'selected' : 'unselected'} onClick={() => isClicked(6)} >
                     <Link to='/announce'>
                         <i class='bx bx-cart-alt'></i>

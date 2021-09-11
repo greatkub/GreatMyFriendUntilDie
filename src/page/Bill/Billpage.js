@@ -41,8 +41,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Billpage({isOpened}) {
     const classes = useStyles();
     
-   
-
     return (
         <ScrollView>
             <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>

@@ -29,6 +29,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import { Update } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#fff",
@@ -101,9 +102,6 @@ const useStyles2 = makeStyles({
 });
 
 
-
-
-
 const DialogActions2 = withStyles((theme) => ({
   root: {
     paddingBottom: theme.spacing(5),
@@ -112,12 +110,9 @@ const DialogActions2 = withStyles((theme) => ({
 
 }))(MuiDialogActions);
 
-
 const api = axios.create({
   baseURL: '/announcement/post-announcement'
 })
-
-
 
 
 function Social() {
@@ -176,12 +171,22 @@ function Social() {
     })
   }
 
+  const deleteAnnounce=(id)=>{
+    axios.post(`/announcement/announcement/10015${id}`) 
+    .then(()=> {
+      setAllData(
+        allData.filter((row)=>{
+          return row.id != id;
+        })
+        );
+      });
+    };
+
+  
   const [title, setTitle] = useState("")
   // const [type, setType] = useState(0)
   const [datecreate, setDatecreate] = useState("")
   const [descrip, setDescrip] = useState("")
-
-
 
   //   const handleChange = (e) => {
   //     setTitle({value: e.target.value})
@@ -190,28 +195,11 @@ function Social() {
 
   return (
     <div>
-
-
-
       <div className="row" style={{ marginLeft: '-15px', marginRight: '0px', border: 'none' }}>
         <Datetoday />
-
-
-
       </div>
-
-
-
-      {/* <div className="col-md-2"> */}
-      {/* <div className={classes.Move} > */}
-      {/* <Button variant="contained" color="primary" disableElevation
-          style={{ backgroundColor: '#485D84' }}
-        onClick={handleClickOpen}>
-        Compose
-      </Button>    */}
+  
       <Dialog
-
-
         classes={{ paper: classes2.dialog }}
         open={open}
         onClose={handleClose}
@@ -308,6 +296,7 @@ function Social() {
             onClick={addNews}>
             <p id="textAnnounceBt"> Announce</p>
           </Button>
+          
           <div className="spacing" />
           <Button id="cancelBT" className={classes.Btn} variant="contained" color="primary" disableElevation
             
@@ -340,7 +329,7 @@ function Social() {
             </Typography>
             {allData.map((value, index) => {
               return value.type === "Important News" ?
-                <ImpNews
+                <ImpNews 
                   key={index}
                   Name={value.title}
                   img={value.imageUrl}
@@ -373,7 +362,6 @@ function Social() {
             </Typography>
             {allData.map((value, index) => {
               return value.type !== "Important News" ?
-
                 <General
                   key={index}
                   Name={value.title}

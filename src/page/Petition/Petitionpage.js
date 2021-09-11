@@ -1,12 +1,28 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
+import React,{useState} from 'react'
+import {lighten, makeStyles, useTheme } from '@material-ui/core/styles';
 import { ScrollView } from 'react-native';
 import Datetoday from '../../Components/AllComponent/Datetoday';
 import { Paper } from '@material-ui/core';
 import { red } from 'chalk';
 import { Row } from 'react-bootstrap';
 import Petitiontable from './Petitioncompo/Petitiontable';
-import { Divider } from '@material-ui/core';
+import { Divider,IconButton } from '@material-ui/core';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Checkbox from '@material-ui/core/Checkbox';
+import Tooltip from "@material-ui/core/Tooltip";
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
+import Card from '@material-ui/core/Card';
+import DeleteIcon from "@material-ui/icons/Delete";
+import TextField from '@material-ui/core/TextField';
+import axios from 'axios';
+import {BrowserRouter as Router, Route, Link, NavLink, Switch} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -105,14 +121,146 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '45px',
         paddingTop: '14px'
     },
-
-
 }));
 
+const useToolbarStyles = makeStyles((theme) => ({
+    root: {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(1)
+    },
+    highlight:
+      theme.palette.type === "light"
+        ? {
+            color: theme.palette.secondary.main,
+            backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+          }
+        : {
+            color: theme.palette.text.primary,
+            backgroundColor: theme.palette.secondary.dark
+          },
+    title: {
+      flex: "1 1 100%"
+    }
+  }));
+
+  const DeletpopUp = (props) => {
+    const classes = useToolbarStyles();
+    const {numSelected,deleteUserHandler,solveStatus} = props
+    return (
+      <Toolbar>
+        {numSelected > 0 ? (
+          <Typography
+            className={classes.title}
+            //color="inherit"
+            //variant="subtitle1"
+            //component="div"
+          >
+            {numSelected} Selected All
+          </Typography>
+        ) : (
+        <Typography
+            className={classes.Move}
+            //variant="h6"
+            id="tableTitle"
+            component="div"
+          >
+            Select All
+          </Typography>
+        )}
+  
+        {numSelected > 0 ? (
+          <Tooltip title="Delete">
+            <IconButton aria-label="delete" onClick={solveStatus}>
+              <EmojiObjectsIcon/>
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip >
+            <IconButton></IconButton>
+          </Tooltip>
+        )}
+  
+          {numSelected > 0 ? (
+          <Tooltip title="Delete">
+            <IconButton aria-label="delete" onClick={deleteUserHandler}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip >
+            <IconButton></IconButton>
+          </Tooltip>
+        )}
+      </Toolbar>
+    );
+  };
+
 export default function Petitionpage({ isOpened }) {
-    const classes = useStyles();
+  const classes = useStyles();
+  const [note, setNote] = useState([])
+  const [selected, setSelected] = React.useState([]);
+  const [search,  setSearch ] = useState([]);
+  //const [status, setStatus] = useState(true)
 
+  React.useEffect(() => {
+    const fetchData = () =>{
+     axios.get('/petition/petitions')
+     .then(r =>
+       setNote(r.data))
+    }
+    fetchData()
+  }, [])
 
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelecteds = note.map((n) => n.roomNumber);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
+
+  const Deletelist =() => {
+    axios.post("/petition/delete-petition-list/", {
+      "PetitionIds": selected
+    
+    }).then((response)=>{
+      window.location.href = '/petitionpage'
+      console.log(response);
+    })
+};
+
+const Petitionstatus =() => {
+  axios.post("/petition/edit-petition-list", {
+    "PetitionIds": selected,
+    "Status": true
+  
+  }).then((response)=>{
+    window.location.href = '/petitionpage'
+    console.log(response);
+  })
+};
+
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+    );
+  }  
+  setSelected(newSelected);
+};
+  console.log(selected)
+
+  const isSelected = (name) => selected.indexOf(name) !== -1;
 
     return (
         <div style={{ width: '100%' }}>
@@ -120,21 +268,17 @@ export default function Petitionpage({ isOpened }) {
             <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
                 <div>
                     <div className={classes.frame}>
-                        <Datetoday />
-
-                        
+                        <Datetoday />                        
                         Petition
                     </div>
                     <div>
                     <Paper className={classes.papercard}>
-                        <div className={classes.headfloor} >
+                       {/* <div className={classes.headfloor} >
                             Select All
                             <div style={{ position: 'absolute', paddingTop: '6px' }}>
-
-                             
                             </div>
-                        </div>
-                        <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px" }} />
+                        </div>*/}
+                        {/*<Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px" }} />*/}
                         
                        {/* {floors.room.map((sub) => { 
                             return(
@@ -143,14 +287,74 @@ export default function Petitionpage({ isOpened }) {
                             />
                             )
                         })} */}
-                    </Paper>
+             <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="caption table">
+                 <TableHead>
+                   <TableRow>
+                      <TableCell>
+                        <Checkbox 
+                            size="small"
+                            color="primary"rowCount={note.length}
+                            onChange={handleSelectAllClick}
+                            />   
+                        </TableCell>
+                        <TableCell> 
+                            <DeletpopUp 
+                                solveStatus={Petitionstatus}
+                                deleteUserHandler={Deletelist }
+                                numSelected={selected.length}
+                            />   
+                        </TableCell>
+                        <TableCell></TableCell>
+                    </TableRow>
+                </TableHead>
+                    {note.map((row, index)=>{
+                        return(
+                    <TableBody>
+                        {row.petition.filter(val=>{
+                        if (search== ''){
+                            return val;
+                        }else if
+                            (val.roomNumber.toLowerCase().includes(search.toLowerCase())){
+                        }else if
+                            (val.title.toLowerCase().includes(search.toLowerCase()))
+                        return val
+                    }).map((info,index) => { 
+                    const isItemSelected = isSelected(info.id);
+                    const labelId = `enhanced-table-checkbox-${index}`;
+                        return(
+                         <TableRow 
+                            role="checkbox"
+                            aria-checked={isItemSelected}
+                            tabIndex={-1}
+                            key={index.id}
+                            selected={isItemSelected}>   
+                            <TableCell>
+                                <Checkbox
+                                    onClick={(event) => handleClick(event, info.id)}
+                                    size="small"
+                                    color="primary"
+                                    checked={isItemSelected}
+                                    inputProps={{ "aria-labelledby": labelId }}/>
+                                    
+                                <Link to={`/notedetails/${info.id}`} 
+                                    style={{ textDecoration: 'none' }}>
+                                    Room {info.roomNumber}
+                                </Link>
+                            </TableCell> 
+                            <TableCell>{info.title}</TableCell> 
+                            <TableCell align="right">{info.statusInfo}</TableCell> 
+                        </TableRow>     
+                         )})}         
+                    </TableBody>                                        
+                    )})} 
+                </Table>    
+                </TableContainer>                 
+                </Paper>
                     </div>
                 </div>
             </div>
-            </ScrollView>
-
-        </div>
-
-
+        </ScrollView>
+    </div>
     )
 }

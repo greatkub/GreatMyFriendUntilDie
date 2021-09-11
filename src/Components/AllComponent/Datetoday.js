@@ -13,7 +13,7 @@ const Datetoday = () => {
             <CalendarTodayIcon style={{ height: '32.5px', width: '32.5px', color: "#000000" }}/>
             <div style={{width:'20px'}}></div>
             <div style={{ display: "inline", fontSize: '22.5px', color:'#4A4A4A' , fontWeight:'bold'}}>
-                 {moment(). format('DD MMM YYYY')}
+                {moment().format('DD MMM YYYY')}
             </div>
             
         </div>

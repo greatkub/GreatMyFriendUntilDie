@@ -129,7 +129,6 @@ export default function Settingpage({ isOpened }) {
         <div style={{ width: '100%' }}>
 
             <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
-
                 <div className={classes.settingpaper}>
 
                     <div className={classes.topicsetup}>
@@ -194,18 +193,18 @@ export default function Settingpage({ isOpened }) {
 
                             <div style={{ height: " 50px" }} />
 
-                            <Link to='/roomtype_sp' style={{textDecoration:"none"}}>
-
+                            <Link to='/feetype_sp' style={{textDecoration:"none"}}>
+                    
                             <div>
                                 <div className="circletext inline item marleft">
                                     4
                                 </div>
                                 <div>
                                     <div className={classes.textsetting}>
-                                        Room Types
+                                        Fee Types
                                     </div>
                                     <div className={classes.subtext}>
-                                        Kind of room
+                                    A group of fee types
                                     </div>
                                 </div>
                             </div>
@@ -214,16 +213,14 @@ export default function Settingpage({ isOpened }) {
                         </div>
                         <div className={classes.mdblue}>
                             <div style={{ height: " 47px" }} />
-
-                            <Link to='/feetype_sp' style={{textDecoration:"none"}}>
-
+                            <Link to='/feesets_sp' style={{textDecoration:"none"}}>
                             <div>
                                 <div className="circletext inline item marleft">
                                     5
                                 </div>
                                 <div>
                                     <div className={classes.textsetting}>
-                                        Fee Types
+                                        Fee Sets
                                     </div>
                                     <div className={classes.subtext}>
                                         Fee items to set the fee set
@@ -233,8 +230,7 @@ export default function Settingpage({ isOpened }) {
                             </Link>
 
                             <div style={{ height: " 50px" }} />
-
-                            <Link to='/feesets_sp' style={{textDecoration:"none"}}>
+                            <Link to='/roomtype_sp' style={{textDecoration:"none"}}>
 
                             <div>
                                 <div className="circletext inline item marleft">
@@ -242,10 +238,10 @@ export default function Settingpage({ isOpened }) {
                                 </div>
                                 <div>
                                     <div className={classes.textsetting}>
-                                        Fee Sets
+                                        Room Types
                                     </div>
                                     <div className={classes.subtext}>
-                                        A group of fee types
+                                        Kind of room
                                     </div>
                                 </div>
                             </div>
