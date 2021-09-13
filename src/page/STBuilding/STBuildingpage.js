@@ -111,12 +111,19 @@ export default function STBuildingpage({ isOpened }) {
                                         numberOfRoom={value.numberOfRoom}
                                         tenant={value.tenant}
                                         overdue={value.overdue}
-                                        vacant={value.vacant}
+                                        vacant={value.vacant} 
+                                        Manage={
 
-                                        Manage={"Manage"}
-                                        Edit={"Edit"}
+                                            <Link to='/' style={{ textDecoration: "none" }}>
+                                            <Button className={classes.buttontop}>
+                                              Manage
+                                            </Button>
+                                        </Link>
+                                        }
+                                       
                                     />
                                 ))}
+                              
                             </div>
 
                         </ScrollView>

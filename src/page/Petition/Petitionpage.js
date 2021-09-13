@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {lighten, makeStyles, useTheme } from '@material-ui/core/styles';
+import {lighten, makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import { ScrollView } from 'react-native';
 import Datetoday from '../../Components/AllComponent/Datetoday';
 import { Paper } from '@material-ui/core';
@@ -22,13 +22,16 @@ import Card from '@material-ui/core/Card';
 import DeleteIcon from "@material-ui/icons/Delete";
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
+import InputBase from '@material-ui/core/InputBase';
+
 import {BrowserRouter as Router, Route, Link, NavLink, Switch} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     frame: {
         width: '1163px',
         height: '232px',
-        backgroundColor: 'red',
+        //backgroundColor: 'red',
     },
     scrollspace: {
         height: "730px",
@@ -121,7 +124,80 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '45px',
         paddingTop: '14px'
     },
+
+    Fieldstyle: {
+      backgroundColor: "#fff",
+      borderRadius: '8px',
+      width: 420,
+      height:45,
+      marginBottom: 6,
+      marginTop: -16,
+      '& > * + *': {
+        marginTop: theme.spacing(1),
+      },
+    },
+    SearchBtn:{
+      backgroundColor: "#fff",
+      marginBottom: 10,
+      borderRadius: '8px',
+      marginRight: "125%",
+      marginTop: "7%",
+      width:"18%",
+      height:"15%",
+      '& > * + *': {
+        marginTop: theme.spacing(0),
+      },
+    },
+
+    Searchstyle: {
+      backgroundColor: "#fff",
+      borderRadius: '8px',
+      width: 280,
+      height:10,
+      marginBottom: 11,
+      marginLeft:"4%",
+      marginTop: "7%",
+      '& > * + *': {
+        marginTop: theme.spacing(1),
+      },
+    },
 }));
+
+const BootstrapInput = withStyles((theme) => ({
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 98px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
+}))(InputBase);
+
 
 const useToolbarStyles = makeStyles((theme) => ({
     root: {
@@ -145,7 +221,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 
   const DeletpopUp = (props) => {
     const classes = useToolbarStyles();
-    const {numSelected,deleteUserHandler,solveStatus} = props
+    const {numSelected, deleteUserHandler, solveStatus} = props
     return (
       <Toolbar>
         {numSelected > 0 ? (
@@ -261,32 +337,40 @@ const Petitionstatus =() => {
   console.log(selected)
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
     return (
         <div style={{ width: '100%' }}>
             <ScrollView>
             <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
                 <div>
                     <div className={classes.frame}>
-                        <Datetoday />                        
-                        Petition
-                    </div>
-                    <div>
-                    <Paper className={classes.papercard}>
-                       {/* <div className={classes.headfloor} >
-                            Select All
-                            <div style={{ position: 'absolute', paddingTop: '6px' }}>
-                            </div>
-                        </div>*/}
-                        {/*<Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px" }} />*/}
-                        
-                       {/* {floors.room.map((sub) => { 
-                            return(
-                            <Exroomcard 
-                                roomid = {sub.roomid}
-                            />
-                            )
-                        })} */}
+                        <Datetoday/>                        
+                         Petition
+        <div className="row align-items-start">                
+            <div className="col align-self-start">
+            <Paper component="form" className={classes.Searchstyle}>
+              <BootstrapInput
+                  type="text"
+                  size="small"
+                  variant="outlined" 
+                  //label="Date"     
+                  placeholder="search"
+                  onChange={(e)=>{
+                    setSearch(e.target.value);
+                  }}                  
+                />
+            </Paper>
+              </div>
+                <div className="col align-self-end">    
+                <Button className={classes.SearchBtn}
+                        style={{ backgroundColor: '#485D84'}}>
+                  Search
+                </Button>
+            </div>
+        </div> 
+      </div>
+
+      <div>
+          <Paper className={classes.papercard}>        
              <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="caption table">
                  <TableHead>

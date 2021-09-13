@@ -25,9 +25,10 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { NavLink, Link } from "react-router-dom";
-import Savebtn from "../../Components/Button/Save";
+//import Savebtn from "../../Components/Button/Save";
 import InfoIcon from '@material-ui/icons/Info';
 import axios from "axios";
+import Savebtn from "../../Components/Button/Save";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,9 +40,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '4%',  
   },
   Card:{
-    width: '100%',
+    width: '110%',
     padding: theme.spacing(3),
-    margin: 'auto',
+    margin: '4%',
   },
 
   bullet: {
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   Btn:{
     marginLeft: "92%",
-    marginTop: "-6%",  
+    marginTop: "-4%",  
   },
 
   papers: {
@@ -80,6 +81,23 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     width: 450,
     
+  },
+  PriceTag: {
+    height: "24px",
+    width: "100px",
+    backgroundColor: '#D8D8D8',
+    borderRadius: '13px',
+    fontSize: '13px',
+    color: '#4A4A4A',
+    fontWeight: '400',
+    margin: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: "center",
+},
+  MoveName:{
+    marginLeft:"45%",
   }
 }));
 
@@ -120,7 +138,6 @@ export default function Bill(props) {
       <div className="container ">
         <Card className={classes.Card} variant="outlined">
             <Table  aria-label="caption table">
-            
                 <TableHead >
                     <TableRow>
                         <TableCell className={classes.heder}>
@@ -137,19 +154,21 @@ export default function Bill(props) {
                 
             <TableBody>
             <br/>
-            <Grid container spacing={3}>
+            <Grid container spacing={0}>
             {allfeeset.map((row, key)=>{ 
               return(
                 <Grid item xs={4}>
                       <div className="col-sm"> 
-                        <Feecard
+                        <Feecard 
                             Set={row.feeSetName}
                             key={key.feeSetId}
-                            Roomprice="Standard"
+                            //Roomprice="Standard"
                             Electric="Electricity"
                             Water="water" 
                             name={row.feeTypeName}
-                              info={<InfoIcon onClick={handleClickOpen}
+                              info={
+                              <InfoIcon  style={{ display: "flex", flexWrap: 'wrap' }}
+                                onClick={handleClickOpen}
                                       size="small"/>}
                               /*Edit={
                                   <DeleteOutlinedIcon 
@@ -158,6 +177,7 @@ export default function Bill(props) {
 
                               delete={
                                   <DeleteOutlinedIcon 
+                                  style={{ marginTop:"25%"}}
                                   onClick={()=>{deletetable(row.feeSetId)}}
                                   size="small"/>}
                              />    
@@ -204,7 +224,7 @@ export default function Bill(props) {
     <NavLink to='/roomtype'>
       <Button onClick>
           <Savebtn save="save"/>
-      </Button>
+     </Button>
       </NavLink>
     </div>
    

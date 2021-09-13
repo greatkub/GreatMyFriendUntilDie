@@ -102,6 +102,7 @@ export default function Floorcard(props) {
                         </div>
                         <div className={classes.floortext}>
                             Remarks
+                            <div className={classes.minitext} style={{paddingLeft:'275px'}}></div>
                         </div>
                     </div>
                 </div>

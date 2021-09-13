@@ -25,7 +25,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import Card from '@material-ui/core/Card';
 import axios from "axios";
 
-import "../../Css/Fee/Fee.css";
+//import "../../Css/Fee/Fee.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {

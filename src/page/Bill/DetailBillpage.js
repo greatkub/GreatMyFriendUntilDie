@@ -45,13 +45,7 @@ export default function DetailBillpage({isOpened}) {
                     </div>
                     <div>
                         <Roomdetail/>
-                       <Otherdetail/>
-
-
-
-
-
-                       
+                       {/*<Otherdetail/>*/}            
                     </div>
                 </div>
             </div>

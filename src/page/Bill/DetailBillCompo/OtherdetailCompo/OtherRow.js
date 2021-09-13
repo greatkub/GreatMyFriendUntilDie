@@ -63,7 +63,6 @@ export default function OtherRow(props) {
                 1600.00
             </div>
 
-
         </Paper>
     );
 }

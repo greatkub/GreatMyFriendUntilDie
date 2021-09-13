@@ -72,10 +72,6 @@ export default function Studentdetail(props) {
                 unpaid
             </div>
 
-
-
-
-
         </Paper>
     );
 }

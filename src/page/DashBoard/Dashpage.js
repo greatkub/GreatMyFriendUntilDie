@@ -9,6 +9,7 @@ import { BarChart, LineChart, Line, Bar, Cell, XAxis, YAxis, CartesianGrid, Tool
 import { scaleOrdinal } from "d3-scale";
 import { schemeCategory10 } from "d3-scale-chromatic";
 import axios from "axios";
+import moment from 'moment';
 
 
 
@@ -149,6 +150,11 @@ export default function Dashpage({ isOpened }) {
     const [vacants, setVacants] = useState([])
     const [occupied, setOccupied] = useState([])
 
+    const dateFormatter = date => {
+        // return moment(date).unix();
+        return moment(date).format('DD-MM-YY');
+      };
+
     useEffect(()=>{
         axios.get('/history/barchart/1').then(response =>{
         console.log(response.data);
@@ -193,14 +199,19 @@ export default function Dashpage({ isOpened }) {
                         </div>
                         <div className={classes.mainfame}>
                             <Paper className={classes.Yfame}>
-                                <div className={classes.normaltext} style={{ height: 283.5, width: "100%" }}>                    
+                                <div className={classes.normaltext} style={{ height: 283.5, width: "150%" }}>                    
                                 <BarChart
                                       width={380}
                                       height={290}
                                       data={bardash}
+                                    
                                       margin={{top: 20,right: 30,left: 20,bottom: 5}}>
                                         <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="dataTime" />
+                                        <XAxis 
+                                        dataKey="dataTime" 
+                                        tickFormatter={dateFormatter} 
+                                        
+                                        />
                                         <YAxis />
                                         <Bar
                                             dataKey="electricity"
@@ -257,7 +268,6 @@ export default function Dashpage({ isOpened }) {
 
                            
                             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                           
                                 <Paper className={classes.miniXfame}>
                                 {vacants.map((value,index)=>(
                                     <div className={classes.textRoom} style={{ paddingLeft: 20, paddingTop: 20 }}>

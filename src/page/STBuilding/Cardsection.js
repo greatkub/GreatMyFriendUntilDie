@@ -103,9 +103,6 @@ const useStyles = makeStyles((theme) => ({
 
     }
 
-
-
-
 }));
 
 export default function Cardsection(props) {
@@ -141,9 +138,9 @@ export default function Cardsection(props) {
                     </Button>
                     <div style={{ width: 10 }}></div>
 
-                    <Button className={classes.buttondown2}>
+                    {/*<Button className={classes.buttondown2}>
                         {props.Edit}
-                    </Button>
+    </Button>*/}
 
                 </div>
 

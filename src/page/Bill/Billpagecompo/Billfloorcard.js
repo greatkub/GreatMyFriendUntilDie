@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Divider } from '@material-ui/core';
 import axios from 'axios';
@@ -17,6 +17,10 @@ import Table from '@material-ui/core/Table';
 import moment from 'moment';
 import NumberFormat from 'react-number-format';
 import Billroomcard from './Billroomcard'
+import Savebtn from '../../../Components/Button/Save';
+import InputBase from '@material-ui/core/InputBase';
+import NativeSelect from '@material-ui/core/NativeSelect';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -197,12 +201,17 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '45px',
         paddingTop: '14px'
     },
+
+    Closebill:{
+      marginButtom: '-50%'
+    }
 }));
 
 export default function Billfloorcard(props) {
     const classes = useStyles();
     const str = props.Date
     const [bill, setBill] = useState([]);
+    const [search, setSearch] = useState("")
     
     React.useEffect(() => {
         const fetchData = () =>{
@@ -214,26 +223,104 @@ export default function Billfloorcard(props) {
       }, [])
         console.log(bill)
 
-      // useEffect(() => {
-    //     axios('https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/floorexpense')
-    //         .then(response => {
-    //             console.log("hi" + response.data)
-    //             setAllFloor(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.log('Error getting fake data: ' + error);
-    //         })
-    // }, []);
-
-    //API id, current date and role haven't been add yet
+      
+    
+    const Closebill =()=>{
+      axios.post("/bill/closed-bill",{
+      }).then(() => {
+      setBill([
+        {
+          "BillIds": [1,2,3]
+        },
+      ]);    
+      window.location.href = '/createfeetype';
+    });
+  };
+  
+  const BootstrapInput = withStyles((theme) => ({
+    root: {
+      'label + &': {
+        marginTop: theme.spacing(3),
+      },
+    },
+    input: {
+      borderRadius: 4,
+      position: 'relative',
+      backgroundColor: theme.palette.background.paper,
+      border: '1px solid #ced4da',
+      fontSize: 16,
+      padding: '10px 26px 10px 12px',
+      transition: theme.transitions.create(['border-color', 'box-shadow']),
+      // Use the system font instead of the default Roboto font.
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+      '&:focus': {
+        borderRadius: 4,
+        borderColor: '#80bdff',
+        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+      },
+    },
+  }))(InputBase);
+  
     return (
-        <div>
+        <div >
             {bill.map((rows)=>{
             return( 
-            <div>      
-                {rows.buildingName}
+        <div className="container ">
+            <h5 className={classes.TabMove}>Bill</h5>   
+                <div class="container d-flex justify-content-start">       
+
+          <div className="row align-items-start">                
+            <div className="col align-self-start">     
+            <Paper component="form" className={classes.Searchstyle}>
+              <BootstrapInput
+                  type="text"
+                  size="small"
+                  variant="outlined" 
+                  //label="Date"     
+                  placeholder="search"
+                  onChange={(e)=>{
+                    setSearch(e.target.value);
+                  }}                  
+                />
+            </Paper>
+            </div>
+         
+          <div className="col">    
+              <Paper component="form" className={classes.Searchstyle}>
+              <BootstrapInput
+                  type="date"
+                  size="small"
+                  variant="outlined" 
+                  label="Date"     
+                  placeholder="Date"
+                  
+                />
+            </Paper>
+          </div>
+       
+          <div className="col align-self-end">    
+            <Button 
+                className={classes.SearchBtn}
+                variant="contained" color="primary" disableElevation
+                style={{ backgroundColor: '#485D84'}}>
+              Search</Button>
+           </div>
+          </div> 
+        </div>
+              {rows.buildingName}
                     {rows.floors.map((f) => { 
-                      return(
+                    return(
                     <Paper className={classes.papercard}>
                         <h4 className={classes.headfloors}>Floor{f.floorName}</h4>
                         <div className={classes.headfloor}>  
@@ -333,15 +420,18 @@ export default function Billfloorcard(props) {
                               <TableCell></TableCell>
                             </TableRow>  
                             )})}   
+                               
                         </TableBody>  
-                        )})}                              
+                        )})} 
+
                     </Paper>
                        )})}  
-                </div>
+                       
+                </div>      
                 )})}  
-            </div>
-            
-    );
+                 
+            </div>         
+    );    
 }   
 
 

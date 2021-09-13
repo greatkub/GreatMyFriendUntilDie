@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+    import React, {useState, useEffect} from "react";
     import { makeStyles } from '@material-ui/core/styles';
     import Card from '@material-ui/core/Card';
     import CardActions from '@material-ui/core/CardActions';
@@ -36,7 +36,8 @@ import React, {useState, useEffect} from "react";
     //import "../../Css/Fee/Fee.css"
     import axios from "axios";
     import Chip from '@material-ui/core/Chip';
-    
+    import { ScrollView } from 'react-native';
+
     const useStyles = makeStyles((theme) => ({
       root: {
         minWidth: 275,
@@ -79,8 +80,135 @@ import React, {useState, useEffect} from "react";
       },
     
       head:{
-        marginLeft: "12%",  
-      }
+        marginLeft: "9%",  
+      },
+      fame: {
+        width: "755px",
+        height: "653px",
+        backgroundColor: "#FFFFFF"
+    },
+    titleframe: {
+        height: "85.7px",
+        width: "100%",
+        position: "relative"
+    },
+    mainframe: {
+        height: "567.3px",
+        width: "100%",
+    },
+    textbuilding: {
+        fontSize: "22.6px",
+        fontWeight: "bold",
+        color: "#4A4A4A",
+        paddingLeft: 40,
+        paddingTop: 22
+    },
+    line: {
+        height: "1px",
+        width: "90%",
+        backgroundColor: "#D8D8D8",
+        top: 30,
+        position: "relative",
+        margin: "auto"
+    },
+    eachtitle: {
+        fontSize: "18px",
+        color: "#4A4A4A"
+    },
+    setrow: {
+        height: "31.5px",
+        width: "100%",
+        fontSize: "18px",
+        color: "#4A4A4A"
+    },
+    setrow2: {
+        height: "31.5px",
+        width: "100%",
+        fontSize: "18px",
+        color: "#4A4A4A"
+    },
+    setwidth: {
+        width: "100%",
+
+    },
+    setwidth2: {
+        width: "100%",
+        height: "59.8px",
+        position: "relative"
+    },
+    setrow3: {
+        height: "31.5px",
+        width: "200%",
+        fontSize: "18px",
+        color: "#4A4A4A",
+        marginRight: "150%"
+    },
+    setauto: {
+        height: 266,
+        width: 670,
+        margin: "auto",
+        paddingTop: 40,
+        position: "relative"
+
+    },
+    buttonsubmit: {
+        width: "407px",
+        height: "42.8px",
+        position: "absolute",
+        top: 450,
+        left: "20%"
+    },
+    scrollspace: {
+        height: "730px",
+        width: '1163px',
+        margin: 'auto',
+        paddingLeft: 110,
+        transition: 'all 0.5s ease'
+    },
+    scrollspace36: {
+        height: "730px",
+        width: '1163px',
+        margin: 'auto',
+        paddingLeft: 36,
+        transition: 'all 0.5s ease'
+    },
+
+    PriceTag: {
+      height: "24px",
+      width: "100px",
+      backgroundColor: '#D8D8D8',
+      borderRadius: '13px',
+      fontSize: '13px',
+      color: '#4A4A4A',
+      fontWeight: '400',
+      margin: 'auto',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: "center",
+
+      PriceTagFont: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: "center",
+        marginTop: '8px',
+        fontSize: '16px',
+        fontWeight: '400',
+        fontcolor: "#4a4a4a"
+    },
+   
+  },
+
+  savebutton: {
+    width: "407px",
+    height: "42.8px",
+    position: "absolute",
+    top: 620,
+    left: "35%"
+   
+},
+
     }));
     
     export default function Bill(props) {
@@ -93,7 +221,6 @@ import React, {useState, useEffect} from "react";
       const handleClose = () => {
         setOpen(false);
       };
-    
     
       const [price, setPrice]= useState("");
       const [feetype, setFeetype] =useState([]);
@@ -118,6 +245,8 @@ import React, {useState, useEffect} from "react";
         console.log('Error getting fake data: ' + error);
         })
         }, []);
+
+        
       
        const deletetable=(id) =>{
         axios.post(`/feetype/fee-type/${id}`)
@@ -135,7 +264,7 @@ import React, {useState, useEffect} from "react";
         axios.post("/feeset/create-feeset", {
           "FeeSetName": addFeesetname,
           "RoomPrice": parseInt(roomprice),
-          "FeeTypeIds": [1,2,3,4,5]
+          "FeeTypeIds": selected           //[1,2,3,4,5] 
         }).then((response)=>{
           window.location.href = '/feeset';
           console.log(response);
@@ -168,6 +297,9 @@ import React, {useState, useEffect} from "react";
     const isSelected2 = (name) => selected.indexOf(name) !== -1;
       return (
           <div className="container ">
+          <div>
+          <ScrollView>
+            <div style={{ width: '100%', height: '549px' }}>
             <Card className={classes.Card} variant="outlined">
                 <Table  aria-label="caption table">
                     <TableHead >
@@ -180,32 +312,41 @@ import React, {useState, useEffect} from "react";
                 <TableBody>
                 <br/>
                 <div className="container ">
-              <div className="Feeinput">
-                <input   
-                    placeholder="Feet Set Name"
-                    type="text"
-                    name="FeeSetName"
-                    onChange={(event)=>{
-                      setAddfeesetname(event.target.value)
-                    }}
-                    noValidate           
-                />
-                </div> 
-            
-                <div className="Feeinput">
-                  <input   
-                      placeholder="Room price"
-                      type="number"
-                      //name="FeeSetName"
-                      onChange={(event)=>{
-                        setRoomprice(event.target.value)
-                       }}
-                      noValidate           
-                />
-                </div> 
+             
+                <div style={{ display: "flex" }} className={classes.setwidth2}>
+                        <div style={{ width: "45%" }} >
+                            {/*<div htmlFor="Phone" className={classes.eachtitle} style={{paddingLeft: "98px", paddingBottom: 5 }}>Phone Number</div>*/}
+                            <input
+                                className={classes.setrow}
+                                placeholder="Name"
+                                type="text"
+                                //name="Phone Number"
+                                style={{ position: "absolute", width: "36%", right: 480 }}
+                                onChange={(event) => {
+                                  setAddfeesetname(event.target.value);
+                              }} 
+                              />
+                        </div>
+                        <div style={{ width: "45%" }}>
+                            {/*<div htmlFor="lastName" className={classes.eachtitle} style={{ paddingLeft: "80px", paddingBottom: 5 }}>Email</div>*/}
+                            <input
+                                className={classes.setrow}
+                                placeholder="Room Price"
+                                type="text"
+                                style={{ position: "absolute", width: "36%", left: 470 }}
+                                //name="lastName"
+                                onChange={(event) => {
+                                  setRoomprice(event.target.value);
+                              }} 
+                               />
+                        </div>
+                    </div>
+
+
                     <h5 className={classes.head}> 
-                          Feetype <Button onClick={handleClickOpen}>
-                               <AddIcon/></Button>  
+                        Select Fee Types <Button onClick={handleClickOpen}>
+                               {/*<AddIcon/>*/}
+                    </Button>  
                   <Dialog
                       open={open}
                       onClose={handleClose}
@@ -248,6 +389,7 @@ import React, {useState, useEffect} from "react";
           </Table>  
         </Card>
       </div> 
+      
       <DialogActions >
           <Button 
               variant="contained" 
@@ -264,9 +406,9 @@ import React, {useState, useEffect} from "react";
       </DialogContent>      
        </Dialog>
           </h5> 
-          <Card className={classes.Cards} variant="outlined">
+         {/* <Card className={classes.Cards} variant="outlined">
               <Table>
-                {/*<TableCell> {selected} </TableCell>*/}
+                
                 <TableBody>
                   {selected.map((row)=>(
                   <TableRow>
@@ -279,14 +421,52 @@ import React, {useState, useEffect} from "react";
                       </TableCell>
                       <TableCell align="right">
                       <Button onClick={()=>{deletetable(row.id)}}>
-                          {/*<DeleteSweepOutlinedIcon/>*/}
+                        
                           </Button> 
                       </TableCell>
                   </TableRow>        
                   ))}      
                   </TableBody>              
               </Table>  
-            </Card>  
+                  </Card>  */}
+
+              <Card className={classes.Cards} variant="outlined">
+              
+                      <Table >
+                        <TableBody>      
+                        {feetype.map((row,index) => {
+                        const isItemSelected = isSelected(row.feeTypeName);
+                        const labelId = `enhanced-table-checkbox-${index}`;
+                    return(      
+                      <TableRow 
+                          onClick={(event) => handleClick(event, row.feeTypeName)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.feeTypeName}
+                          //selected={isItemSelected}
+                          >       
+                    <TableCell>
+                        <Checkbox
+                          color="primary"
+                          checked={isItemSelected}
+                      />
+                  </TableCell>
+                  <TableCell align="Left">
+                    {row.feeTypeName}
+                  </TableCell>
+                 
+                  <TableCell>
+                    <div className={classes.PriceTag}>
+                      <h6 className={classes.PriceTagFont}> {row.feeTypePrice} THB </h6>
+                    </div>
+                    </TableCell>
+                </TableRow>
+                );
+            })}
+            </TableBody>                     
+          </Table>  
+              </Card>
           </div>
           </TableBody>
         </Table>   
@@ -300,7 +480,19 @@ import React, {useState, useEffect} from "react";
             Save
         </Button>             
       </div>      
-    </Card>        
+    </Card>   
+    </div>
+          </ScrollView>
+          <Link to="/feesets">
+            <Button
+               className={classes.savebutton}
+               variant="contained" color="primary" disableElevation
+               style={{ backgroundColor: '#485D84' }} >
+               Save
+           </Button>
+    </Link>
+            </div>     
+           
   </div>    
       );
     }

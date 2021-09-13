@@ -60,25 +60,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Otherdetail(props) {
     const classes = useStyles();
     const str = props.Date
-
-
     const [allFloor, setAllFloor] = useState([]);
 
-    // useEffect(() => {
-    //     axios('https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/floorexpense')
-    //         .then(response => {
-    //             console.log("hi" + response.data)
-    //             setAllFloor(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.log('Error getting fake data: ' + error);
-    //         })
-    // }, []);
-
-    //API id, current date and role haven't been add yet
-
+    
     return (
-        <div>
+       <div>
             <Paper className={classes.papercard}>
                 <div className={classes.headfloor} >
                     Other
@@ -117,9 +103,20 @@ export default function Otherdetail(props) {
                 <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px" }} />
                 <OtherRow/>
             </Paper>
-
-        </div>
+       </div>
     );
 }
 
 
+// useEffect(() => {
+    //     axios('https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/floorexpense')
+    //         .then(response => {
+    //             console.log("hi" + response.data)
+    //             setAllFloor(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.log('Error getting fake data: ' + error);
+    //         })
+    // }, []);
+
+    //API id, current date and role haven't been add yet

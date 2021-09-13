@@ -93,11 +93,11 @@ input.error {
 
 .firstName,
 .lastName {
-  width: 49%;
+  width: 100%;
 }
 
-.email,
-.password {
+.emails,
+.passwords {
   width: 100%;
 }
 

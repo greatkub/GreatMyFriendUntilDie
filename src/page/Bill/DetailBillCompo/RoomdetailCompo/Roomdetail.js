@@ -369,27 +369,29 @@ export default function Roomdetail(props) {
         //API id, current date and role haven't been add yet
         return (
                 <div> 
-                    <div>      
-                    {billdetails.map((rows)=>{
+                      {billdetails.map((rows)=>{
                         return( 
+                    <div>      
+                  
                         <Paper className={classes.papercard}>
                             <h4 className={classes.headfloors}>Floor</h4>
                             <div className={classes.headfloor}>  
                                 <div style={{ position: 'absolute', paddingTop: '6px' }}>
                                     <div className={classes.floortext}>
                                         Name
-                                        <div className={classes.minitext} style={{paddingLeft:'1px'}}>  </div>
+                                        <div className={classes.minitext} style={{paddingLeft:'101px'}}>  </div>
                                     </div>
                                     <div className={classes.floortext}>
                                         Bed
-                                        <div className={classes.minitext} style={{paddingLeft:'1px'}}>  </div>
+                                        <div className={classes.minitext} style={{paddingRight:'1px'}}>  </div>
                                     </div>
                                     <div className={classes.floortext}>
                                         Billed Period     
-                                        <div className={classes.minitext} style={{paddingLeft:'275px'}}>(THB) </div>
+                                        <div className={classes.minitext} style={{paddingLeft:'275px'}}></div>
                                     </div>
                                     <div className={classes.floortext}>
                                         Rent
+                                        <div className={classes.minitext} style={{paddingLeft:'403px'}}>THB</div>
                                     </div>
                                     <div className={classes.floortext}>
                                         Electricity            
@@ -404,8 +406,8 @@ export default function Roomdetail(props) {
                                        Total               
                                     </div>
                                     <div className={classes.floortext}>
-                                        Detail
-                                        <div className={classes.minitext} style={{paddingLeft:'3px'}}> </div>
+                                        Status
+                                        <div className={classes.minitext} style={{paddingLeft:'403px'}}> </div>
                                     </div>
                                 </div>
                             </div>   
@@ -414,46 +416,88 @@ export default function Roomdetail(props) {
                                 return( 
                             <TableBody>
                                   <TableRow>
-                                  <TableCell align="right" style={{paddingLeft:'38px'}}>
-                                  {rows.userFirstName} {rows.userLastName}
+                                  <TableCell align="right" style={{paddingLeft:'25px'}}>
+                                  {rows.userFirstName} 
+
+                                    {rows.userLastName}
                                   </TableCell>   
+                                 
 
                                   <TableCell align="left"style={{paddingLeft:'28px'}}>
                                   {rows.bedName}
                                   </TableCell>
-
-                                  <TableCell align="right"style={{paddingLeft:'58px'}}>
-                                  {p.totalPrice}
+                                  <TableCell align="left"style={{paddingLeft:'60px'}}>
+                                    {moment(p.billPeriod).format("L")}
                                   </TableCell>
-    
-                                  <TableCell align="right"style={{paddingLeft:'29px'}}>
-                                  {p.electricityPrice}
+                                  <TableCell align="right"style={{paddingLeft:'79px'}}>4800</TableCell>
+                                  <TableCell align="right"style={{paddingLeft:'57px'}}>
+                                    {p.electricityPrice}
                                   </TableCell>
-
                                   <TableCell align="right"style={{paddingLeft:'79px'}}>
                                   {p.waterPrice}
                                   </TableCell>
-    
-                                  <TableCell align="left"style={{paddingLeft:'77px'}} >
+                                  <TableCell align="left"style={{paddingLeft:'56px'}} >
                                   {p.other}
                                    </TableCell>
-                                   <TableCell align="right" style={{paddingLeft:'45px'}} >
+                                   <TableCell align="left"style={{paddingLeft:'36px'}} >
+                                  {p.totalPrice}
+                                   </TableCell>
+                                   <TableCell align="right" style={{paddingLeft:'54px'}} >
                                    {p.statusInfo}
                                     </TableCell>
-    
-                                    <TableCell align="left"style={{paddingLeft:'62px'}} >
-                                     
-                                  </TableCell>
-
-                                  <TableCell></TableCell>
-                                </TableRow>  
-                               
+                                    <TableCell></TableCell>
+                                </TableRow>   
                             </TableBody>  
                              )})}                                                     
-                        </Paper>  
-                         )})}                         
-                    </div>                 
+                        </Paper> 
+
+        <div>
+            <Paper className={classes.papercard}>
+                <div className={classes.headfloor} >
+                    Other
+                    <div style={{ position: 'absolute', paddingTop: '6px' }}>
+
+                        <div className={classes.floortext}>
+                            Date
+                        </div>
+                        <div className={classes.floortext}>
+                            Fine
+                            <div className={classes.minitext} style={{ paddingLeft: '1px' }}> (THB) </div>
+
+                        </div>
+                        <div className={classes.floortext}>
+                            Furniture
+                            <div className={classes.minitext} style={{ paddingLeft: '16px' }}> (THB) </div>
+
+                        </div>
+                        <div className={classes.floortext}>
+                            Internet
+
+                            <div className={classes.minitext} style={{ paddingLeft: '12px' }}> (THB) </div>
+                        </div>
+                        <div className={classes.floortext}>
+                            Parking
+
+                            <div className={classes.minitext} style={{ paddingLeft: '11px' }}> (THB) </div>
+                        </div>
+                        <div className={classes.floortext}>
+                            Total
+                            <div className={classes.minitext} style={{ paddingLeft: '3px' }}> (THB) </div>
+                        </div>
+
+                    </div>
                 </div>
+                <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px" }} />
+             
+            </Paper>
+       </div>
+                   
+            <div>
+                  
+            </div>                                      
+        </div>
+         )})}        
+        </div> 
                 
         );
     }   

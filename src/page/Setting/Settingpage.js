@@ -1,12 +1,22 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import ComplexGrid from '../../Components/Setting/Setting'
 import { Button } from '@material-ui/core'
 import { styled } from '@material-ui/styles';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import './../../Css/Setup/Settingpage.css'
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { Row } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import Card from '@material-ui/core/Card';
+import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs'
+import Axios from "axios";
 
+import Nav from 'react-bootstrap/Nav'
 
 const useStyles = makeStyles({
     flexGrow: {
@@ -124,6 +134,65 @@ const useStyles = makeStyles({
 
 export default function Settingpage({ isOpened }) {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const [promtpay, setPromtpay] =React.useState("");
+    const [allpromtpay, setAllPromtpay] =React.useState([]);
+
+
+    const [allewallet, setAllewallet] =React.useState("");
+    const [ewallet, setEwallet] = React.useState([]);
+    //const [id, setId] = React.useState();
+    const handleClickOpen = () => {
+        setOpen(true)
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const BankAccountsave =()=> {
+        Axios.post("/bankaccount/promptpay/1",{
+        "id": 1,
+        "promptPay": promtpay
+       
+        }).then((response) => {
+            //window.location.href = '/building_sp';
+            console.log(response);
+        })
+    };
+
+    const Ewalletsave =()=> {
+        Axios.post("/bankaccount/e-wallet/1",{
+        "id": 1,
+        "e_wallet":ewallet
+        
+        }).then((response) => {
+            //window.location.href = '/building_sp';
+            console.log(response);
+        })
+    };
+
+    useEffect(() => {
+        Axios('/bankaccount/e-wallet/1')
+            .then(response => {
+                console.log(response.data)
+                setAllewallet(response.data);
+            })
+            .catch(error => {
+                console.log('Error getting fake data: ' + error);
+            })
+    }, []);
+
+    useEffect(() => {
+        Axios('/bankaccount/promptpay/1')
+            .then(response => {
+                console.log(response.data)
+                setAllPromtpay(response.data);
+            })
+            .catch(error => {
+                console.log('Error getting fake data: ' + error);
+            })
+    }, []);
 
     return (
         <div style={{ width: '100%' }}>
@@ -174,7 +243,7 @@ export default function Settingpage({ isOpened }) {
                             </Link>
 
                             <div style={{ height: " 50px" }} />
-                            <Link to='/rooms_sp' style={{textDecoration:"none"}}>
+                            <Link to="/setroom" style={{textDecoration:"none"}}>
 
                             <div>
                                 <div className="circletext inline item marleft">
@@ -249,15 +318,17 @@ export default function Settingpage({ isOpened }) {
 
                             <div style={{ height: " 50px" }} />
 
-                            <Link to='/bankacc_sp' style={{textDecoration:"none"}}>
-
+                           {/* <Link to='/bankacc_sp' style={{textDecoration:"none"}} >*/}
+                           <Link onClick={handleClickOpen} style={{textDecoration:"none"}} >
                             <div>
                                 <div className="circletext inline item marleft">
                                     7
                                 </div>
                                 <div>
                                     <div className={classes.textsetting}>
+                                   
                                         Bank Account
+                                      
                                     </div>
                                     <div className={classes.subtext}>
                                         Setting the channel to earn
@@ -273,9 +344,95 @@ export default function Settingpage({ isOpened }) {
                     <Button className={classes.button2}>
                         SAVE
                     </Button>
+                <Dialog open={open} onClose={handleClose}
+                        aria-labelledby="edit-apartment"
+                        fullWidth={true}>
+                    <DialogTitle id="edit-apartment" className={classes.dialogPaper2}>Bank</DialogTitle>
+                    <DialogContent className={classes.dialogPaper}>
+                    <Tabs
+                        defaultActiveKey="home"
+                        transition={false}
+                        id="noanim-tab-example"
+                        className="mb-3"
+                    >
+                        <Tab eventKey="home" title="Prompt pay">
+                            <DialogContentText>
+                            <h6>Mobile No./Citizen ID/Tax ID</h6>
+                                <input maxlength="40" size="40"
+                                   id
+                                   type="text"
+                                   fullWidth    
+                                   contenteditable="true"
+                                   value={promtpay.allpromtpay}
+                                   onChange={(event) => {
+                                    setPromtpay(event.target.value);
+                                }              
+                            }/>
 
+{/*<div 
+className={classes.input_md} 
+contenteditable="true" 
+onInput={e => setAddFirstName(e.currentTarget.textContent)} >
+ {allData.length > 0 == false ? allData[0].firstName : ""}
+</div>*/}
 
+                            </DialogContentText>
+                            <DialogActions className={classes.dialogPaper3}>
+                                <Button
+                                    onClick={BankAccountsave }
+                                    className={classes.Cursor}
+                                    variant="contained" 
+                                    color="primary" 
+                                    disableElevation
+                                    style={{backgroundColor: '#485D84'}}>
+                                Create
+                        </Button>
+                        <div className={classes.dialogButton}>
+                            <Button className={classes.Cursor}
+                                    type={"button"}
+                                    variant="contained" disableElevation
+                                    onClick={handleClose}>
+                                cancel
+                            </Button>
+                        </div>
+                    </DialogActions>
+                        </Tab>
 
+                        <Tab eventKey="profile" title="E-wallet">
+                        <DialogContentText>
+                        <h6>Reference Number</h6>
+                            <input maxlength="40" size="40"
+                                   type="text"
+                                   fullWidth    
+                                   value={ewallet}
+                                   onChange={(event) => {
+                                    setEwallet(event.target.value);
+                                }}
+                                 />
+                             </DialogContentText>
+                             <DialogActions className={classes.dialogPaper3}>
+                                <Button
+                                    onClick={Ewalletsave}
+                                    className={classes.Cursor}
+                                    variant="contained" 
+                                    color="primary" 
+                                    disableElevation
+                                    style={{backgroundColor: '#485D84'}}>
+                                Create
+                        </Button>
+                        <div className={classes.dialogButton}>
+                            <Button className={classes.Cursor}
+                                    type={"button"}
+                                    variant="contained" disableElevation
+                                    onClick={handleClose}>
+                                cancel
+                            </Button>
+                        </div>
+                    </DialogActions>
+                        </Tab>
+                    </Tabs>
+                    </DialogContent>
+                </Dialog>
                 </div>
             </div>
         </div>
