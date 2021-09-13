@@ -90,13 +90,16 @@ const useStyles = makeStyles((theme) => ({
         width: '3%',
         height: '3%',
         marginLeft: '2%',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        color: "#485D84"
 
     },
     TitleMargin: {
         marginTop: '1%',
         marginLeft: '1%',
-        marginBottom: '2%'
+        marginBottom: '2%',
+        fontWeight: 'bold',
+        color: "#4A4A4A"
     },
     tableCell: {
         padding: "0px 8px"
@@ -146,7 +149,8 @@ const useStyles = makeStyles((theme) => ({
     },
     IconSizeTable: {
         height: "20px",
-        width: "20px"
+        width: "20px",
+        color: "#4A4A4A"
     },
     PriceTagFont: {
         display: 'flex',
@@ -163,9 +167,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'left',
         justifyContent: 'left',
         textAlign: "left",
-        fontSize: '18px',
-        fontWeight: '400',
-        fontcolor: "#4a4a4a"
+        fontSize: '19px',
+        color: "#383738",
+        fontWeight: 400
     },
     ClosedIconDialogBg: {
         height: "10px",
@@ -334,6 +338,7 @@ export default function CreateFeetype(props) {
                 <h4 className={classes.TitleMargin}> Fee Types
                     <AddCircleIcon className={classes.IconSize} onClick={handleClickOpen} color="primary"/>
                 </h4>
+                
                 <hr/>
 
                 <div className="container">
@@ -361,7 +366,7 @@ export default function CreateFeetype(props) {
                                             <DeleteIcon className={classes.IconSizeTable}>
                                                 onClick={() => {
                                                 deletetable(row.id)
-                                            }}>
+                                            }}
                                             </DeleteIcon>
                                         </div>
                                     </TableCell>

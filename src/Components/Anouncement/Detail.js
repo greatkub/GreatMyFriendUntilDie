@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Detail() {
+export default function Detail(props) {
   const classes = useStyles();
  
 
@@ -80,10 +80,10 @@ export default function Detail() {
       <Paper className={classes.paper}>
             <div className={classes.heder} >     
                   <p style={{marginLeft:"25px", paddingTop:"32.36px", fontSize:"19.4px", fontWeight:"bold", color:"#4A4A4A"}}>
-                    Important News
+                    {props.title}
                     </p>
                   <p style={{marginLeft:"25px", paddingTop:"68.18px", fontSize:"16.18px", fontWeight:400, color:"#4A4A4A", position:"absolute", top:0}}>
-                  Important News • 18/04/2021
+                  {props.type} • {props.announceDate}
                   </p>
             </div>
         <Divider style={{backgroundColor:"#AAAAAA", margin: "0px 13.7px"}}/>
@@ -92,7 +92,7 @@ export default function Detail() {
           <Grid item>
             <div style={{height:"25px"}}/>
 
-              <img className={classes.img} alt="complex" src="https://image.freepik.com/free-vector/megaphone-with-important-announcement-flat_149152-517.jpg" />
+              <img className={classes.img} alt="complex" src={props.imageUrl} />
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={0}>
@@ -102,24 +102,7 @@ export default function Detail() {
                 <div style={{height:"20px"}}/>
 
                 <Typography className={classes.typography} style={{paddingBottom:"50px"}}>
-                12334567890123456789123456789012345678901234567890
-                The booster jab coul
-
-                d be associated to a "
-                higher risk of adverse reactions", said Jay Butler, the deputy director of the CDC, who is concerned that "more severe – although very rare – side effects" may occur.
-                The booster jab could b'Arraylist.js
-                
-                e 
-                
-                associated to a "higher \ris
-                k
-                 of adverse reactions", sa
-                 \id Jay Butler, the deputy director of the CDC, who is concerned that "more severe – although very rare – side effects" may occur.
-                The booster jab could be asso
-                ci
-                ated to a "higher risk of adverse reactions", said Jay Butler, the deputy director of the CDC, who is concerned that "more severe – although very rare – side effects" may occur.
-                The booster jab could be associated to a "higher risk of adverse reactions", said Jay Butler, the deputy director of the CDC, who is concerned that "more severe – although very rare – side effects" may occur.
-                While America has not made a decision on whether to go ahead with booster jabs or not, the UK is taking on the advice from the Joint Committee on Vaccination and Immunisation (JCVI). The JCVI advise booster jabs will "prolong the protection that vaccines provide" – especially in the most vulnerable ahead of the winter months.
+                  {props.description}
                 </Typography>
               {/* </Grid> */}
             </Grid>           

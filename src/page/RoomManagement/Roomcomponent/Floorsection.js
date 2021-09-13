@@ -23,8 +23,9 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 0,
         marginBottom: "16px",
         //   backgroundColor:'green',
-        position: 'absolute',
+        position: 'relative',
         borderRadius: 5,
+        border: "solid 1px #AAAAAA"
     },
     headfloor: {
         // display: 'block',
@@ -72,8 +73,8 @@ export default function Floorsection(props) {
     const classes = useStyles();
     const str = props.Date
 
-
-    const [allFloor, setAllFloor] = useState([]);
+    // const [allFloor, setAllFloor] = useState([]);
+    const [allRoom, setAllRoom] = useState(props.allFloor);
 
 
     return (
@@ -81,7 +82,7 @@ export default function Floorsection(props) {
             <Paper className={classes.papercard}>
                 <div className={classes.headfloor}>
                     <div className={classes.floortext}>
-                        Floor 1
+                        Floor {props.floorName}
                     </div>
                     <div className={classes.numinroom}>
                         <PersonIcon className={classes.personicon} />
@@ -89,14 +90,17 @@ export default function Floorsection(props) {
                     </div>
                 </div>
                 <Divider style={{ backgroundColor: "#AAAAAA", marginTop: 81 }} />
-                <div style={{ display: 'flex' ,flexWrap: 'wrap', marginLeft: '50.5px', marginTop: '32.36px', marginBottom: '21.8px'}}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', marginLeft: '50.5px', marginTop: '32.36px', marginBottom: '21.8px' }}>
+                    {allRoom.map((sub, value) => (
 
-                    <Roomsection />
-                    <Roomsection />
-                    <Roomsection />
-                    <Roomsection />
-                    <Roomsection />
-                    <Roomsection />
+                        <Roomsection 
+                        beds = {sub.beds}
+                        roomNumber = {sub.roomNumber} 
+                        roomTypeName = {sub.roomTypeName}
+                        numberOfBed = {sub.numberOfBed}
+                        />
+                    ))}
+
                 </div>
 
 

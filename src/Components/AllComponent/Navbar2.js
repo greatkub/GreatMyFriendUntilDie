@@ -9,6 +9,8 @@ const Navbar2 = (props) => {
     // const [currentClicked, setCurrentClicked] = useState(false)
     const [currentTag, setCurrentTag] = useState(0)
    
+    
+
     function handlerclick () {
         setShowNav(!showNav)
         props.isOpened(showNav)
@@ -122,7 +124,15 @@ const Navbar2 = (props) => {
                     {/* <span class="tooltip">Dashboard</span> */}
 
                 </li>
+                <li className={currentTag == 9 ? 'selected' : 'unselected'} onClick={() => isClicked(9)} >
+                    <Link to='/testnewpage'>
+                        <i class='bx bx-heart'></i>
+                        <span class="links_name">testnewpage</span>
+                    </Link>
+                    {/* <span class="tooltip">Dashboard</span> */}
+                </li>
             </ul>
+           
             {/* <div className="profile_content">
                 <div class="profile">
                     <div class="profile_details">

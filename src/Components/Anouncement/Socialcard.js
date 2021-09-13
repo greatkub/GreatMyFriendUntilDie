@@ -28,6 +28,7 @@ import moment from 'moment';
 import ImageIcon from '@material-ui/icons/Image';
 import { Update } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
+import DropFloor from '../Dropdown/DropFloor';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     height: '38px',
     width: '38px',
     paddingRight: theme.spacing(5),
-  
+
   }
 
 }));
@@ -114,7 +115,7 @@ const DialogActions2 = withStyles((theme) => ({
 
 
 const api = axios.create({
-  baseURL: '/announcement/post-announcement'
+  baseURL: '/announcement/announcement'
 })
 
 
@@ -125,11 +126,14 @@ function Social() {
   const classes2 = useStyles2();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [currentAnnounce, setCurrentAnnounce] = useState(0)
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+    // console.log(currentAnnounce)
   };
 
   const imagefunction = () => {
@@ -166,13 +170,13 @@ function Social() {
   const addNews = async () => {
     let res = await api.post('/', {
       "Title": title,
-      "TypeId": 1,
+      "TypeId": parseInt(currentAnnounce),
       "AnnounceDate": datecreate,
       "Description": descrip,
       "ImageUrl": "https://cdn.wallpapersafari.com/36/96/7cRSqV.png",
-      "Likes": 3,
-      "Comments": 24,
-      "StaffId": 1
+      "Likes": 0,
+      "Comments": 0,
+      "StaffId": 5
     })
   }
 
@@ -246,16 +250,12 @@ function Social() {
 
               <div >
                 <form>
-                  <label id="typetitle" htmlFor="Province">Type</label>
+                  <label id="typetitle" htmlFor="Province" >Type</label>
                   <div className="spacing9"></div>
                   <Arraylist
-                  // onChange={(event) => {
-                  //     {event.target.value === "General News" ? 
-                  //     setType(1) :
-                  //     setType(2) 
-                  //   }
+                    url='/announcement/type-announcements'
+                    save={currentAnnounce => setCurrentAnnounce(currentAnnounce)}
 
-                  //  }}
                   />
                 </form>
 
@@ -300,8 +300,8 @@ function Social() {
         </DialogContent>
         <DialogActions2 >
 
-          <IconButton className={classes.importimgbtn}  onClick={imagefunction}> 
-            <ImageIcon className={classes2.importimgbtn} style={{color: '#4A4A4A'}}/> </IconButton>
+          <IconButton className={classes.importimgbtn} onClick={imagefunction}>
+            <ImageIcon className={classes2.importimgbtn} style={{ color: '#4A4A4A' }} /> </IconButton>
           {/* <input type="file"></input> */}
           <Button id="announceBT" className={classes.Btn} variant="contained" color="primary" disableElevation
 
@@ -310,7 +310,7 @@ function Social() {
           </Button>
           <div className="spacing" />
           <Button id="cancelBT" className={classes.Btn} variant="contained" color="primary" disableElevation
-            
+
             onClick={handleClose}>
             <p id="cancelAnnounceBt">Cancel</p>
           </Button>
@@ -340,13 +340,17 @@ function Social() {
             </Typography>
             {allData.map((value, index) => {
               return value.type === "Important News" ?
-                <ImpNews
-                  key={index}
-                  Name={value.title}
-                  img={value.imageUrl}
-                  //cell={value.description}
-                  Date={value.announceDate}
-                  ID={value.id} />
+                <Link to={`/detailpage/${value.id}`} onClick={()=> console.log(value.id)}>
+                  <ImpNews
+                    key={index}
+                    Name={value.title}
+                    img={value.imageUrl}
+                    //cell={value.description}
+                    Date={value.announceDate}
+                    ID={value.id} />
+
+                </Link>
+
                 : null
 
             })}
@@ -373,8 +377,10 @@ function Social() {
             </Typography>
             {allData.map((value, index) => {
               return value.type !== "Important News" ?
-              
+
+
                 <General
+
                   key={index}
                   Name={value.title}
                   //cell={value.description}
@@ -386,6 +392,7 @@ function Social() {
                 : null
             })}
           </div>
+
         </div>
         {/* </div> */}
       </Grid>

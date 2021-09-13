@@ -25,13 +25,16 @@ import Petitionpage from './page/Petition/Petitionpage';
 import STBuildingpage from './page/STBuilding/STBuildingpage';
 import Createbuilding from './page/STBuilding/Createbuilding';
 import CreateFeetype from './page/STFeetype/CreateFeetype';
-
+import DisplayDialog from './page/STRoom/DisplayDialog';
+import DialogDetail from './page/STRoom/DialogDetail';
+import STRoompage from './page/STRoom/STRoompage';
 
 
 function App2() {
 
   // const [ word , setWord] = useState('Bob')
   const [ word , setWord] = useState(false)
+  const [announceId, setAnnounceId] = useState(0)
 
 
   return (
@@ -60,7 +63,11 @@ function App2() {
           {/* <Route path="/expensehistory" exact={true} component={Exhistorypage} /> */}
           <Route path="/expensehistory" exact={true} render={(props) => <Exhistorypage isOpened = {word} {...props} />}  />
 
+
           <Route path="/setting" exact={true} component={Setting}/>
+
+
+
           <Route path="/setting2" exact={true}  render={(props) => <Settingpage isOpened = {word} {...props} />} />
           <Route path="/momo" exact={true} component={Settingpage}/>
           {/* <Route path="/details" exact={true} component={Detailpage}/> */}
@@ -78,6 +85,11 @@ function App2() {
           <Route path="/detailpage" exact={true}  render={(props) => <Detailpage isOpened = {word} {...props} />} />
           <Route path="/petitionpage" exact={true}  render={(props) => <Detailpage isOpened = {word} {...props} />} />
 
+          {/* <Route path="/testnewpage" exact={true}  render={(props) => <STRoompage isOpened = {word} {...props} />} /> */}
+          <Route path="/testnewpage" exact={true}  render={(props) => <Personalinfopage isOpened = {word} {...props} />} />
+
+          <Route path="/detailpage/:id" exact={true}  render={(props) => <Detailpage isOpened = {word} {...props} />} />
+
           
 
 
@@ -94,3 +106,4 @@ function App2() {
 }
 
 export default App2;
+

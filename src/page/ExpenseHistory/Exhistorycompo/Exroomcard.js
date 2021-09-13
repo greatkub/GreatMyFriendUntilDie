@@ -5,6 +5,7 @@ import { Button } from '@material-ui/core';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -36,28 +37,38 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-
 }));
 
 export default function Exroomcard(props) {
     const classes = useStyles();
+    const [total, setTotal] = useState([])
+
+    useEffect(() => {
+      setTotal(props.expense)
+    }, [])
+    
 
     return (
         <Paper className={classes.paperrow}>
             <div className={classes.newdetext} style={{ left: 45 }}>
-                {props.roomid}
+                {props.roomNumber}
             </div>
-            <div className={classes.newdetext} style={{ left: 244 }}>
-                27/04/2021
+            <div className={classes.newdetext} style={{ left: 212 }}>
+                {/* {props.expense} */}
+                {/* {total.length > 0 ? props.expense : ""} */}
+
+                {/* <button onClick={() => console.log(total)}>
+
+                </button>  */}
             </div>
-            <div className={classes.newdetext} style={{ left: 455 }}>
-                3
+            <div className={classes.newdetext} style={{ left: 487 }}>
+                {props.occupant}
             </div>
             <div className={classes.newdetext} style={{ right: 447 }}>
-                5,366.00
+                {/* {props.expense.totalPrice} */}
             </div>
             <div className={classes.newdetext} style={{ right: 245 }}>
-                Unpaid
+                {props.statusInfo}
             </div>
             <Link to='/historydetails'>
 

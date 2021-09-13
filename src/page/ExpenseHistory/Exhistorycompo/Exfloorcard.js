@@ -56,64 +56,70 @@ const useStyles = makeStyles((theme) => ({
 export default function Exloorcard(props) {
     const classes = useStyles();
     const str = props.Date
+    const [allRoom, setAllRoom] = useState(props.allFloor);
 
 
-    const [allFloor, setAllFloor] = useState([]);
 
-    useEffect(() => {
-        axios('https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/floorexpense')
-            .then(response => {
-                console.log("hi" + response.data)
-                setAllFloor(response.data);
-            })
-            .catch(error => {
-                console.log('Error getting fake data: ' + error);
-            })
-    }, []);
+
+    // useEffect(() => {
+    //     axios('https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/floorexpense')
+    //         .then(response => {
+    //             console.log("hi" + response.data)
+    //             setAllFloor(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.log('Error getting fake data: ' + error);
+    //         })
+    // }, []);
+
+
 
     //API id, current date and role haven't been add yet
 
     return (
         <div>
-            {allFloor.map((floors) => { 
-                return (
-                    <Paper className={classes.papercard}>
-                        <div className={classes.headfloor} >
-                            Floor {floors.floorName}
-                            <div style={{ position: 'absolute', paddingTop: '6px' }}>
+            <Paper className={classes.papercard}>
+                <div className={classes.headfloor} >
+                    Floor {props.nowFloor}
+                    <div style={{ position: 'absolute', paddingTop: '6px' }}>
 
-                                <div className={classes.floortext}>
-                                    Room
-                                </div>
-                                <div className={classes.floortext}>
-                                    Billed at
-                                </div>
-                                <div className={classes.floortext}>
-                                    Occupants
-                                </div>
-                                <div className={classes.floortext}>
-                                    Total
-                                </div>
-                                <div className={classes.minitext}> (THB) </div>
-                                <div className={classes.floortext}>
-                                    Status
-                                </div>
-                                <div className={classes.floortext}>
-                                    Detail
-                                </div>
-                            </div>
+                        <div className={classes.floortext} style={{ marginRight: '130px' }}>
+                            Room
                         </div>
-                        <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px" }} />
-                        {floors.room.map((sub) => { 
-                            return(
-                            <Exroomcard 
-                                roomid = {sub.roomid}
-                            />
-                            )
-                        })}
-                    </Paper>
-                )
-            })} 
+                        <div className={classes.floortext} style={{ marginRight: '195px' }}>
+                            Billed at
+                        </div>
+                        <div className={classes.floortext}>
+                            Occupants
+                        </div>
+                        <div className={classes.floortext}>
+                            Total
+                        </div>
+                        <div className={classes.minitext}> (THB) </div>
+                        <div className={classes.floortext}>
+                            Status
+                        </div>
+                        <div className={classes.floortext}>
+                            Detail
+                        </div>
+                    </div>
+                </div>
+                <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px" }} />
+                {allRoom.map((sub) => {
+                    return (
+                        <Exroomcard
+                            roomNumber={sub.roomNumber}
+                            roomId={sub.roomId}
+                            expenses={sub.expense}
+                            statusInfo={sub.statusInfo}
+                            occupant={sub.occupant}
+                            expense={sub.expenses[0]}
+
+                        />
+                    )
+                })}
+            </Paper>
+
         </div>
     );
 }

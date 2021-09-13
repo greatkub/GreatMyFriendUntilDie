@@ -5,7 +5,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { useEffect } from 'react';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         boxShadow: 'none',
         borderRadius: '4px',
-        border: '1px solid #AAAAAA',
+        border: '0.5px solid #AAAAAA',
         marginRight: '22.6px',
         marginBottom: '22.6px',
         // display: 'flex'
@@ -24,27 +23,24 @@ const useStyles = makeStyles((theme) => ({
 
 
     },
-    paperempty: {
+    selectPaperrow:{
         width: '195px',
         height: '85px',
         position: 'relative',
         boxShadow: 'none',
         borderRadius: '4px',
+        border: '2px solid #485D84',
         marginRight: '22.6px',
         marginBottom: '22.6px',
-        backgroundColor: "#F8F8F8"
-        // display: 'flex'
-
-
-
-    },
+    }
+    ,
     roomtext: {
         position: 'absolute',
         color: '#4A4A4A',
         fontSize: '22.6px',
         marginTop: "10px",
         fontWeight: 'bold',
-        marginLeft: '26.6px'
+        marginLeft: '17.8px'
     },
     infobutton: {
         position: 'absolute',
@@ -88,28 +84,10 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '17.8px'
 
     },
-    roomstatusRed: {
+    roomstatus: {
         height: '28.3px',
         width: '2.5px',
-        backgroundColor: '#C03B3B',
-        borderRadius: 4,
-        position: 'absolute',
-        marginLeft: '14.5px',
-        marginTop: '15.3px'
-    },
-    roomstatusGreen: {
-        height: '28.3px',
-        width: '2.5px',
-        backgroundColor: '#3BC045',
-        borderRadius: 4,
-        position: 'absolute',
-        marginLeft: '14.5px',
-        marginTop: '15.3px'
-    },
-    roomstatusGray: {
-        height: '28.3px',
-        width: '2.5px',
-        backgroundColor: '#AAAAAA',
+        backgroundColor: 'red',
         borderRadius: 4,
         position: 'absolute',
         marginLeft: '14.5px',
@@ -121,40 +99,42 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Roomsection(props) {
+export default function Roomcom(props) {
     const classes = useStyles()
-    const [arrayBeds, setArrayBeds] = useState([])
-    const a = props.beds.length
+  
+    const [showNav, setShowNav] = useState(true)
+    // const [allSelect, setAllSelect] = useState([]);
 
-    useEffect(() => {
-        setArrayBeds(a)
-    })
+    function handlerclick () {
+        setShowNav(!showNav)
+        props.save(props.id)
+        props.getTorF(showNav)
+        // allSelect.push(props.id)
+
+        console.log("ff")
+        // console.log(allSelect)
+
+    }
     return (
-        <Link 
-        to='/personinfo' 
-        >
-            <Paper className={props.numberOfBed != 0 ? classes.paperrow: classes.paperempty}>
-                <div className={props.numberOfBed == 0 ? classes.roomstatusGray : props.numberOfBed != a ? classes.roomstatusGreen : classes.roomstatusRed}>
+        // <Link to='/personinfo'>
 
-                </div>
+           
+            <Paper className={showNav ? classes.paperrow : classes.selectPaperrow}  onClick={() => handlerclick()} >
+
                 <div className={classes.roomtext}>
                     {props.roomNumber}
-                </div>
-
-                <div className={classes.numinroom}>
-                    <PersonIcon className={classes.personicon} />
-                    <div className={classes.aligninicon}>{arrayBeds} / {props.numberOfBed}</div>
+                    {props.floorName}
                 </div>
 
                 <div className={classes.typeroom}>
-                    {props.numberOfBed != 0 ? props.roomTypeName : "Not Specify Type"}
+                    {props.roomTypeName}
                 </div>
+                <ExitToAppIcon style={{ height: '40px', width: '40px', color: 'rgb(237, 237, 237)', position: "absolute", right: 10, top: 10 }} />
 
-                <IconButton style={{ height: '32px', width: '32px', position: 'absolute', top: 44, left: 148 }}>
-                    <ExitToAppIcon style={{ height: '32px', width: '32px', color: 'rgb(237, 237, 237)' }} />
-                </IconButton>
+            </Paper >
 
-            </Paper>
-        </Link>
+
+
+        // </Link>
     )
 }
