@@ -10,6 +10,11 @@ import { useEffect } from 'react';
 import DisplayDialog from './DisplayDialog.js';
 import DropFloor from '../../Components/Dropdown/DropFloor.js';
 import Arraylist from '../../Components/Anouncement/Arraylist.js';
+import DropBuilding from '../../Components/Dropdown/DropFloor.js';
+import DropStatus from '../../Components/Dropdown/DropStatus.js';
+import { Button } from '@material-ui/core';
+import DropIsAvailable from '../../Components/Dropdown/DropIsAvailable.js';
+
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -39,13 +44,47 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "19px",
         fontWeight: "bold",
         color: "#4A4A4A"
+    },
+    texttitle: {
+        fontSize: "19px",
+        fontWeight: "bold",
+        color: "#4A4A4A"
+    },
+    textDrop: {
+        fontSize: 16,
+        color: "#4A4A4A"
+
+    },
+    titleText: {
+        fontSize: 19.4,
+        fontWeight: 'bold',
+        color: "#4A4A4A"
+
+    },
+    buttontop: {
+        backgroundColor: '#485D84',
+        borderRadius: "5px",
+        textTransform: "none",
+        fontSize: "13px",
+        color: '#fff',
+        fontWeight: 'normal',
+        width: "107.6px",
+        height: "31.5px",
+        // position: "absolute",
+
+        '&:hover': {
+            backgroundColor: '#687690',
+            color: '#fff',
+            width: "107.6px",
+            height: "31.5px"
+        },
     }
 }));
 
 export default function STRoompage({ isOpened }) {
     const classes = useStyles();
     useEffect(() => {
-        axios('/room/room-types/King David')
+        axios('/room/room-types/King Solomon')
             .then(response => {
                 console.log(response.data)
                 setAllFloor(response.data);
@@ -60,6 +99,9 @@ export default function STRoompage({ isOpened }) {
 
     const [dropFloorSelect, setDropFloorSelect] = useState("2")
 
+    // const [keptAllSelect, setKeptAllSelect] = useState(props.selectArray)
+    const [getcurrentSelect, setCurrentSelect] = useState([])
+
     function findpositionElement() {
         for (var i = 0; i < allFloor.length; i++) {
             if (allFloor[i].floorName == dropFloorSelect) {
@@ -71,9 +113,11 @@ export default function STRoompage({ isOpened }) {
 
 
 
+
     return (
         <div style={{ width: "100%", height: "100%" }}>
             <DisplayDialog
+                allSelcted={getcurrentSelect}
                 trigger={buttonPopup}
                 setTrigger={setButtonPopup} />
 
@@ -82,22 +126,50 @@ export default function STRoompage({ isOpened }) {
             >
                 <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
                     <div>
-                        <div style={{ height: '58px' }}></div>
                         <div className={classes.frame}>
-                            <div className={classes.texttitle}>
+                            <Datetoday />
+                            {/* <Button  style={{backgroundColor: 'blue'}} onClick={() => props.isOpened('Anna')}/> */}
+                            <div className={classes.titleText}>
                                 Room Types
                             </div>
+                            
 
-                          
-                            <DropFloor
-                                url='/announcement/type-announcements'
-                            />
-
-                                
+                            <div style={{ display: "flex", position: "absolute", bottom: 70, width: '100%' }}>
 
 
-                            <div className={classes.texttitle} style={{ position: 'absolute', bottom: 19 }}>
+                                <div>
+                                    <div className={classes.textDrop}>
+                                        Floor
+                                    </div>
+                                    <div style={{ height: 4 }} />
+
+                                    <DropFloor
+                                        url='/filter/filter-building/King David'
+                                    />
+                                </div>
+
+                                <div style={{ width: 12 }} />
+
+
+                                <div>
+                                    <div className={classes.textDrop}>
+                                        Type
+                                    </div>
+                                    <div style={{ height: 4 }} />
+
+                                    <DropStatus />
+                                </div>
+
+
+                            </div>
+
+
+                            <div className={classes.titleText} style={{ position: 'absolute', bottom: 0 }}>
                                 King Solomon
+                            </div>
+
+                            <div style={{ height: '20px' }}>
+
                             </div>
                         </div>
                         <div>
@@ -107,7 +179,7 @@ export default function STRoompage({ isOpened }) {
 
                                     <Floorcom
                                         // key={index}
-                                        // getcurrentSelect = {currentSelect => setCurrentSelect(currentSelect)}
+                                        getcurrentSelect={currentSelect => setCurrentSelect(currentSelect)}
                                         setTrigger={setButtonPopup}
                                         floorName={item.floorName}
                                         allFloor={allFloor[index].rooms}
@@ -117,11 +189,12 @@ export default function STRoompage({ isOpened }) {
                                 allFloor.filter(floor => floor.floorName == dropFloorSelect).map((item, index) => (
                                     <Floorcom
                                         // key={index}
-                                        // getcurrentSelect = {currentSelect => setCurrentSelect(currentSelect)}
+                                        getcurrentSelect={currentSelect => setCurrentSelect(currentSelect)}
                                         setTrigger={setButtonPopup}
                                         floorName={item.floorName}
                                         allFloor={allFloor[findpositionElement()].rooms}
                                     />
+
                                 ))}
 
 

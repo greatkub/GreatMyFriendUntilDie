@@ -44,7 +44,7 @@ export default function Exroomcard(props) {
     const [total, setTotal] = useState([])
 
     useEffect(() => {
-      setTotal(props.expense)
+      setTotal(props.expenses)
     }, [])
     
 
@@ -54,12 +54,14 @@ export default function Exroomcard(props) {
                 {props.roomNumber}
             </div>
             <div className={classes.newdetext} style={{ left: 212 }}>
-                {/* {props.expense} */}
+                {/* {total.length > 0 ? props.expenses.totalPrice : ""} */}
                 {/* {total.length > 0 ? props.expense : ""} */}
+                {/* {total == [] ? total: "yes"} */}
 
-                {/* <button onClick={() => console.log(total)}>
+                <button onClick={() => console.log(total)}>
 
-                </button>  */}
+                </button> 
+                
             </div>
             <div className={classes.newdetext} style={{ left: 487 }}>
                 {props.occupant}

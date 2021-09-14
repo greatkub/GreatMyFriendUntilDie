@@ -85,8 +85,8 @@ function App2() {
           <Route path="/detailpage" exact={true}  render={(props) => <Detailpage isOpened = {word} {...props} />} />
           <Route path="/petitionpage" exact={true}  render={(props) => <Detailpage isOpened = {word} {...props} />} />
 
-          {/* <Route path="/testnewpage" exact={true}  render={(props) => <STRoompage isOpened = {word} {...props} />} /> */}
-          <Route path="/testnewpage" exact={true}  render={(props) => <Personalinfopage isOpened = {word} {...props} />} />
+          <Route path="/testnewpage" exact={true}  render={(props) => <STRoompage isOpened = {word} {...props} />} />
+          {/* <Route path="/testnewpage" exact={true}  render={(props) => <Personalinfopage isOpened = {word} {...props} />} /> */}
 
           <Route path="/detailpage/:id" exact={true}  render={(props) => <Detailpage isOpened = {word} {...props} />} />
 

@@ -105,15 +105,14 @@ export default function Exloorcard(props) {
                     </div>
                 </div>
                 <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px" }} />
-                {allRoom.map((sub) => {
+                {allRoom.map((sub,index) => {
                     return (
                         <Exroomcard
                             roomNumber={sub.roomNumber}
                             roomId={sub.roomId}
-                            expenses={sub.expense}
+                            expenses={sub.expenses.totalPrice}
                             statusInfo={sub.statusInfo}
                             occupant={sub.occupant}
-                            expense={sub.expenses[0]}
 
                         />
                     )

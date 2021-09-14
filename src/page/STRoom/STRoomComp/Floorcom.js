@@ -125,6 +125,7 @@ export default function Floorcom(props) {
     const [getT, setGetT] = useState(false)
 
 
+
     function handlerClick() {
         //     const result = keptAS.filter(word => word == allSelect);
         //     var index = keptAS.indexOf(allSelect);
@@ -152,38 +153,40 @@ export default function Floorcom(props) {
 
     function handelerBoth() {
         // handlerClick()
+        
+        props.getcurrentSelect(allSelect)
         props.setTrigger(true)
     }
 
     function handlerCheck() {
-        const result = keptAS.filter(word => word != allSelect);
-        const result2 = keptAS.filter(word => word == allSelect);
-
-        var index = keptAS.indexOf(allSelect);
-
-        if (result2 == allSelect) {
-            console.log("yes")
-            setAS(result)
-            // setAS(result)
-            console.log(keptAS)
-            
-
-            return getT
-            
-
-
-        } else {
-            console.log("No")
-            keptAS.push(allSelect)
-            console.log(keptAS)
-            return getT
-
-
-        }
+        console.log(allSelect)
+        // keptAS.push(allSelect)
+        // console.log(keptAS)
+        return getT
 
     }
+    //  useEffect(() => {
 
 
+
+    // }, []);
+
+
+    function handlerPushToArray(allSelectpara) {
+        const result = allSelect.filter(word => word == allSelectpara);
+        var index = allSelect.indexOf(allSelectpara);
+
+        console.log(result)
+        if (result == allSelectpara) {
+            if (index > -1) { //Make sure item is present in the array, without if condition, -n indexes will be considered from the end of the array.
+                allSelect.splice(index, 1);
+            }
+            console.log("data already exist")
+        } else {
+            console.log("push data success")
+            allSelect.push(allSelectpara)
+        }
+    }
 
 
 
@@ -218,9 +221,11 @@ export default function Floorcom(props) {
                         // <div onClick={() => handlerClick()}>
                         <Roomcom
                             getTorF={getT => setGetT(getT)}
-                            save={allSelect => setAllSelect(allSelect)}
+                            // save={allSelect => setAllSelect(allSelect)}
+                            save={allSelectpara => handlerPushToArray(allSelectpara)}
+
                             roomNumber={sub.roomNumber}
-                            id={sub.id}
+                            roomId={sub.roomId}
                             roomTypeName={sub.roomTypeName}
                         // roomTypeName={sub.roomTypeName}
                         />
@@ -231,7 +236,7 @@ export default function Floorcom(props) {
 
                     ))}
                     <div className={classes.btgray}
-                    onClick={() => handelerBoth()}
+                        onClick={() => handelerBoth()}
                     >
                         <Button className={handlerCheck() ?
                             classes.btlightblue : classes.btgray}>
@@ -250,3 +255,30 @@ export default function Floorcom(props) {
 }
 
 
+// const result = keptAS.filter(word => word != allSelect);
+// const result2 = keptAS.filter(word => word == allSelect);
+
+// var index = keptAS.indexOf(allSelect);
+
+// if (result2 == allSelect) {
+//     // console.log("yes")
+//     // setAS(result)
+//     // setAS(result)
+//     // console.log(keptAS)
+//     // keptAS.push()
+//     console.log(allSelect)
+
+
+//     return getT
+
+
+
+// } else {
+//     // console.log("No")
+//     // keptAS.push(allSelect)
+//     // console.log(keptAS)
+
+//     return getT
+
+
+// }

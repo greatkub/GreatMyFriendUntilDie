@@ -107,11 +107,11 @@ export default function Roomcom(props) {
 
     function handlerclick () {
         setShowNav(!showNav)
-        props.save(props.id)
+        props.save(props.roomId)
         props.getTorF(showNav)
         // allSelect.push(props.id)
 
-        console.log("ff")
+        console.log(props.roomId + 'from Roomcard component')
         // console.log(allSelect)
 
     }
@@ -124,6 +124,7 @@ export default function Roomcom(props) {
                 <div className={classes.roomtext}>
                     {props.roomNumber}
                     {props.floorName}
+                    
                 </div>
 
                 <div className={classes.typeroom}>

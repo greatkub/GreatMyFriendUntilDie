@@ -287,8 +287,11 @@ export default function Personalinfopage({ isOpened }) {
 
     function handleSave() {
         setEdit(!Edit)
+        console.log(Edit)
+        if(Edit == true) {
+            addTenant()
+        } 
 
-        
     }
 
 
@@ -337,7 +340,7 @@ export default function Personalinfopage({ isOpened }) {
 
                         <Divider />
                         <div>
-                            {/* <img className={allData.length > 0 && Edit == false ? classes.img : classes.emptyimg} alt="complex" src={allData.length == 0 && Edit == false ? allData[0].profileURL : ""} /> */}
+                            <img className={allData.length > 0 && Edit == false ? classes.img : classes.emptyimg} alt="complex" src={allData.length > 0 && Edit == false ? allData[0].profileURL : ""} />
 
                         </div>
                         <div className={classes.fameinfo}>
@@ -348,7 +351,7 @@ export default function Personalinfopage({ isOpened }) {
                                     </div>
                                     <div style={{ height: 4 }}></div>
                                     <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setAddFirstName(e.currentTarget.textContent)} >
-                                        {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].firstName : ""}
+                                        {allData.length > 0 && Edit == false ? allData[currentBed].firstName : ""}
                                     </div>
 
 
@@ -360,7 +363,7 @@ export default function Personalinfopage({ isOpened }) {
                                     </div>
                                     <div style={{ height: 4 }}></div>
                                     <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setAddLastName(e.currentTarget.textContent)}>
-                                        {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].lastName : ""}
+                                        {allData.length > 0 && Edit == false ? allData[currentBed].lastName : ""}
 
                                     </div>
                                 </div>
@@ -374,7 +377,7 @@ export default function Personalinfopage({ isOpened }) {
                                     </div>
                                     <div style={{ height: 4 }}></div>
                                     <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setAddDateBirth(e.currentTarget.textContent)}>
-                                        {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].birthDate : ""}
+                                        {allData.length > 0 && Edit == false ? allData[currentBed].birthDate : ""}
 
                                     </div>
                                 </div>
@@ -385,7 +388,7 @@ export default function Personalinfopage({ isOpened }) {
                                     </div>
                                     <div style={{ height: 4 }}></div>
                                     <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setAddGender(e.currentTarget.textContent)}>
-                                        {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].gender : ""}
+                                        {allData.length > 0 && Edit == false ? allData[currentBed].gender : ""}
 
                                     </div>
                                 </div>
@@ -396,7 +399,7 @@ export default function Personalinfopage({ isOpened }) {
                                     </div>
                                     <div style={{ height: 4 }}></div>
                                     <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setAddIdCard(e.currentTarget.textContent)}>
-                                        {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].identificationNo : ""}
+                                        {allData.length > 0 && Edit == false ? allData[currentBed].identificationNo : ""}
 
                                     </div>
                                 </div>
@@ -407,7 +410,7 @@ export default function Personalinfopage({ isOpened }) {
                                     Address
                                 </div>
                                 <div className={classes.input_full} contenteditable={Edit == true ? "true" : "false"} onInput={e => setAddAddress(e.currentTarget.textContent)}>
-                                    {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].address : ""}
+                                    {allData.length > 0 && Edit == false ? allData[currentBed].address : ""}
 
                                 </div>
                             </div>
@@ -415,28 +418,28 @@ export default function Personalinfopage({ isOpened }) {
 
                             <div className={classes.famerow2} style={{ position: 'relative', marginTop: -26 }}> {/*   District, Sub-district, Province, Zip code */}
                                 <div className={classes.input_sm} contenteditable={Edit == true ? "true" : "false"} placeholder="District" onInput={e => setDistrict(e.currentTarget.textContent)}>
-                                    {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].district : ""}
+                                    {allData.length > 0 && Edit == false ? allData[currentBed].district : ""}
 
                                 </div>
 
                                 <div className={classes.grab4} />
 
                                 <div className={classes.input_sm} contenteditable={Edit == true ? "true" : "false"} placeholder="Sub-district" onInput={e => setSubDistrict(e.currentTarget.textContent)}>
-                                    {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].subDistrict : ""}
+                                    {allData.length > 0 && Edit == false ? allData[currentBed].subDistrict : ""}
 
                                 </div>
 
                                 <div className={classes.grab4} />
 
                                 <div className={classes.input_sm} contenteditable={Edit == true ? "true" : "false"} placeholder="Province" onInput={e => setProvince(e.currentTarget.textContent)}>
-                                    {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].province : ""}
+                                    {allData.length > 0 && Edit == false ? allData[currentBed].province : ""}
 
                                 </div>
 
                                 <div className={classes.grab4} />
 
                                 <div className={classes.input_sm} contenteditable={Edit == true ? "true" : "false"} placeholder="Zip code" onInput={e => setZip(e.currentTarget.textContent)}>
-                                    {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].zipCode : ""}
+                                    {allData.length > 0 && Edit == false ? allData[currentBed].zipCode : ""}
 
                                 </div>
                             </div>
@@ -453,7 +456,7 @@ export default function Personalinfopage({ isOpened }) {
                                     <div style={{ height: 4 }}></div>
 
                                     <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setPhone(e.currentTarget.textContent)}>
-                                        {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].phoneNo : ""}
+                                        {allData.length > 0 && Edit == false ? allData[currentBed].phoneNo : ""}
 
                                     </div>
                                 </div>
@@ -464,7 +467,7 @@ export default function Personalinfopage({ isOpened }) {
                                     </div>
                                     <div style={{ height: 4 }}></div>
                                     <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setEmail(e.currentTarget.textContent)}>
-                                        {allData.length == currentBed + 1 && Edit == false ? allData[currentBed].email : ""}
+                                        {allData.length > 0 && Edit == false ? allData[currentBed].email : ""}
 
                                     </div>
                                 </div>

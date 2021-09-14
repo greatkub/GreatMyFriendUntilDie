@@ -153,19 +153,42 @@ export default function DisplayDialog(props) {
     const [isSelect, setIsSelect] = useState(false)
     const [selectElement, setSelectElement] = useState(0)
     const [buttonPopup, setButtonPopup] = useState(false)
+    const [getcurrentSelect, setCurrentSelect] = useState(props.allSelcted)
+    const [getRoomTypeName, setRoomTypeName] = useState("")
+    const [getNumberofBeds, setNumberofBeds] = useState(0)
+    const [getFeeSetTypeId, setFeeSetTypeId] = useState(0)
 
 
     const handleClick = (id) => {
         setSelectElement(id)
         console.log(selectElement)
     }
-    const handleClick2 = (i) => {
+    const handleClick2 = (i, id) => {
         setSelectElement(i)
+        console.log(id)
+        setFeeSetTypeId(id)
+
     }
 
     function handleClickBoth() {
         setButtonPopup(!buttonPopup)
         console.log(selectElement)
+
+    }
+
+    const api = axios.create({
+        baseURL: `/room/room-type`
+    })
+
+    const assignFee = async () => {
+        let res = await api.post('/', {
+            "RoomTypeName": getRoomTypeName,
+            "NumberofBeds": parseInt(getNumberofBeds),
+            "FeeSetTypeId": getFeeSetTypeId,
+            "RoomIds": props.allSelcted
+        })
+        console.log("assignFee?")
+        console.log(props.allSelcted)
 
     }
 
@@ -212,7 +235,9 @@ export default function DisplayDialog(props) {
                                 Room Type Name
                                 <div style={{ height: '12.5px' }} />
 
-                                <input className={classes.resizeInput}>
+                                <input className={classes.resizeInput} onChange={(event) => {
+                                    setRoomTypeName(event.target.value)
+                                }}>
 
                                 </input>
                             </div>
@@ -226,7 +251,9 @@ export default function DisplayDialog(props) {
                                 Number of Bed
                                 <div style={{ height: '12.5px' }} />
 
-                                <input className={classes.resizeInput}>
+                                <input className={classes.resizeInput} onChange={(event) => {
+                                    setNumberofBeds(event.target.value)
+                                }}>
 
                                 </input>
                             </div>
@@ -254,11 +281,12 @@ export default function DisplayDialog(props) {
                                     // feeSetName = {item.feeSetName}
                                     // />
 
-                                    <div key={index} className={selectElement === index ? classes.fcframeSelect : classes.fcframe} onClick={() =>
-                                        // handleClick(item.feeSetId)
-                                        handleClick2(index)
+                                    <div key={index} className={selectElement === index ? classes.fcframeSelect : classes.fcframe}
+                                        onClick={() =>
 
-                                    }>
+                                            handleClick2(index, item.feeSetId)
+
+                                        }>
 
                                         <div style={{ margin: '13px 0px 0px 21px', width: '190px' }}>
                                             <div style={{ display: 'flex' }}>
@@ -290,7 +318,7 @@ export default function DisplayDialog(props) {
                     </div>
 
                     <div style={{ display: 'flex', position: 'absolute', bottom: 0, right: 0 }}>
-                        <Button className={classes.btblue}>
+                        <Button className={classes.btblue} onClick={assignFee}>
                             Confirm
                         </Button>
                         <div style={{ width: '21.8px' }} />

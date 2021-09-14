@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const api = axios.create ({
-  baseURL: '/comment/comment'
+  baseURL: `/comment/comment`
 })
 
 
@@ -101,7 +101,7 @@ export default function Comment(props) {
 
        "Message": message,
        "PostAnnouncementId": postId,
-       "StaffId": 5
+       "StaffId": 1
        })
      }
   
