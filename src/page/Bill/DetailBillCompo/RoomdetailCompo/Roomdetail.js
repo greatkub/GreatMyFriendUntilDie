@@ -417,9 +417,9 @@ export default function Roomdetail(props) {
                             <TableBody>
                                   <TableRow>
                                   <TableCell align="right" style={{paddingLeft:'25px'}}>
-                                  {rows.userFirstName} 
+                                  {rows.userFirstName} {" "} {rows.userLastName}
 
-                                    {rows.userLastName}
+                                    
                                   </TableCell>   
                                  
 

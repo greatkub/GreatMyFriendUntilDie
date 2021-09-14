@@ -29,6 +29,7 @@ import CreateFeeSet from './page/STFeeset/CreateFeeset';
 import FeeSet from './page/STFeeset/Feeset';
 import Floor from './page/STFloor/Createfloor';
 import STRoompage from './page/STRoom/STRoompage';
+import Initial from './page/Initialize/Initialize';
 
 import Login from './page/Account/Login';
 import Registration from './page/Account/Registration';
@@ -89,6 +90,7 @@ function App2() {
           <Route path="/petitionpage"  render={(props) => <Petitionpage isOpened = {word} {...props} />} />
           <Route path="/notedetails/:id" exact={true}  render={(props) => <Notedetails isOpened = {word} {...props} />} />
           <Route path="/roomtype_sp" exact={true}  render={(props) => <STRoompage isOpened = {word} {...props} />} />
+          <Route path="/initial" exact={true}  render={(props) => <Initial isOpened = {word} {...props} />} />
 
 
           <Route path="/building_sp" exact={true}  render={(props) => <STBuildingpage isOpened = {word} {...props} />} />

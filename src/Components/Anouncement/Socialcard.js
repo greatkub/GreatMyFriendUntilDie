@@ -180,6 +180,18 @@ function Social() {
     })
   }
 
+  const DeleteAnnounce =(id)=>{
+    axios.post(`/announcement/announcement/${id}`)
+    .then(()=>{
+      setAllData(
+        allData.filter((row)=>{
+          return row.id !=id;
+        })
+      )
+    })
+
+  }
+
   const [title, setTitle] = useState("")
   // const [type, setType] = useState(0)
   const [datecreate, setDatecreate] = useState("")
@@ -199,12 +211,7 @@ function Social() {
 
       <div className="row" style={{ marginLeft: '-15px', marginRight: '0px', border: 'none' }}>
         <Datetoday />
-
-
-
       </div>
-
-
 
       {/* <div className="col-md-2"> */}
       {/* <div className={classes.Move} > */}
@@ -214,8 +221,6 @@ function Social() {
         Compose
       </Button>    */}
       <Dialog
-
-
         classes={{ paper: classes2.dialog }}
         open={open}
         onClose={handleClose}
@@ -337,21 +342,25 @@ function Social() {
               <div className="divider" />
             </Typography>
             {allData.map((value, index) => {
+              
               return value.type === "Important News" ?
                 <Link to={`/detailpage/${value.id}`} onClick={()=> console.log(value.id)}>
                   <ImpNews
                     key={index}
-                    Name={value.title}
+                    Name={ value.title}
                     img={value.imageUrl}
                     //cell={value.description}
-                    Date={value.announceDate}
-                    ID={value.id} />
-
-                    <Button>delete</Button>
-
+                    Date={value.announceDate}  
+                    ID={value.id}       
+                    />
+                   
                 </Link>
 
+
                 : null
+
+                
+
 
             })}
           </div>
@@ -377,16 +386,13 @@ function Social() {
             </Typography>
             {allData.map((value, index) => {
               return value.type !== "Important News" ?
-
-
                 <General
-
                   key={index}
                   Name={value.title}
                   //cell={value.description}
                   img={value.imageUrl}
                   Date={value.announceDate}
-                //ID ={index.id}             
+                  //ID ={index.id}             
                 />
 
                 : null

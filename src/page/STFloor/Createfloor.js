@@ -306,7 +306,9 @@ export default function SetFloor(props) {
       </Card>     
       </div>             
       </ScrollView> 
-    </div>   
+    </div>
+    
+       
     <Link to="/setroom">
             <Button
                className={classes.buttonsubmit}

@@ -231,7 +231,7 @@ const useToolbarStyles = makeStyles((theme) => ({
   };
 
   const Petitionstatus =() => {
-    axios.post("/petition/edit-petition-list", {
+    axios.post(`/petition/edit-petition-list`, {
       "PetitionIds": selected,
       "Status": true
     

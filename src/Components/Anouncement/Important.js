@@ -74,7 +74,7 @@ function ImportantNews(props) {
     // <Grid >  
     <div className="padleft">
       <Card className={classes.root} >
-        <CardActionArea className={classes.CardActionArea}>
+        {/*<CardActionArea className={classes.CardActionArea}>*/}
           <img src={props.img} className={classes.media} />
           {/* <h3 className={classes.move}>{props.name} </h3> */}
           <CardContent>
@@ -96,10 +96,11 @@ function ImportantNews(props) {
               component="p">
               {props.cell}
             </Typography>
+           {props.delete}
           </CardContent>
-        </CardActionArea>
+        {/*</CardActionArea>*/}
         <CardActions>
-          <Button size="small" color="primary">{props.share}</Button>
+          <Button size="small" color="primary">Share</Button>
           <Button size="small" color="primary">{props.btn2}</Button>
         </CardActions>
       </Card>

@@ -220,7 +220,7 @@ export default function Dashpage({ isOpened }) {
                                             other="other"
                                             //fill="#8884d8"
                                             //shape={<TriangleBar />}
-                                            label={{ position: "top" }}
+                                            //label={{ position: "top" }}
                                         >
                                             {bardash.map((entry, index) => (
                                                 <Cell key={`cell-${index}`}fill={COLORS[index % COLORS.length]}/>
@@ -275,7 +275,7 @@ export default function Dashpage({ isOpened }) {
                                     </div>
                                      ))}   
                                     <div className={classes.normaltext} style={{ paddingLeft: 20, paddingTop: 20 }}>
-                                        New occupied room in April
+                                        Occupied Rooms
                                     </div>
                                    
                                 </Paper>
