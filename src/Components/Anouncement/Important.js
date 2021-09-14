@@ -68,7 +68,6 @@ function ImportantNews(props) {
   const handleChange = (event) => {
     setSpacing(Number(event.target.value));
   };
-
   const str = props.Date
 
   return (
@@ -77,13 +76,15 @@ function ImportantNews(props) {
       <Card className={classes.root} >
         <CardActionArea className={classes.CardActionArea}>
           <img src={props.img} className={classes.media} />
+          {/* <h3 className={classes.move}>{props.name} </h3> */}
           <CardContent>
+            {/* <Typography gutterBottom variant="h6" component="h2"> */}
             <div id="importantdate">
-              {/*props.Date*/}
               {moment(str.replace(/[^a-zA-Z0-9]/g, "")).format("L")}
-
             </div>
             <div id="importanttopic">{props.Name}</div>
+
+            {/* </Typography> */}
             <Typography
               gutterBottom variant="h5"
               component="h2">

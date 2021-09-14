@@ -28,7 +28,7 @@ import moment from 'moment';
 import ImageIcon from '@material-ui/icons/Image';
 import { Update } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
-
+//import DropFloor from '../Dropdown/DropFloor';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     height: '38px',
     width: '38px',
     paddingRight: theme.spacing(5),
-  
+
   }
 
 }));
@@ -102,6 +102,9 @@ const useStyles2 = makeStyles({
 });
 
 
+
+
+
 const DialogActions2 = withStyles((theme) => ({
   root: {
     paddingBottom: theme.spacing(5),
@@ -110,9 +113,12 @@ const DialogActions2 = withStyles((theme) => ({
 
 }))(MuiDialogActions);
 
+
 const api = axios.create({
-  baseURL: '/announcement/post-announcement'
+  baseURL: '/announcement/announcement'
 })
+
+
 
 
 function Social() {
@@ -120,11 +126,14 @@ function Social() {
   const classes2 = useStyles2();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [currentAnnounce, setCurrentAnnounce] = useState(0)
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+    // console.log(currentAnnounce)
   };
 
   const imagefunction = () => {
@@ -161,32 +170,22 @@ function Social() {
   const addNews = async () => {
     let res = await api.post('/', {
       "Title": title,
-      "TypeId": 1,
+      "TypeId": parseInt(currentAnnounce),
       "AnnounceDate": datecreate,
       "Description": descrip,
       "ImageUrl": "https://cdn.wallpapersafari.com/36/96/7cRSqV.png",
-      "Likes": 3,
-      "Comments": 24,
-      "StaffId": 1
+      "Likes": 0,
+      "Comments": 0,
+      "StaffId": 5
     })
   }
 
-  const deleteAnnounce=(id)=>{
-    axios.post(`/announcement/announcement/10015${id}`) 
-    .then(()=> {
-      setAllData(
-        allData.filter((row)=>{
-          return row.id != id;
-        })
-        );
-      });
-    };
-
-  
   const [title, setTitle] = useState("")
   // const [type, setType] = useState(0)
   const [datecreate, setDatecreate] = useState("")
   const [descrip, setDescrip] = useState("")
+
+
 
   //   const handleChange = (e) => {
   //     setTitle({value: e.target.value})
@@ -195,11 +194,28 @@ function Social() {
 
   return (
     <div>
+
+
+
       <div className="row" style={{ marginLeft: '-15px', marginRight: '0px', border: 'none' }}>
         <Datetoday />
+
+
+
       </div>
-  
+
+
+
+      {/* <div className="col-md-2"> */}
+      {/* <div className={classes.Move} > */}
+      {/* <Button variant="contained" color="primary" disableElevation
+          style={{ backgroundColor: '#485D84' }}
+        onClick={handleClickOpen}>
+        Compose
+      </Button>    */}
       <Dialog
+
+
         classes={{ paper: classes2.dialog }}
         open={open}
         onClose={handleClose}
@@ -234,16 +250,11 @@ function Social() {
 
               <div >
                 <form>
-                  <label id="typetitle" htmlFor="Province">Type</label>
+                  <label id="typetitle" htmlFor="Province" >Type</label>
                   <div className="spacing9"></div>
                   <Arraylist
-                  // onChange={(event) => {
-                  //     {event.target.value === "General News" ? 
-                  //     setType(1) :
-                  //     setType(2) 
-                  //   }
-
-                  //  }}
+                    url='/announcement/type-announcements'
+                    save={currentAnnounce => setCurrentAnnounce(currentAnnounce)}
                   />
                 </form>
 
@@ -288,18 +299,17 @@ function Social() {
         </DialogContent>
         <DialogActions2 >
 
-          <IconButton className={classes.importimgbtn}  onClick={imagefunction}> 
-            <ImageIcon className={classes2.importimgbtn} style={{color: '#4A4A4A'}}/> </IconButton>
+          <IconButton className={classes.importimgbtn} onClick={imagefunction}>
+            <ImageIcon className={classes2.importimgbtn} style={{ color: '#4A4A4A' }} /> </IconButton>
           {/* <input type="file"></input> */}
           <Button id="announceBT" className={classes.Btn} variant="contained" color="primary" disableElevation
 
             onClick={addNews}>
             <p id="textAnnounceBt"> Announce</p>
           </Button>
-          
           <div className="spacing" />
           <Button id="cancelBT" className={classes.Btn} variant="contained" color="primary" disableElevation
-            
+
             onClick={handleClose}>
             <p id="cancelAnnounceBt">Cancel</p>
           </Button>
@@ -321,7 +331,6 @@ function Social() {
           {/* <div className="AppBack">                     */}
           <div className="greatcards-container">
             {/* <div className="row">
-
                   </div> */}
             <Typography gutterBottom variant="h5" component="h1">
               <h5 id="importanttitle">Important News</h5>
@@ -329,13 +338,19 @@ function Social() {
             </Typography>
             {allData.map((value, index) => {
               return value.type === "Important News" ?
-                <ImpNews 
-                  key={index}
-                  Name={value.title}
-                  img={value.imageUrl}
-                  //cell={value.description}
-                  Date={value.announceDate}
-                  ID={value.id} />
+                <Link to={`/detailpage/${value.id}`} onClick={()=> console.log(value.id)}>
+                  <ImpNews
+                    key={index}
+                    Name={value.title}
+                    img={value.imageUrl}
+                    //cell={value.description}
+                    Date={value.announceDate}
+                    ID={value.id} />
+
+                    <Button>delete</Button>
+
+                </Link>
+
                 : null
 
             })}
@@ -362,7 +377,10 @@ function Social() {
             </Typography>
             {allData.map((value, index) => {
               return value.type !== "Important News" ?
+
+
                 <General
+
                   key={index}
                   Name={value.title}
                   //cell={value.description}
@@ -374,6 +392,7 @@ function Social() {
                 : null
             })}
           </div>
+
         </div>
         {/* </div> */}
       </Grid>
@@ -401,50 +420,3 @@ export default Social;
 
 
 
-
-
-
-
-
-
-/*<div className="row">
-                    <div className="col-md">
-                    <div className="AppBack">
-                    <div className="cards-container">
-                    <Typography gutterBottom variant="h4" component="h1">
-                    <h3>Important News</h3>
-                    <Divider variant="middle"/>
-
-                    </Typography>
-                        {filteredData.map((value,index)=>(
-                    <ImpNews
-                        key={index}
-                        Name={value.tite}
-                        img={value.image}
-                        //cell={value.description}
-                        ID ={value.id}/>
-                         ))}
-                    </div>
-                </div>
-             </div>
-
-
-             <div className="col-md">
-                    <div className="AppBack2">
-                    <div className="cards-container">
-                        {filteredData.map((value,index)=>(
-                    <ImpNews
-                        key={index}
-                        name={value.tite}
-                        //cell={value.description}
-                        img={value.image}
-                        //ID ={index.id}
-                        />
-                         ))}
-                    </div>
-                </div>
-             </div>
-</div>
-</div>
-);
-}*/

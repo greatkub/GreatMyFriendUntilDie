@@ -264,9 +264,9 @@
         axios.post("/feeset/create-feeset", {
           "FeeSetName": addFeesetname,
           "RoomPrice": parseInt(roomprice),
-          "FeeTypeIds": selected           //[1,2,3,4,5] 
+          "FeeTypeIds": parseInt(selected) //[1,2,3,4,5] 
         }).then((response)=>{
-          window.location.href = '/feeset';
+          window.location.href = '/feesets';
           console.log(response);
         })
       };
@@ -377,7 +377,8 @@
                       />
                   </TableCell>
                   <TableCell align="Left">
-                    {row.feeTypeName}
+                    {row.feeTypeName == 'Electricity'|| row.feeTypeName =='Water' ? row.feeTypeName+"(price/unit)": row.feeTypeName }
+
                   </TableCell>
                   <TableCell align="right">
                   <Chip label={row.feeTypePrice}/> 
@@ -430,14 +431,13 @@
               </Table>  
                   </Card>  */}
 
-              <Card className={classes.Cards} variant="outlined">
-              
+                    <Card className={classes.Cards} variant="outlined">
                       <Table >
                         <TableBody>      
                         {feetype.map((row,index) => {
                         const isItemSelected = isSelected(row.feeTypeName);
                         const labelId = `enhanced-table-checkbox-${index}`;
-                    return(      
+                        return(      
                       <TableRow 
                           onClick={(event) => handleClick(event, row.feeTypeName)}
                           role="checkbox"
@@ -473,18 +473,19 @@
 
          <div className="container-fruid ">
           <Button 
-              onClick={AddFeeSet}
+              //onClick={AddFeeSet}
               className={classes.Btn}
               variant="contained" color="primary" disableElevation
               style={{ backgroundColor: '#485D84' }}>
             Save
-        </Button>             
+          </Button>            
       </div>      
     </Card>   
     </div>
           </ScrollView>
           <Link to="/feesets">
             <Button
+              onClick={AddFeeSet}
                className={classes.savebutton}
                variant="contained" color="primary" disableElevation
                style={{ backgroundColor: '#485D84' }} >

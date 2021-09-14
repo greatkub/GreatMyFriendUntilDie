@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     frame: {
         width: '1163px',
         height: '115px',
-        backgroundColor: 'red',
+        //backgroundColor: 'red',
     },
     scrollspace: {
         height: "730px",
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     mainfame: {
         width: '1163px',
         height: '567px',
-        backgroundColor: 'blue',
+        //backgroundColor: 'blue',
         position: 'relative'
     },
     miniXfame: {
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
         width: "407px",
         height: "567px",
         position: "absolute",
-        backgroundColor: "#ffffff",
+        //backgroundColor: "#ffffff",
         right: 0
     },
     textDash: {
@@ -148,7 +148,7 @@ export default function Dashpage({ isOpened }) {
     const [linedash, setLinedash] = useState([])
     const [bardash, setBardash] = useState([])
     const [vacants, setVacants] = useState([])
-    const [occupied, setOccupied] = useState([])
+    const [overall, setOverall] = useState([])
 
     const dateFormatter = date => {
         // return moment(date).unix();
@@ -295,16 +295,18 @@ export default function Dashpage({ isOpened }) {
                                 <Paper className={classes.Xfame} style={{ marginTop: 25 }}>
                                 <div className={classes.normaltextMonth}>
                                     <LineChart
-                                        width={700} height={340} data={Linedata}
-                                        margin={{top: 15,right: 30,left: 10,bottom: -5}}>
+                                        width={700} height={340} data={linedash}
+                                        margin={{top: 15,right: 10,left: 50,bottom: -5}}>
                                     <CartesianGrid strokeDasharray="1 1" />
-                                      <XAxis dataKey="name"/>
+                                      <XAxis dataKey="dateTime"
+                                      tickFormatter={dateFormatter} 
+                                      />
                                         <YAxis />
                                         <Tooltip />
                                         <Line
                                             connectNulls
                                             //type="monotone"
-                                            dataKey="uv"
+                                            dataKey="totalPrice"
                                             stroke="#8884d8"
                                             fill="#8884d8"
                                         />

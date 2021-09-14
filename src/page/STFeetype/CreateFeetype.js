@@ -586,13 +586,15 @@ export default function CreateFeetype(props) {
                     FeeTypePrice: parseInt(addFeeprice)
                 },
             ]);
-            window.location.href = '/createfeetype';
+            window.location.href = '/feetype_sp';
         });
         setOpen(false)
     };
 
     const deletetable = (id) => {
-        axios.post(`/feetype/fee-type/${id}`).then(() => {
+        axios.post(`/feetype/fee-type/${id}`)
+        .then((result) => {
+            alert(result['Delete'])
             setFeetype(feetype.filter((row) => {
                     return row.id != id;
                 })
@@ -831,7 +833,7 @@ export default function CreateFeetype(props) {
                 </Dialog>
 
                 <div className="container-fruid ">
-                    <NavLink to="/setting">
+                    <NavLink to="/feesets">
                         <Button className={classes.Btn}
                                 variant="contained" color="primary" disableElevation
                                 style={{backgroundColor: '#485D84'}}>Save

@@ -142,7 +142,7 @@ export default function Bill(props) {
                     <TableRow>
                         <TableCell className={classes.heder}>
                          <h4>Fee Set</h4>
-                         <NavLink to="/createfeeset" style={{ textDecoration: 'none' }}>
+                         <NavLink to="/feesets_sp" style={{ textDecoration: 'none' }}>
                             <Button  
                             className={classes.Btn}
                                 variant="contained" color="primary" disableElevation

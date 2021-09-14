@@ -117,5 +117,3 @@ export default function Exloorcard(props) {
         </div>
     );
 }
-
-

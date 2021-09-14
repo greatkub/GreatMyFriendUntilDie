@@ -28,11 +28,11 @@ import CreateFeetype from './page/STFeetype/CreateFeetype';
 import CreateFeeSet from './page/STFeeset/CreateFeeset';
 import FeeSet from './page/STFeeset/Feeset';
 import Floor from './page/STFloor/Createfloor';
-import Room from './page/STRoom/room';
+import STRoompage from './page/STRoom/STRoompage';
+
 import Login from './page/Account/Login';
 import Registration from './page/Account/Registration';
-
-
+import Settingroom from './page/Room/setroom';
 import Notedetails from './page/Petition/Petitiondetails';
 
 function App2() {
@@ -46,11 +46,10 @@ function App2() {
     <>
       <Router>
         <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route path="/registration" exact={true} component={Registration} />
-
+          <Route exact path="/login" component={Login} />
+          <Route path="/registration" exact={true} component={Registration} />
         </Switch>
-        </Router>
+      </Router>
 
       <Router>
         {/* <Button  style={{backgroundColor: 'blue'}} onClick={() => alert(word)}/> */}
@@ -82,13 +81,15 @@ function App2() {
           <Route path="/details" exact={true} component={MoreDetail}/>
 
           <Route path="/billdetails/:roomId" exact={true} render={(props) => <DetailBillpage isOpened = {word} {...props} />} />
-          <Route path="/historydetails" exact={true} render={(props) => <Exdetailpage isOpened = {word} {...props} />}/>
+          <Route path="/historydetails/:id" exact={true} render={(props) => <Exdetailpage isOpened = {word} {...props} />}/>
           <Route path="/rooms" exact={true} render={(props) => <Roompage isOpened = {word} {...props} />}/>
           <Route path="/personinfo" exact={true}  render={(props) => <Personalinfopage isOpened = {word} {...props} />} />
           <Route path="/dashpage" exact={true}  render={(props) => <Dashpage isOpened = {word} {...props} />} />
           
           <Route path="/petitionpage"  render={(props) => <Petitionpage isOpened = {word} {...props} />} />
           <Route path="/notedetails/:id" exact={true}  render={(props) => <Notedetails isOpened = {word} {...props} />} />
+          <Route path="/roomtype_sp" exact={true}  render={(props) => <STRoompage isOpened = {word} {...props} />} />
+
 
           <Route path="/building_sp" exact={true}  render={(props) => <STBuildingpage isOpened = {word} {...props} />} />
           <Route path="/addbuilding" exact={true}  render={(props) => <Createbuilding isOpened = {word} {...props} />} />
@@ -96,7 +97,11 @@ function App2() {
           <Route path="/feesets_sp" exact={true}  render={(props) => <CreateFeeSet isOpened = {word} {...props} />} />
           <Route path="/feesets" exact={true}  render={(props) => <FeeSet isOpened = {word} {...props} />} />
           <Route path="/floors_sp" exact={true}  render={(props) => <Floor isOpened = {word} {...props} />} />
-          <Route path="/setroom" exact={true}  render={(props) => <Room isOpened = {word} {...props} />} />
+   
+          <Route path="/settingroom" exact={true}  render={(props) => <Settingroom isOpened = {word} {...props} />} />
+
+          <Route path="/detailpage/:id" exact={true}  render={(props) => <Detailpage isOpened = {word} {...props} />} />
+
           {/*<Route path="/login" exact={true}  render={(props) => <Login/>} />*/}
 
         </div>

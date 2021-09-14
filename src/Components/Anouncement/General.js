@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     margin: theme.spacing(1),
     marginRight: 40
-    
+
   },
   paper: {
     padding: theme.spacing(1),
@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
     height: 63,
     position: 'relative',
 
-   
-    
+
+
   },
   img: {
     // margin: 'auto',
@@ -52,36 +52,36 @@ export default function ComplexGrid(props) {
   const str = props.Date
 
   return (
-    <div className={classes.root}>
-      <CardActionArea className={classes.paper}>
-        <Grid container spacing={2}>
-          <Grid item>
-              <img className={classes.img} src={props.img} />
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
 
-                 <p id="generalcelldate">
-                  
-                   {moment(str.replace(/[^a-zA-Z0-9]/g, "")).format("L")}
-                  </p> 
-                 <p id="generalcelltitle" >{props.Name} </p> 
+      <div className={classes.root}>
+        <CardActionArea className={classes.paper}>
+          <Grid container spacing={2}>
+            <Grid item>
+              <img className={classes.img} src={props.img} />
+            </Grid>
+            <Grid item xs={12} sm container>
+              <Grid item xs container direction="column" spacing={2}>
+                <Grid item xs>
+
+                  <p id="generalcelldate">
+
+                    {moment(str.replace(/[^a-zA-Z0-9]/g, "")).format("L")}
+                  </p>
+                  <p id="generalcelltitle" >{props.Name} </p>
+                </Grid>
+                <Grid item>
+                  <Typography variant="body2" style={{ cursor: 'pointer' }}>
+                    {props.remove}
+                  </Typography>
+                </Grid>
               </Grid>
               <Grid item>
-                <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                  {props.remove}
-                </Typography>
+
               </Grid>
             </Grid>
-            <Grid item>
-              
-            </Grid>
           </Grid>
-        </Grid>
-      </CardActionArea>
-    </div>
+        </CardActionArea>
+      </div>
+
   );
 }
-
-

@@ -67,17 +67,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const api = axios.create ({
-  baseURL: '/comment/post-comments'
+  baseURL: '/comment/comment'
 })
 
 
-export default function Comment() {
+export default function Comment(props) {
   const classes = useStyles();
+  const postId = props.postId
 
+  
   const [allData, setAllData] = useState([]);
   useEffect(() => {
-  
-    axios('/comment/comments')
+    console.log(postId)
+    axios(`/comment/comments/${postId}`) //changewithpostID
       .then(response => {
         console.log("hi"+response.data)
         setAllData(response.data);
@@ -89,15 +91,18 @@ export default function Comment() {
 
     const [message, setMessage] = useState("")
     const [date, setDate] = useState("2021-07-21")
-    const [postid, setPostid] = useState(1)
-    const [personid, setPersonid] = useState(5)
+    ///const [postid, setPostid] = useState(3)
+    ///const [personid, setPersonid] = useState(5)
 
     const addNews = async () => {
       let res = await api.post('/', {
-        "Message": message,
-       "CommentDate": date,
-        "PostAnnouncementId": postid,
-       "UserId": personid
+      //   "Message": message,
+      //   "PostAnnouncementId": 10,
+      //  "UserId": personid
+
+       "Message": message,
+       "PostAnnouncementId": 1,
+       "StaffId": 1
        })
      }
   
@@ -113,7 +118,7 @@ export default function Comment() {
 
                 <p style={{fontSize:"19.4px", fontWeight:"bold", color:"#4A4A4A",display: "inline", float:'right',marginRight:'13.7px',marginTop:'22px' }}>
 
-                    100 Likes
+                    {props.likes} Likes
                 </p>
 
             </div>
@@ -142,6 +147,7 @@ export default function Comment() {
                     lastName={value.lastName}
                     profileUrl={value.profileUrl}            
                   />
+                  
 
                 :null
                 })}
@@ -177,4 +183,3 @@ export default function Comment() {
 
   );
 }
-

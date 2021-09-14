@@ -243,7 +243,7 @@ export default function Settingpage({ isOpened }) {
                             </Link>
 
                             <div style={{ height: " 50px" }} />
-                            <Link to="/setroom" style={{textDecoration:"none"}}>
+                            <Link to="/settingroom" style={{textDecoration:"none"}}>
 
                             <div>
                                 <div className="circletext inline item marleft">
@@ -342,7 +342,10 @@ export default function Settingpage({ isOpened }) {
                     </div>
 
                     <Button className={classes.button2}>
+                    <Link to='/rooms' style={{textDecoration:"none"}}>
+
                         SAVE
+                        </Link>
                     </Button>
                 <Dialog open={open} onClose={handleClose}
                         aria-labelledby="edit-apartment"

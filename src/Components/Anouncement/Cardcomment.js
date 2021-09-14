@@ -100,8 +100,7 @@ export default function Cardcomment(props) {
                 {/* </Typography> */}
                 <Typography className={classes.typography}>
                  {/* <p id="generalcelltitle" > */}
-                     {/* {props.Des}  */}
-                     Hello hahffwfwe
+                     {props.message} 
                 </Typography>
               </Grid>
               <Grid item>
@@ -109,7 +108,7 @@ export default function Cardcomment(props) {
                   {props.remove}
                 </Typography>
                 <div style={{fontSize:"9.7px" , fontWeight:'bold', color:"#D8D8D8", position:"absolute", bottom:0, left:0, marginLeft:84}}>
-                    just now
+                    {props.commentDate}
                 </div>
                 
 
@@ -123,5 +122,3 @@ export default function Cardcomment(props) {
     </div>
   );
 }
-
-

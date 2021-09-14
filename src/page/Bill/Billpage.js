@@ -384,7 +384,8 @@ export default function Billpage({isOpened}) {
               Search</Button>      
           </div>
           </div> 
-        </div>      
+        </div>   
+           
     <div>
                         {/*<Billfloorcard />*/}
         <div>
@@ -448,15 +449,14 @@ export default function Billpage({isOpened}) {
                               return(
                               <TableRow>
                               <TableCell align="right" style={{paddingLeft:'48px'}}>{n.roomNumber}</TableCell>   
-                              <TableCell align="left"style={{paddingLeft:'75px'}}
+                              <TableCell align="left"style={{paddingLeft:'74px'}}
                                tickFormatter={dateFormatter} 
                               >
-                              {/*moment(x.billPeriod).format("L")*/}
-                              {x.billPeriod}
+                              {moment(x.billPeriod).format("L")}
+                              {/*x.billPeriod*/}
                             
-
                               </TableCell>
-                              <TableCell align="right"style={{paddingLeft:'65px'}}>
+                              <TableCell align="right"style={{paddingLeft:'73px'}}>
                                     <NumberFormat
                                       value={x.rent.toFixed(2)} 
                                       displayType="text" 
@@ -464,7 +464,7 @@ export default function Billpage({isOpened}) {
                                       decimalScale={2} />
                               </TableCell>
 
-                              <TableCell align="right"style={{paddingLeft:'48px'}}>
+                              <TableCell align="right"style={{paddingLeft:'46px'}}>
                                     <NumberFormat
                                       value={x.electricity.toFixed(2)}
                                       displayType="text" 
@@ -505,6 +505,7 @@ export default function Billpage({isOpened}) {
                               </TableCell>
 
                               <TableCell></TableCell>
+                              
                             </TableRow>  
                             )})}   
                                
