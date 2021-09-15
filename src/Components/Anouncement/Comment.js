@@ -97,9 +97,7 @@ export default function Comment(props) {
       let res = await api.post('/', {
       //   "Message": message,
       //   "PostAnnouncementId": 10,
-      //  "UserId": personid
-
-       "Message": message,
+      //  "UserId": personid       "Message": message,
        "PostAnnouncementId": postId,
        "StaffId": 1
        })

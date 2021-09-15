@@ -128,12 +128,25 @@ export default function Roomsection(props) {
 
     useEffect(() => {
         setArrayBeds(a)
-    })
+        console.log(props.numberOfBed)
+        // console.log(props.id)
+    },[])
+
+   
+
+    // function handlerclick () {
+    //     console.log(props.id)
+
+        
+
+    // }
+
+
+
     return (
-        <Link 
-        to='/personinfo' 
-        >
-            <Paper className={props.numberOfBed != 0 ? classes.paperrow: classes.paperempty}>
+        <Link to={`/personinfo/${props.id}`} >
+
+            <Paper className={props.numberOfBed != 0 ? classes.paperrow: classes.paperempty} >
                 <div className={props.numberOfBed == 0 ? classes.roomstatusGray : props.numberOfBed != a ? classes.roomstatusGreen : classes.roomstatusRed}>
 
                 </div>
@@ -153,6 +166,8 @@ export default function Roomsection(props) {
                 <IconButton style={{ height: '32px', width: '32px', position: 'absolute', top: 44, left: 148 }}>
                     <ExitToAppIcon style={{ height: '32px', width: '32px', color: 'rgb(237, 237, 237)' }} />
                 </IconButton>
+
+                
 
             </Paper>
         </Link>

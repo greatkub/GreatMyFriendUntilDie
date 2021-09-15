@@ -132,7 +132,7 @@ export default function STRoompage({ isOpened }) {
                             <div className={classes.titleText}>
                                 Room Types
                             </div>
-                            
+
 
                             <div style={{ display: "flex", position: "absolute", bottom: 70, width: '100%' }}>
 
@@ -217,6 +217,19 @@ export default function STRoompage({ isOpened }) {
                     </div>
                 </div>
             </ScrollView>
+
+            <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
+                <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21 ,zIndex: 1, position: 'absolute', left: 540, top: 40}}>
+                    SAVE
+                </Button>
+                <div style={{
+                    backgroundColor: '#385CA8', opacity: 0.5
+                    , width: "100%", height: 200, position: 'relative'
+                }}>
+
+                </div>
+            </div>
+
         </div>
 
     )

@@ -10,6 +10,10 @@ import { blue } from '@material-ui/core/colors';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { Button } from '@material-ui/core';
+import { useParams } from 'react-router-dom'
+import { TrendingUpTwoTone } from '@material-ui/icons';
+import DropGender from '../../Components/Dropdown/DropGender.js';
+
 // import SegmentedControl from 'rn-segmented-control';
 // import { SegmentedControl } from 'segmented-control'
 // import SegmentedControl from '@react-native-segmented-control/segmented-control';
@@ -180,7 +184,18 @@ const useStyles = makeStyles((theme) => ({
         , display: 'flex'
         , width: 'fit-content'
         , borderRadius: 5
-    }
+    },
+    btmBelowRed: {
+        width: 406,
+        height: 42.8,
+        backgroundColor: "#A54C44",
+        textTransform: "none",
+        color: '#ffffff',
+        fontSize: 17,
+        position: "absolute",
+        left: 390,
+        top: 520
+    },
 
 }));
 
@@ -190,6 +205,7 @@ export default function Personalinfopage({ isOpened }) {
 
     const [name, setName] = useState("")
 
+    const { id } = useParams();
 
     const [allData, setAllData] = useState([])
 
@@ -207,6 +223,8 @@ export default function Personalinfopage({ isOpened }) {
     const [addPhone, setPhone] = useState("")
     const [addEmail, setEmail] = useState("")
 
+    const [currentUserId, setCurrentUser] = useState(0)
+
 
     const idroom = 3
 
@@ -218,9 +236,26 @@ export default function Personalinfopage({ isOpened }) {
     const [bedName, setBedName] = useState("Bed A")
 
     const api = axios.create({
-        baseURL: `/user/add-user-bed/room/${idroom}`
+        baseURL: `/user/add-user-bed/room/${id}`
     })
 
+    const apidelete = axios.create({
+        baseURL: `/user/delete-user/${currentUserId}`
+    })
+
+    const deleteTenant = async () => {
+
+        
+        let res = await apidelete.post('/').then(response => {
+            console.log(response)
+            console.log('Etherea: ');
+        })
+        .catch(error => {
+            console.log('Eta: ' + error);
+        })
+    }
+
+    
 
     const addTenant = async () => {
         let res = await api.post('/', {
@@ -241,44 +276,69 @@ export default function Personalinfopage({ isOpened }) {
             },
             "Bed": {
                 "bed_name": bedName,
-                "room_id": idroom
+                "room_id": parseInt(id)
             }
         })
     }
 
     function handleClick0() {
+        if (allData.length > 0) {
+            setCurrentUser(allData[currentBed].userId)
+            setEdit(true)
+        }else{
+            setEdit(false)
+        }
         setNewCurrentBed(0)
+        
         setBedName("Bed A")
     }
 
 
     function handleClick1() {
+        if (allData.length > 1 ) {
+            setEdit(true)
+
+            setCurrentUser(allData[currentBed].userId)
+
+        }else{
+            setEdit(false)
+        }
+
         setNewCurrentBed(1)
         setBedName("Bed B")
 
     }
 
     function handleClick2() {
+        if (allData.length > 2) {
+            setEdit(true)
+            setCurrentUser(allData[currentBed].userId)
+
+        }else{
+            setEdit(false)
+        }
         setNewCurrentBed(2)
         setBedName("Bed C")
     }
 
 
-
+    
     useEffect(() => {
-        axios(`/user/user-room/${idroom}`)
+
+        axios(`/user/user-room/${id}`)
             .then(response => {
                 console.log(response.data)
                 setAllData(response.data);
-
+                setCurrentUser(allData[currentBed].userId)
+                console.log(currentUserId)
 
             })
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
-
             })
-
-
+            
+            
+            
     }, []);
 
     function handleChange(e) {
@@ -290,7 +350,10 @@ export default function Personalinfopage({ isOpened }) {
         console.log(Edit)
         if(Edit == true) {
             addTenant()
-        } 
+        } else {
+            console.log("in else delete Tenant")
+            deleteTenant()
+        }
 
     }
 
@@ -307,9 +370,12 @@ export default function Personalinfopage({ isOpened }) {
                     <div className={classes.frame}>
                         <Datetoday />
                         <div className={classes.titleText}>
-                            King Solomon • Room: 101
+                            {allData.length > 0 ? `King Solomon • Room: ${allData[0].room[0].roomNumber}` : "" }
+                          
                         </div>
+                        <button onClick={()=> console.log(allData)}>
 
+                        </button>
 
                     </div>
                     <Paper className={classes.paper}>
@@ -351,7 +417,7 @@ export default function Personalinfopage({ isOpened }) {
                                     </div>
                                     <div style={{ height: 4 }}></div>
                                     <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setAddFirstName(e.currentTarget.textContent)} >
-                                        {allData.length > 0 && Edit == false ? allData[currentBed].firstName : ""}
+                                        {allData.length > 0  && Edit == false ? allData[currentBed].firstName : ""}
                                     </div>
 
 
@@ -363,7 +429,8 @@ export default function Personalinfopage({ isOpened }) {
                                     </div>
                                     <div style={{ height: 4 }}></div>
                                     <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setAddLastName(e.currentTarget.textContent)}>
-                                        {allData.length > 0 && Edit == false ? allData[currentBed].lastName : ""}
+                                        
+                                      {allData.length > 0 && Edit == false ? allData[currentBed].lastName : ""}
 
                                     </div>
                                 </div>
@@ -472,8 +539,8 @@ export default function Personalinfopage({ isOpened }) {
                                     </div>
                                 </div>
                             </div>
-                            <Button className={classes.btmBelow} onClick={() => handleSave()}>
-                                {Edit == true ? "SAVE" : "EDIT"}
+                            <Button className={Edit == true ? classes.btmBelow : classes.btmBelowRed} onClick={() => handleSave()}>
+                                {Edit == true ? "SAVE" : "Check out"}
 
                             </Button>
                         </div>
