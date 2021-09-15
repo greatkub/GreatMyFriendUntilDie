@@ -176,7 +176,6 @@ export default function (props) {
             </div>
       </TableBody>
     </Table>     
-    
     </Card>   
      )})}       
     </div>
@@ -185,7 +184,7 @@ export default function (props) {
 </div>
 </div>
 
-                <Link to="/feetype_sp">
+                <Link to="/initial">
                       <Button
                         className={classes.buttonsubmit}
                         variant="contained" color="primary" disableElevation

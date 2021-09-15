@@ -84,7 +84,7 @@ function App2() {
           <Route path="/billdetails/:roomId" exact={true} render={(props) => <DetailBillpage isOpened = {word} {...props} />} />
           <Route path="/historydetails/:id" exact={true} render={(props) => <Exdetailpage isOpened = {word} {...props} />}/>
           <Route path="/rooms" exact={true} render={(props) => <Roompage isOpened = {word} {...props} />}/>
-          <Route path="/personinfo" exact={true}  render={(props) => <Personalinfopage isOpened = {word} {...props} />} />
+          <Route path="/personinfo/:id" exact={true}  render={(props) => <Personalinfopage isOpened = {word} {...props} />} />
           <Route path="/dashpage" exact={true}  render={(props) => <Dashpage isOpened = {word} {...props} />} />
           
           <Route path="/petitionpage"  render={(props) => <Petitionpage isOpened = {word} {...props} />} />

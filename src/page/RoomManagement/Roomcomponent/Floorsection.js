@@ -94,19 +94,15 @@ export default function Floorsection(props) {
                     {allRoom.map((sub, value) => (
 
                         <Roomsection 
+                        id = {sub.roomId}
                         beds = {sub.beds}
                         roomNumber = {sub.roomNumber} 
                         roomTypeName = {sub.roomTypeName}
                         numberOfBed = {sub.numberOfBed}
                         />
                     ))}
-
                 </div>
-
-
-
             </Paper>
-
         </div>
     );
 }

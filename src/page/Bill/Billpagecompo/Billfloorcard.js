@@ -404,7 +404,7 @@ export default function Billfloorcard(props) {
                                       value={x.totalPrice.toFixed(2)}
                                       displayType="text" 
                                       thousandSeparator={true} 
-                                      decimalScale={2} />
+                                    decimalScale={2} />
                                 </TableCell>
 
                                 <TableCell align="left"style={{paddingLeft:'62px'}} >

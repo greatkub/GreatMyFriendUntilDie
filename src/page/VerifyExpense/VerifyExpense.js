@@ -162,7 +162,7 @@ const Expensesave = event => {
      axios.get('/rentingtransaction/electricity-water-expenses/1')
     .then(r => {  
       
-      setXpense(r.data)
+    setXpense(r.data)
      for (const data in r.data) {
       for (const floor in data){
         for (const room in floor.rooms)    

@@ -116,10 +116,10 @@ export default function Roomcom(props) {
 
     }
     return (
-        // <Link to='/personinfo'>
+        // <Link to={`/personinfo/${props.roomId}`} onClick={() => handlerclick()}>
 
            
-            <Paper className={showNav ? classes.paperrow : classes.selectPaperrow}  onClick={() => handlerclick()} >
+            <Paper className={showNav ? classes.paperrow : classes.selectPaperrow} onClick={() => handlerclick()} >
 
                 <div className={classes.roomtext}>
                     {props.roomNumber}
@@ -131,11 +131,7 @@ export default function Roomcom(props) {
                     {props.roomTypeName}
                 </div>
                 <ExitToAppIcon style={{ height: '40px', width: '40px', color: 'rgb(237, 237, 237)', position: "absolute", right: 10, top: 10 }} />
-
             </Paper >
-
-
-
         // </Link>
     )
 }

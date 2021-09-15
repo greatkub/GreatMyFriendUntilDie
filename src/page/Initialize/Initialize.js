@@ -74,11 +74,60 @@ useEffect(() => {
             console.log('Error getting fake data: ' + error);
         })
 }, []);
+console.log(allroom)
+
+/*const [stroom, setStroom] = useState([])
+  React.useEffect(() => {
+    const fetchData = () =>{
+     axios.get('/building/rooms/1')
+    .then(r => {  
+      
+    setStroom(r.data)
+     for (const data in r.data) {
+      for (const floor in data){
+        for (const room in floor.room)    
+        {
+          let Initial ={
+              id: "1",
+              roomNumber: "1"  
+              }
+              stroom.push(Calculate)
+          }  
+        }
+       }    
+    })
+    
+  };
+  fetchData()
+}, [])*/
+
+
+function handlerChangeJSOn() {
+  allroom[0].buildingName = "Laila"
+  setKeepstate(allroom[3].floors[0].rooms)
+  console.log(keepstate)
+}
+
+
+const [keepstate , setKeepstate] = useState([])
+
+const Expensesave = event => {
+event.preventDefault();
+axios.post("/rentingtransaction/electricity-water-expenses", 
+
+  keepstate
+
+).then((response)=>{
+  console.log(response);
+})
+};
+
+
 
   return (
-      <div className="container ">
-     
-          <ScrollView>
+    <div className="container">
+    <div>
+    <ScrollView>
         <div style={{ width: '100%', height: '650px' }}>
         {allroom.map((set)=>{
                 return(
@@ -144,9 +193,24 @@ useEffect(() => {
     </Card>   
      )})}  
      </div>             
-      </ScrollView> 
-    </div>     
-
+     </ScrollView> 
+    </div>
     
+    <div style={{ position: 'absolute', width: '100%', height: 200, top: 590 }}>
+    <Link to='/feetype_sp' style={{ textDecoration: "none" }}>
+      <Button style={{ backgroundColor: "#485D84", 
+              width: 406, height: 42.87, color: "#FFFFFF", 
+              fontSize: 21 ,zIndex: 1, 
+              position: 'absolute', left: 540, top: 40}}>
+        SAVE
+    </Button>
+    </Link >
+      <div 
+      style={{backgroundColor: '#385CA8',
+       opacity: 0.5,width: "100%", height: 200, position: 'relative'
+      }}>
+      </div>
+    </div>
+  </div>        
   );
 }

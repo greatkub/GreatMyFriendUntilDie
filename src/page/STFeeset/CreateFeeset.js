@@ -264,7 +264,7 @@
         axios.post("/feeset/create-feeset", {
           "FeeSetName": addFeesetname,
           "RoomPrice": parseInt(roomprice),
-          "FeeTypeIds": parseInt(selected) //[1,2,3,4,5] 
+          "FeeTypeIds":[1,2,3,4,5] 
         }).then((response)=>{
           window.location.href = '/feesets';
           console.log(response);
@@ -473,7 +473,7 @@
 
          <div className="container-fruid ">
           <Button 
-              //onClick={AddFeeSet}
+              onClick={AddFeeSet}
               className={classes.Btn}
               variant="contained" color="primary" disableElevation
               style={{ backgroundColor: '#485D84' }}>
@@ -483,7 +483,7 @@
     </Card>   
     </div>
           </ScrollView>
-          <Link to="/feesets">
+         {/* <Link to="/feesets">
             <Button
               onClick={AddFeeSet}
                className={classes.savebutton}
@@ -491,9 +491,8 @@
                style={{ backgroundColor: '#485D84' }} >
                Save
            </Button>
-    </Link>
-            </div>     
-           
+          </Link>*/}
+        </div>        
   </div>    
       );
     }

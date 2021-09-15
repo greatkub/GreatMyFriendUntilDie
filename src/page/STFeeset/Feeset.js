@@ -29,6 +29,7 @@ import { NavLink, Link } from "react-router-dom";
 import InfoIcon from '@material-ui/icons/Info';
 import axios from "axios";
 import Savebtn from "../../Components/Button/Save";
+import { ScrollView } from 'react-native';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,7 +99,16 @@ const useStyles = makeStyles((theme) => ({
 },
   MoveName:{
     marginLeft:"45%",
-  }
+  },
+
+  buttonsubmit: {
+    width: "407px",
+    height: "42.8px",
+    position: "absolute",
+    top: 620,
+    left: "39%"
+},
+
 }));
 
 export default function Bill(props) {
@@ -136,6 +146,8 @@ export default function Bill(props) {
 
   return (
       <div className="container ">
+        <div>
+      
         <Card className={classes.Card} variant="outlined">
             <Table  aria-label="caption table">
                 <TableHead >
@@ -212,21 +224,27 @@ export default function Bill(props) {
                ))} 
         </DialogContent> 
                 </Dialog>
+                
     </Grid> 
     )})}
   </Grid>      
       </TableBody>
          </Table>    
-            <CardActions> 
-              <Button size="small">{props.Btn}</Button>
-            </CardActions>
+            
         </Card>
-    <NavLink to='/roomtype'>
-      <Button onClick>
-          <Savebtn save="save"/>
-     </Button>
-      </NavLink>
+        
+        </div>
+        <CardActions> 
+       
+        <Link to="/roomtype_sp">
+        <Button
+               className={classes.buttonsubmit}
+               variant="contained" color="primary" disableElevation
+               style={{ backgroundColor: '#485D84' }} >
+               Save
+           </Button>
+           </Link>
+    </CardActions>
     </div>
-   
   );
 }

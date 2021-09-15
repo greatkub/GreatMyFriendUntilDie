@@ -155,12 +155,17 @@ const useStyles = makeStyles((theme) => ({
       width: 280,
       height:10,
       marginBottom: 11,
-      marginLeft:"4%",
+      marginLeft:"-0.3%",
       marginTop: "7%",
       '& > * + *': {
         marginTop: theme.spacing(1),
       },
     },
+    headBuilding: {
+     
+      marginLeft: '-25px',
+      paddingTop: '14px'
+  },
 }));
 
 const BootstrapInput = withStyles((theme) => ({
@@ -344,7 +349,9 @@ const Petitionstatus =() => {
                 <div>
                     <div className={classes.frame}>
                         <Datetoday/>                        
-                         Petition
+
+                         <h5 className={classes.headBuilding} id="newannouncetitle">  Petition </h5>   
+
         <div className="row align-items-start">                
             <div className="col align-self-start">
             <Paper component="form" className={classes.Searchstyle}>

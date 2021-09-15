@@ -309,7 +309,7 @@ export default function SetFloor(props) {
     </div>
     
        
-    <Link to="/setroom">
+    <Link to="/settingroom">
             <Button
                className={classes.buttonsubmit}
                variant="contained" color="primary" disableElevation

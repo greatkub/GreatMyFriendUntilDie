@@ -180,19 +180,44 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '8px',
         width: 200,
         marginBottom: 40,
-        marginLeft: 37,
+        marginLeft: 15,
+        marginTop: 10,
+        '& > * + *': {
+          marginTop: theme.spacing(2),
+        },
+      },
+
+      Searchbuilding: {
+        backgroundColor: "#fff",
+        borderRadius: '8px',
+        width: 200,
+        marginBottom: 40,
+        marginLeft: -70,
+        marginTop: 10,
+        '& > * + *': {
+          marginTop: theme.spacing(2),
+        },
+      },
+
+      Searchbuilding2: {
+        backgroundColor: "#fff",
+        borderRadius: '8px',
+        width: 200,
+        marginBottom: 40,
+        marginLeft: -150,
         marginTop: 10,
         '& > * + *': {
           marginTop: theme.spacing(2),
         },
       },
     
+    
       SearchBtn:{
         backgroundColor: "#fff",
         marginBottom: 40,
-        marginLeft: 37,
+        marginLeft: -20,
         '& > * + *': {
-          marginTop: theme.spacing(0),
+          marginTop: theme.spacing(2),
         },
       },
     
@@ -320,8 +345,9 @@ export default function Billpage({isOpened}) {
             <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
                 <div>
                     <div className={classes.frame}>
-                        <Datetoday />
-                        <h5 >Expense History</h5>   
+                        <Datetoday />   
+                        <h5 id="newannouncetitle"> Expense History </h5>   
+
                         <div>
 
                         <div className="row align-items-start">       
@@ -338,7 +364,7 @@ export default function Billpage({isOpened}) {
                   </Paper>
                </div>                      
               <div className="col">    
-                <Paper component="form" className={classes.Searchstyle}>
+                <Paper component="form" className={classes.Searchbuilding}>
                   <BootstrapInput
                       type="date"
                       size="small"
@@ -350,7 +376,7 @@ export default function Billpage({isOpened}) {
             </div>
 
             <div className="col">    
-            <Paper component="form" className={classes.Searchstyle}>
+            <Paper component="form" className={classes.Searchbuilding2}>
               <NativeSelect
                className={classes.dropdown}
                 id="demo-customized-select-native"

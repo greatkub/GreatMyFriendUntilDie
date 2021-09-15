@@ -114,7 +114,7 @@ export default function STBuildingpage({ isOpened }) {
                                         vacant={value.vacant} 
                                         Manage={
 
-                                            <Link to='/' style={{ textDecoration: "none" }}>
+                                            <Link to='/setting2' style={{ textDecoration: "none" }}>
                                             <Button className={classes.buttontop}>
                                               Manage
                                             </Button>

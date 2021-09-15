@@ -169,13 +169,49 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '8px',
         width: 200,
         marginBottom: 40,
-        marginLeft: 37,
+        marginLeft:-7,
+        marginTop: 10,
+        '& > * + *': {
+          marginTop: theme.spacing(2),
+        },
+      },
+
+      Searchbuilding: {
+        backgroundColor: "#fff",
+        borderRadius: '8px',
+        width: 200,
+        marginBottom: 40,
+        marginLeft: -70,
+        marginTop: 10,
+        '& > * + *': {
+          marginTop: theme.spacing(2),
+        },
+      },
+
+      Searchbuilding2: {
+        backgroundColor: "#fff",
+        borderRadius: '8px',
+        width: 200,
+        marginBottom: 40,
+        marginLeft: -150,
         marginTop: 10,
         '& > * + *': {
           marginTop: theme.spacing(2),
         },
       },
     
+    
+      SearchBtn:{
+        backgroundColor: "#fff",
+        borderRadius: '8px',
+        marginBottom: 40,
+        marginLeft: -150,
+        marginTop: 10,
+        '& > * + *': {
+          marginTop: theme.spacing(2),
+        },
+      },
+
       SearchBtn:{
         backgroundColor: "#fff",
         marginBottom: 40,
@@ -232,6 +268,20 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '45px',
         paddingTop: '14px'
     },
+
+    headBuilding: {
+     
+      marginLeft: '-25px',
+      paddingTop: '14px'
+  },
+
+  Billheadd: {
+     
+    marginLeft: '-25px',
+    paddingTop: '14px'
+},
+
+
 
     Closebill:{
       marginButtom: '-50%'
@@ -324,7 +374,7 @@ export default function Billpage({isOpened}) {
                 <div>
                     <div className={classes.frame}>
                         <Datetoday />
-                        <h5 >Bill</h5>   
+                        <h5 className={classes.Billheadd} id="newannouncetitle">  Bill </h5>   
 
         <div className="row align-items-start">       
 
@@ -343,7 +393,7 @@ export default function Billpage({isOpened}) {
             </Paper>
           </div>                      
           <div className="col">    
-              <Paper component="form" className={classes.Searchstyle}>
+              <Paper component="form" className={classes.Searchbuilding}>
               <BootstrapInput
                   type="date"
                   size="small"
@@ -356,7 +406,7 @@ export default function Billpage({isOpened}) {
           </div>
 
           <div className="col">    
-            <Paper component="form" className={classes.Searchstyle}>
+            <Paper component="form" className={classes.Searchbuilding2}>
               <NativeSelect
                className={classes.dropdown}
                 id="demo-customized-select-native"
@@ -378,7 +428,7 @@ export default function Billpage({isOpened}) {
 
           <div className="col align-self-end">       
               <Button 
-                className={classes.SearchBtn}
+                className={classes.Searchbuilding2}
                 variant="contained" color="primary" disableElevation
                 style={{ backgroundColor: '#485D84'}}>
               Search</Button>      
@@ -392,8 +442,7 @@ export default function Billpage({isOpened}) {
             {bill.map((rows)=>{
             return( 
         <div className="container ">
-            
-              {rows.buildingName}
+          <h5 className={classes.headBuilding} id="newannouncetitle"> {rows.buildingName} </h5>
                     {rows.floors.map((f) => { 
                     return(
                     <Paper className={classes.papercard}>
