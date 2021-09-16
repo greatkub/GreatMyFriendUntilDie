@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     frame: {
         width: '1163px',
         height: '232px',
-        backgroundColor: 'red',
+        //backgroundColor: 'red',
         position: "relative"
     },
 
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 export default function STRoompage({ isOpened }) {
     const classes = useStyles();
     useEffect(() => {
-        axios('/room/room-types/King Solomon')
+        axios('/room/room-types/VMC')
             .then(response => {
                 console.log(response.data)
                 setAllFloor(response.data);
@@ -112,10 +112,8 @@ export default function STRoompage({ isOpened }) {
     }
 
 
-
-
     return (
-        <div style={{ width: "100%", height: "100%" }}>
+        <div style={{ width: "150%", height: "140%" }}>
             <DisplayDialog
                 allSelcted={getcurrentSelect}
                 trigger={buttonPopup}
@@ -144,7 +142,7 @@ export default function STRoompage({ isOpened }) {
                                     <div style={{ height: 4 }} />
 
                                     <DropFloor
-                                        url='/filter/filter-building/King David'
+                                        url='/filter/filter-building/VMS'
                                     />
                                 </div>
 
@@ -165,7 +163,7 @@ export default function STRoompage({ isOpened }) {
 
 
                             <div className={classes.titleText} style={{ position: 'absolute', bottom: 0 }}>
-                                King Solomon
+                                VMC
                             </div>
 
                             <div style={{ height: '20px' }}>

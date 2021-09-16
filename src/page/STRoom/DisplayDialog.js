@@ -223,9 +223,9 @@ export default function DisplayDialog(props) {
                         Room Type
                     </div>
                     <div style={{ height: '10.5px' }} />
-                    <div className={classes.subTitle}>
+                   {/* <div className={classes.subTitle}>
                         Room: 102 • 104 • 107 • 104 • 107 • 104 • 107 • 104 • 107
-                    </div>
+    </div>*/}
                     <div style={{ height: '32.5px' }} />
 
                     <div style={{ display: 'flex', position: "absolute", top: 105 }}>

@@ -109,7 +109,7 @@ export default function (props) {
   const [allroom, setAllroom] = useState([]);
 
   useEffect(() => {
-    axios('/building/rooms/1')
+    axios('/building/rooms/3')
         .then(response => {
             console.log("hi" + response.data)
             setAllroom(response.data);
@@ -142,10 +142,10 @@ export default function (props) {
             <div className="container">
             <h4>{set.building}</h4>
               <Card className={classes.Cards} variant="outlined">
-                   <h5 className={classes.heder}>{set.FloorName}</h5>  
+                   
                 <Table>
                     <TableHead >  
-                      <h5 className={classes.heder}>Floor{set.FloorNumber}</h5>    
+                      <h5 className={classes.heder}>Floor {set.floorName}</h5>    
                   
                      <TableRow>
                         <TableCell>Rooms</TableCell>

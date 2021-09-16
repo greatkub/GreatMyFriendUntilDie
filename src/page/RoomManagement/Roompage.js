@@ -81,7 +81,7 @@ export default function Roompage({ isOpened }) {
     const [keptDropBuilding, setKeptDropBuilding] = useState("")
 
     useEffect(() => {
-        axios('/room/room-beds/King Solomon')
+        axios('/room/room-beds/VMC')
             .then(response => {
                 console.log(response.data)
                 setAllFloor(response.data);
@@ -165,7 +165,7 @@ export default function Roompage({ isOpened }) {
                         </div>
 
                         <div className={classes.titleText} style={{ position: 'absolute', bottom: 0 }}>
-                            Building
+                           VMC
                         </div>
                     </div>
 

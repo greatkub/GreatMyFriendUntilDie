@@ -322,7 +322,7 @@ export default function Billpage({isOpened}) {
     
     React.useEffect(() => {
         const fetchData = () =>{
-         axios.get('/history/expense-history/King Solomon/date/2021-06-20')
+         axios.get('/history/expense-history/VMS/date/2021-06-20')
          .then(r => 
           setHistory(r.data))
         }

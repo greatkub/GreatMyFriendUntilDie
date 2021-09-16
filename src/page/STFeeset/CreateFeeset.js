@@ -261,10 +261,12 @@
     
     const AddFeeSet = event => {
       event.preventDefault();
-        axios.post("/feeset/create-feeset", {
+        axios.post("/feeset/create-feeset", 
+        
+        {
           "FeeSetName": addFeesetname,
           "RoomPrice": parseInt(roomprice),
-          "FeeTypeIds":[1,2,3,4,5] 
+          "FeeTypeIds":selected
         }).then((response)=>{
           window.location.href = '/feesets';
           console.log(response);
@@ -272,9 +274,8 @@
       };
     
         
-    const handleClick = (event, name, calories) => {
+    const handleClick = (event, name) => {
       const selectedIndex = selected.indexOf(name);
-      const selectedIndex2 = selected.indexOf(calories);
     
       let newSelected = [];
      if (selectedIndex === -1) {
@@ -293,8 +294,7 @@
     };
     console.log(selected)
     
-    const isSelected = (name) => selected.indexOf(name,price) !== -1;
-    const isSelected2 = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (name) => selected.indexOf(name) !== -1;
       return (
           <div className="container ">
           <div>
@@ -359,23 +359,29 @@
                       <Table >
                         <TableBody>      
                         {feetype.map((row,index) => {
-                        const isItemSelected = isSelected(row.feeTypeName);
+                        const isItemSelected = isSelected(row.id);
                         const labelId = `enhanced-table-checkbox-${index}`;
                     return(      
                       <TableRow 
-                          onClick={(event) => handleClick(event, row.feeTypeName)}
+                         
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={row.feeTypeName}
-                          //selected={isItemSelected}
+                          key={index.id}
+                          selected={isItemSelected}
+
                           >       
                     <TableCell>
                         <Checkbox
+                           onClick={(event) => handleClick(event, row.id)}
                           color="primary"
                           checked={isItemSelected}
+                          inputProps={{ "aria-labelledby": labelId }}
+
                       />
                   </TableCell>
+
+
                   <TableCell align="Left">
                     {row.feeTypeName == 'Electricity'|| row.feeTypeName =='Water' ? row.feeTypeName+"(price/unit)": row.feeTypeName }
 
@@ -407,53 +413,31 @@
       </DialogContent>      
        </Dialog>
           </h5> 
-         {/* <Card className={classes.Cards} variant="outlined">
-              <Table>
-                
-                <TableBody>
-                  {selected.map((row)=>(
-                  <TableRow>
-                      <TableCell align="left">{row.name}</TableCell> 
-                      <TableCell align="right">
-                       <Chip label={row.feeTypePrice}/>
-                      </TableCell>
-                      <TableCell align="right">
-                     
-                      </TableCell>
-                      <TableCell align="right">
-                      <Button onClick={()=>{deletetable(row.id)}}>
-                        
-                          </Button> 
-                      </TableCell>
-                  </TableRow>        
-                  ))}      
-                  </TableBody>              
-              </Table>  
-                  </Card>  */}
-
+        
                     <Card className={classes.Cards} variant="outlined">
                       <Table >
                         <TableBody>      
                         {feetype.map((row,index) => {
-                        const isItemSelected = isSelected(row.feeTypeName);
+                        const isItemSelected = isSelected(row.id);
                         const labelId = `enhanced-table-checkbox-${index}`;
                         return(      
                       <TableRow 
-                          onClick={(event) => handleClick(event, row.feeTypeName)}
+                          onClick={(event) => handleClick(event, row.id)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={row.feeTypeName}
-                          //selected={isItemSelected}
+                          //key={index.id}
+                          selected={isItemSelected}
                           >       
                     <TableCell>
                         <Checkbox
                           color="primary"
                           checked={isItemSelected}
+                          inputProps={{ "aria-labelledby": labelId }}
                       />
                   </TableCell>
                   <TableCell align="Left">
-                    {row.feeTypeName}
+                    <h5> {row.feeTypeName} </h5>
                   </TableCell>
                  
                   <TableCell>

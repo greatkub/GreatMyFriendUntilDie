@@ -250,7 +250,7 @@ const useToolbarStyles = makeStyles((theme) => ({
         )}
   
         {numSelected > 0 ? (
-          <Tooltip title="Delete">
+          <Tooltip title="solve">
             <IconButton aria-label="delete" onClick={solveStatus}>
               <EmojiObjectsIcon/>
             </IconButton>
@@ -426,18 +426,23 @@ const Petitionstatus =() => {
                                     size="small"
                                     color="primary"
                                     checked={isItemSelected}
-                                    inputProps={{ "aria-labelledby": labelId }}/>
+                                    inputProps={{ "aria-labelledby": labelId }}
+                                    
+                                    />
                                     
                                 <Link to={`/notedetails/${info.id}`} 
                                     style={{ textDecoration: 'none' }}>
                                     Room {info.roomNumber}
                                 </Link>
                             </TableCell> 
-                            <TableCell>{info.title}</TableCell> 
+                             <TableCell>
+                               {info.title} - {info.description.length > 100 ?
+                                      `${info.description.substring(0, 100)}...` : 
+                                      info.description} </TableCell> 
                             <TableCell align="right">{info.statusInfo}</TableCell> 
                         </TableRow>     
                          )})}         
-                    </TableBody>                                        
+                </TableBody>                                        
                     )})} 
                 </Table>    
                 </TableContainer>                 

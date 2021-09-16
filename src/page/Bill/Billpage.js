@@ -336,7 +336,7 @@ export default function Billpage({isOpened}) {
     
     React.useEffect(() => {
         const fetchData = () =>{
-         axios.get('/bill/bills/1/date/08-07-2021')
+         axios.get('/bill/bills/7/date/08-07-2021')
          .then(r => 
           setBill(r.data))
         }

@@ -202,7 +202,6 @@ export default function SetFloor(props) {
     const updateFloor = (id)=>{
         axios.put("", {})
     }
-
       const onChange = (e, row) => {
         if (!previous[row.id]) {
           setPrevious((state) => ({ ...state, [row.id]: row }));}
@@ -223,7 +222,6 @@ export default function SetFloor(props) {
           <div>
           <ScrollView>
         <div style={{ width: '100%', height: '650px' }}>
-        
           <Card className={classes.Card} variant="outlined">
               <Table  aria-label="caption table">
                   <TableHead >
@@ -232,6 +230,7 @@ export default function SetFloor(props) {
                            <div className="row">
                               <div className="col">
                                     <h4>Floor</h4>  
+                                     VMC
                               </div>
 
                                <div className="col-md-3">
@@ -251,8 +250,7 @@ export default function SetFloor(props) {
                                         setCommittedFloorToAdd(inputfloorToAdd);
                                     }}>Generate Floor</Button>
                                 </div>
-                           </div>
-                           
+                           </div>           
                           </TableCell>
                       </TableRow>
                   </TableHead>  
@@ -263,7 +261,7 @@ export default function SetFloor(props) {
                 <Card className={classes.Cards} variant="outlined">
                   <Table >
                     <TableHead >  
-                        <h5 className={classes.heder}>King Solomon</h5>       
+                        <h5 className={classes.heder}></h5>       
                        <TableRow>
                           <TableCell align="left">Floor</TableCell>
                           <TableCell align="center">Edit Name Floor</TableCell>
