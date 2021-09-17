@@ -202,7 +202,7 @@ export default function Createbuilding(props) {
             "Email": email,
             "PhoneNumber":phoneNo,
             "Building": {
-                "BuildingId": id,
+                "BuildingId": parseInt(id),
                 "BuildingName": buildingName
             }
 

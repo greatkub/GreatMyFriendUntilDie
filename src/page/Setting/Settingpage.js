@@ -135,13 +135,10 @@ const useStyles = makeStyles({
 export default function Settingpage({ isOpened }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [promtpay, setPromtpay] =React.useState("");
-    const [allpromtpay, setAllPromtpay] =React.useState([]);
-
-
-    const [allewallet, setAllewallet] =React.useState("");
-    const [ewallet, setEwallet] = React.useState([]);
-    //const [id, setId] = React.useState();
+    const [promptPay, setPromptPay] =React.useState("");
+   
+    const [eWallet, setEWallet] =React.useState("");
+   
     const handleClickOpen = () => {
         setOpen(true)
     };
@@ -153,7 +150,7 @@ export default function Settingpage({ isOpened }) {
     const BankAccountsave =()=> {
         Axios.post("/bankaccount/promptpay/1",{
         "id": 1,
-        "promptPay": promtpay
+        "promptPay": promptPay
        
         }).then((response) => {
             //window.location.href = '/building_sp';
@@ -164,7 +161,7 @@ export default function Settingpage({ isOpened }) {
     const Ewalletsave =()=> {
         Axios.post("/bankaccount/e-wallet/1",{
         "id": 1,
-        "e_wallet":ewallet
+        "e_wallet":eWallet
         
         }).then((response) => {
             //window.location.href = '/building_sp';
@@ -173,10 +170,12 @@ export default function Settingpage({ isOpened }) {
     };
 
     useEffect(() => {
-        Axios('/bankaccount/e-wallet/1')
+        Axios.get('/bankaccount/e-wallet/1')
             .then(response => {
-                console.log(response.data)
-                setAllewallet(response.data);
+               
+
+                const {data} = response;
+                setEWallet(data[0].eWallet)
             })
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
@@ -186,13 +185,16 @@ export default function Settingpage({ isOpened }) {
     useEffect(() => {
         Axios('/bankaccount/promptpay/1')
             .then(response => {
-                console.log(response.data)
-                setAllPromtpay(response.data);
+                const {data} = response;
+                setPromptPay(data[0].promptPay);
             })
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
             })
     }, []);
+
+
+
 
     return (
         <div style={{ width: '100%' }}>
@@ -366,18 +368,11 @@ export default function Settingpage({ isOpened }) {
                                    type="text"
                                    fullWidth    
                                    contenteditable="true"
-                                   value={promtpay.allpromtpay}
+                                   value={promptPay}
                                    onChange={(event) => {
-                                    setPromtpay(event.target.value);
+                                    setPromptPay(event.target.value);
                                 }              
                             }/>
-
-{/*<div 
-className={classes.input_md} 
-contenteditable="true" 
-onInput={e => setAddFirstName(e.currentTarget.textContent)} >
- {allData.length > 0 == false ? allData[0].firstName : ""}
-</div>*/}
 
                             </DialogContentText>
                             <DialogActions className={classes.dialogPaper3}>
@@ -407,9 +402,9 @@ onInput={e => setAddFirstName(e.currentTarget.textContent)} >
                             <input maxlength="40" size="40"
                                    type="text"
                                    fullWidth    
-                                   value={ewallet}
+                                   value={eWallet}
                                    onChange={(event) => {
-                                    setEwallet(event.target.value);
+                                    setEWallet(event.target.value);
                                 }}
                                  />
                              </DialogContentText>

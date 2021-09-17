@@ -225,7 +225,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import TextField from '@material-ui/core/TextField';
 import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
 import axios from 'axios';
-import { BrowserRouter as Rounter, Route, Link, NavLink, Switch } from 'react-router-dom';
+import { BrowserRouter as Rounter, Route, Link, NavLink, Switch, useParams } from 'react-router-dom';
 import { ScrollView } from 'react-native';
 
 const useStyles = makeStyles((theme) => ({
@@ -275,7 +275,8 @@ const useStyles = makeStyles((theme) => ({
 export default function (props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
-
+ 
+  const {id} = useParams
   const [allroom, setAllroom] = useState([]);
   useEffect(() => {
     axios('/building/rooms/3')
@@ -286,7 +287,7 @@ export default function (props) {
         .catch(error => {
             console.log('Error getting fake data: ' + error);
         })
-}, []);
+}, [id]);
 
 
   ///const [roomId, setRoomId] = useState("")
@@ -299,7 +300,7 @@ export default function (props) {
     axios.post("/InitializeExpenses/initialize-expenses", 
     [
         {
-          "roomId": 1,
+          "roomId": 3,
           "SetupDate": setupdate,
           "ElectricityReading": electricityReading,
           "WaterReading": waterReading
@@ -312,14 +313,9 @@ export default function (props) {
           "WaterReading": waterReading
         },
 
-        {
-          "roomId": 3,
-          "SetupDate": setupdate,
-          "ElectricityReading": electricityReading,
-          "WaterReading": waterReading
-        },
+       
 
-        {
+       /* {
           "roomId": 4,
           "SetupDate": setupdate,
           "ElectricityReading": electricityReading,
@@ -366,7 +362,7 @@ export default function (props) {
           "SetupDate": setupdate,
           "ElectricityReading": electricityReading,
           "WaterReading": waterReading
-        }
+        }*/
         
         
     ]).then((response)=>{   

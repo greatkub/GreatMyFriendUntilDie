@@ -91,7 +91,7 @@ function App2() {
           <Route path="/petitionpage"  render={(props) => <Petitionpage isOpened = {word} {...props} />} />
           <Route path="/notedetails/:id" exact={true}  render={(props) => <Notedetails isOpened = {word} {...props} />} />
           <Route path="/roomtype_sp" exact={true}  render={(props) => <STRoompage isOpened = {word} {...props} />} />
-          <Route path="/initial" exact={true}  render={(props) => <Initial isOpened = {word} {...props} />} />
+          <Route path="/initial/:id" exact={true}  render={(props) => <Initial isOpened = {word} {...props} />} />
 
 
           <Route path="/building_sp" exact={true}  render={(props) => <STBuildingpage isOpened = {word} {...props} />} />

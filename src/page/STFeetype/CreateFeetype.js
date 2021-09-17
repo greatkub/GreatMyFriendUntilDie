@@ -365,7 +365,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import {BrowserRouter as Rounter, Route, Link, NavLink, Switch} from 'react-router-dom';
+import {BrowserRouter as Rounter, Route, Link, NavLink, Switch, useParams} from 'react-router-dom';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Modal from '@material-ui/core/Modal';
 import axios from "axios";
@@ -619,16 +619,16 @@ export default function CreateFeetype(props) {
         setModalDelete(!modaldelete);
     }
 
-    const UpdateFeetype = (id) => {
-        axios.post("/feetype/edit-fee-type/" + id, feetype, {
-            "id": id,
+     const UpdateFeetype = () => {
+        axios.post("/feetype/edit-fee-type/3", {
+            "id": 3,
             "FeeTypeName": addFeetypename,
             "FeeTypePrice": parseInt(addFeeprice)
         }).then(() => {
             setFeetype([
                 {
                     ...feetype,
-                    id: userId,
+                 
                     FeeTypeName: addFeetypename,
                     FeeTypePrice: parseInt(addFeeprice)
                 },
@@ -637,6 +637,7 @@ export default function CreateFeetype(props) {
         setOpen(false)
     };
 
+   
     //TODO Check edit
     // const EditTextfeild = (
     //     <div className={classes.modal}>
@@ -736,6 +737,7 @@ export default function CreateFeetype(props) {
                             <h6>Fee type name</h6>
                             <input maxlength="40" size="40"
                                    type="text"
+                                   id="addfeetypename"
                                 // name="Feetype name"
                                    fullWidth
                                 //value={addFeetypename}
@@ -751,6 +753,7 @@ export default function CreateFeetype(props) {
                                 maxlength="40" size="40"
                                 // name="Feetype price"
                                 fullWidth
+                                id="addfeeprice"
                                 //value={addFeeprice}
                                 onChange={(event) => {
                                     setAddfeeprice(event.target.value);
