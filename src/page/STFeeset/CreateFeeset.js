@@ -13,11 +13,7 @@
     import Paper from '@material-ui/core/Paper';
     import Table from '@material-ui/core/Table';
     import Grid from '@material-ui/core/Grid';
-    import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-    import Tab from 'react-bootstrap/Tab'
-    import Nav from 'react-bootstrap/Nav'
-    import TabContainer from 'react-bootstrap/TabContainer'
-    import TabContent from 'react-bootstrap/TabContent'
+    
     import Dialog from "@material-ui/core/Dialog";
     import DialogActions from "@material-ui/core/DialogActions";
     import DialogContent from "@material-ui/core/DialogContent";

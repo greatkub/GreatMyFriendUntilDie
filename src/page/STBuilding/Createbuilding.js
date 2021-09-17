@@ -154,11 +154,11 @@ export default function Createbuilding(props) {
                     <div className="Building">
                         <div htmlFor="BuildingName" className={classes.eachtitle} style={{ paddingBottom: 5 }}>Building Name</div>
                         <input
+                            id="building"
                             className={classes.setrow}
-                            //className="form-control"
+                           
                             placeholder="Building Name"
                             type="text"
-                            //name="Building"
                             onChange={(event) => {
                                 setBuilding(event.target.value);
                             }}
@@ -169,8 +169,8 @@ export default function Createbuilding(props) {
                         <input
                             className={classes.setrow}
                             placeholder="Address"
+                            id="address"
                             type="text"
-                            //name="Address"
                             onChange={(event) => {
                                 setAddress(event.target.value);
                             }} />
@@ -181,10 +181,11 @@ export default function Createbuilding(props) {
                             <div htmlFor="Province" className={classes.eachtitle} ></div>
 
                             <input
+                                id="province"
                                 className={classes.setrow2}
                                 placeholder="Province"
                                 type="text"
-                                //name="Province"
+                                name="Province"
                                 onChange={(event) => {
                                     setProvince(event.target.value);
                                 }} />
@@ -195,6 +196,7 @@ export default function Createbuilding(props) {
                             <div htmlFor="Sub-Distric" className={classes.eachtitle}></div>
 
                             <input
+                                id="subdistrict"
                                 className={classes.setrow2}
                                 placeholder="Sub-disdrict"
                                 type="text"
@@ -209,7 +211,7 @@ export default function Createbuilding(props) {
                         <div className="District">
                             <div htmlFor="District" className={classes.eachtitle}></div>
                             <input
-
+                                id="district"
                                 className={classes.setrow2}
                                 placeholder="Disdrict"
                                 type="text"
@@ -224,6 +226,7 @@ export default function Createbuilding(props) {
                         <div className="zipcode">
                             <div htmlFor="District" className={classes.eachtitle}></div>
                             <input
+                                id="zipcode"
                                 className={classes.setrow2}
                                 placeholder="Zipcode"
                                 type="text"
@@ -239,6 +242,7 @@ export default function Createbuilding(props) {
                         <div style={{ width: "45%" }} >
                             <div htmlFor="Phone" className={classes.eachtitle} style={{ paddingBottom: 5 }}>Phone Number</div>
                             <input
+                                id="phone"
                                 className={classes.setrow}
                                 placeholder="Phone Number"
                                 type="text"
@@ -251,6 +255,7 @@ export default function Createbuilding(props) {
                         <div style={{ width: "45%" }}>
                             <div htmlFor="lastName" className={classes.eachtitle} style={{ paddingLeft: "46px", paddingBottom: 5 }}>Email</div>
                             <input
+                                id="email"
                                 className={classes.setrow}
                                 placeholder="Email"
                                 type="text"

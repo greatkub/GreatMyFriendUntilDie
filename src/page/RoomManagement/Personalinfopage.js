@@ -359,9 +359,6 @@ export default function Personalinfopage({ isOpened }) {
 
 
 
-
-
-
     return (
         <ScrollView>
             <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>

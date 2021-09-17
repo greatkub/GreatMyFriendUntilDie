@@ -1,3 +1,5 @@
+
+    import React, {useState, useEffect} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -18,7 +20,6 @@ import Input from "@material-ui/core/Input";
 import TextField from '@material-ui/core/TextField';
 import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
 import {BrowserRouter as Router, Route, Link, NavLink, Switch} from "react-router-dom";
-import { useState } from 'react';
 import { ScrollView } from 'react-native';
 
 //import Savebtn from "../../Components/Button/Save";
@@ -187,6 +188,18 @@ export default function SetFloor(props) {
     const [inputfloorToAdd, setInputfloorToAdd] = useState(null)
     const [committedfloorToAdd, setCommittedFloorToAdd] = useState([]);
 
+    const [allfloor, setAllFloor] = useState([]);
+    useEffect(() => {
+
+      axios('/building/buildings/4')
+        .then(r => {
+            console.log("hi" + r.data)
+            setAllFloor(r.data);
+        })
+        .catch(error => {
+            console.log('Error getting fake data: ' + error);
+        })
+}, []);
 
     const onToggleEditMode = (id) => {
         setCommittedFloorToAdd((state) => {
@@ -222,15 +235,17 @@ export default function SetFloor(props) {
           <div>
           <ScrollView>
         <div style={{ width: '100%', height: '650px' }}>
+        
           <Card className={classes.Card} variant="outlined">
               <Table  aria-label="caption table">
+            
                   <TableHead >
                       <TableRow>
                           <TableCell className={classes.heder}> 
                            <div className="row">
                               <div className="col">
                                     <h4>Floor</h4>  
-                                     VMC
+                                   
                               </div>
 
                                <div className="col-md-3">
@@ -301,7 +316,8 @@ export default function SetFloor(props) {
               </div>
         </TableBody>
       </Table>                  
-      </Card>     
+      </Card>   
+  
       </div>             
       </ScrollView> 
     </div>

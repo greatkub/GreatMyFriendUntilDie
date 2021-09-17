@@ -474,6 +474,7 @@ export default function (props) {
   const {id} = useParams();
   useEffect(() => {
     //const petitiondetails=(id) =>{
+     
     axios("/petition/petitions/"+id)
         .then(response => {
             console.log("hi" + response.data)

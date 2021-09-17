@@ -30,6 +30,7 @@ import FeeSet from './page/STFeeset/Feeset';
 import Floor from './page/STFloor/Createfloor';
 import STRoompage from './page/STRoom/STRoompage';
 import Initial from './page/Initialize/Initialize';
+import STEditBuildingpage from './page/STBuilding/Editbuilding';
 
 import Login from './page/Account/Login';
 import Registration from './page/Account/Registration';
@@ -94,13 +95,15 @@ function App2() {
 
 
           <Route path="/building_sp" exact={true}  render={(props) => <STBuildingpage isOpened = {word} {...props} />} />
-          <Route path="/addbuilding" exact={true}  render={(props) => <Createbuilding isOpened = {word} {...props} />} />
+          <Route path="/addbuilding/" exact={true}  render={(props) => <Createbuilding isOpened = {word} {...props} />} />
           <Route path="/feetype_sp" exact={true}  render={(props) => <CreateFeetype isOpened = {word} {...props} />} />
           <Route path="/feesets_sp" exact={true}  render={(props) => <CreateFeeSet isOpened = {word} {...props} />} />
           <Route path="/feesets" exact={true}  render={(props) => <FeeSet isOpened = {word} {...props} />} />
           <Route path="/floors_sp" exact={true}  render={(props) => <Floor isOpened = {word} {...props} />} />
-   
-          <Route path="/settingroom" exact={true}  render={(props) => <Settingroom isOpened = {word} {...props} />} />
+          <Route path="/editbuilding_sp/:id" exact={true}  render={(props) => <STEditBuildingpage isOpened = {word} {...props} />} />
+
+        
+          <Route path="/settingroom/:id" exact={true}  render={(props) => <Settingroom isOpened = {word} {...props} />} />
 
           <Route path="/detailpage/:id" exact={true}  render={(props) => <Detailpage isOpened = {word} {...props} />} />
 

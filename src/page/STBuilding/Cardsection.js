@@ -136,6 +136,9 @@ export default function Cardsection(props) {
                     <Button className={classes.buttondown1}>
                         {props.Manage}
                     </Button>
+                    <Button className={classes.buttondown1}>
+                        {props.Edit}
+                    </Button>
                     <div style={{ width: 10 }}></div>
 
                     {/*<Button className={classes.buttondown2}>

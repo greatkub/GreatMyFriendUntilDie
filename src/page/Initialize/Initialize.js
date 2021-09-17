@@ -272,9 +272,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-
-
 export default function (props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
@@ -394,7 +391,7 @@ console.log(allroom)
                          <h4>Initial Expense</h4>  
                          <br/>
                           <TextField
-                        
+
                               type ="date"
                               size="small" 
                               variant="outlined"    
@@ -424,13 +421,14 @@ console.log(allroom)
                          
                     </TableHead> 
                     {set.room.map((r)=>{
+                      const isItemSelected = (r.id)
                       return(
                     <TableBody>
                         <TableRow>
                           <TableCell align="left">{r.roomNumber}</TableCell> 
                             <TableCell align="center">
                                 <input
-                                    id={r.id}
+                                    id={isItemSelected}
                                     size="small" 
                                     variant="outlined"     
                                     onChange={(event)=> {
@@ -443,7 +441,7 @@ console.log(allroom)
                            <TableCell align="center">
                            
                                 <input
-                                    id={r.id}
+                                    
                                     size="small" 
                                     variant="outlined" 
                                     onChange={(event)=> {
@@ -467,14 +465,14 @@ console.log(allroom)
     </ScrollView>
   
           <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
-          <Link to='/feetype_sp'>
+          {/*<Link to='/feetype_sp'>*/}
                 <Button type="submit"   
                  id="1"    
-                 //onClick={InitialsSave}
+                 onClick={InitialsSave}
                 style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21 ,zIndex: 1, position: 'absolute', left: 540, top: 40}}>
                     SAVE
                 </Button>
-                </Link>
+                {/*</Link>*/}
                 <div style={{
                     backgroundColor: '#385CA8', opacity: 0.5
                     , width: "100%", height: 200, position: 'relative'

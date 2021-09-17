@@ -20,7 +20,7 @@ import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
 import axios from 'axios';
 import { ScrollView } from 'react-native';
 import Savebtn from '../../Components/Button/Save'
-import { BrowserRouter as Rounter, Route, Link, NavLink, Switch } from 'react-router-dom';
+import { BrowserRouter as Rounter, Route, Link, NavLink, Switch, useParams } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -107,9 +107,9 @@ export default function (props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   const [allroom, setAllroom] = useState([]);
-
+ const {id} =useParams()
   useEffect(() => {
-    axios('/building/rooms/3')
+    axios('/building/rooms/'+id)
         .then(response => {
             console.log("hi" + response.data)
             setAllroom(response.data);
@@ -127,7 +127,7 @@ export default function (props) {
           <div style={{ width: '100%', height: '550px' }}>
         
         {allroom.map((set)=>{
-                return(
+          return(
         <Card className={classes.Card} variant="outlined">
             <Table  aria-label="caption table">
                 <TableHead >
