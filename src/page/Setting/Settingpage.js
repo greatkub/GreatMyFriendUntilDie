@@ -140,134 +140,157 @@ export default function Settingpage({ isOpened }) {
 
                         <div className={classes.mdcolum}>
                             <div style={{ height: " 47px" }} />
-                            <Link to='/building_sp' style={{textDecoration:"none"}}>
-                            <div>
-                                <div className="circletext inline item marleft">
-                                    1
-                                </div>
+                            <Link to='/building_sp' style={{ textDecoration: "none" }}>
                                 <div>
-                                    <div className={classes.textsetting}>
-                                        Building
+                                    <div className="circletext inline item marleft">
+                                        1
                                     </div>
-                                    <div className={classes.subtext}>
-                                        Manage and create building
-                                    </div>
-                                </div>
-                            </div>
-                            </Link>
-
-                            <div style={{ height: " 50px" }}  />
-
-                            <Link to='/floors_sp' style={{textDecoration:"none"}}>
-                            <div>
-                                <div className="circletext inline item marleft">
-                                    2
-                                </div>
-                                <div>
-                                    <div className={classes.textsetting}>
-                                        Floors
-                                    </div>
-                                    <div className={classes.subtext}>
-                                        Setting the floors of building
+                                    <div>
+                                        <div className={classes.textsetting}>
+                                            Building
+                                        </div>
+                                        <div className={classes.subtext}>
+                                            Manage and create building
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            </Link>
-
-                            <div style={{ height: " 50px" }} />
-                            <Link to='/rooms_sp' style={{textDecoration:"none"}}>
-
-                            <div>
-                                <div className="circletext inline item marleft">
-                                    3
-                                </div>
-                                <div>
-                                    <div className={classes.textsetting}>
-                                        Rooms
-                                    </div>
-                                    <div className={classes.subtext}>
-                                        Manage and set up room
-                                    </div>
-                                </div>
-                            </div>
                             </Link>
 
                             <div style={{ height: " 50px" }} />
 
-                            <Link to='/roomtype_sp' style={{textDecoration:"none"}}>
-
-                            <div>
-                                <div className="circletext inline item marleft">
-                                    4
-                                </div>
+                            <Link to='/floors_sp' style={{ textDecoration: "none" }}>
                                 <div>
-                                    <div className={classes.textsetting}>
-                                        Room Types
+                                    <div className="circletext inline item marleft">
+                                        2
                                     </div>
-                                    <div className={classes.subtext}>
-                                        Kind of room
+                                    <div>
+                                        <div className={classes.textsetting}>
+                                            Floors
+                                        </div>
+                                        <div className={classes.subtext}>
+                                            Setting the floors of building
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
+
+                            <div style={{ height: " 50px" }} />
+                            <Link to='/rooms_sp' style={{ textDecoration: "none" }}>
+
+                                <div>
+                                    <div className="circletext inline item marleft">
+                                        3
+                                    </div>
+                                    <div>
+                                        <div className={classes.textsetting}>
+                                            Rooms
+                                        </div>
+                                        <div className={classes.subtext}>
+                                            Manage and set up room
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
+
+                            <div style={{ height: " 50px" }} />
+
+                            <Link to='/roomtype_sp' style={{ textDecoration: "none" }}>
+
+                                <div>
+                                    <div className="circletext inline item marleft">
+                                        4
+                                    </div>
+                                    <div>
+                                        <div className={classes.textsetting}>
+                                            Room Types
+                                        </div>
+                                        <div className={classes.subtext}>
+                                            Kind of room
+                                        </div>
+                                    </div>
+                                </div>
                             </Link>
 
                         </div>
                         <div className={classes.mdblue}>
                             <div style={{ height: " 47px" }} />
 
-                            <Link to='/feetype_sp' style={{textDecoration:"none"}}>
+                            <Link to='/feetype_sp' style={{ textDecoration: "none" }}>
 
-                            <div>
-                                <div className="circletext inline item marleft">
-                                    5
-                                </div>
                                 <div>
-                                    <div className={classes.textsetting}>
-                                        Fee Types
+                                    <div className="circletext inline item marleft">
+                                        5
                                     </div>
-                                    <div className={classes.subtext}>
-                                        Fee items to set the fee set
+                                    <div>
+                                        <div className={classes.textsetting}>
+                                            Fee Types
+                                        </div>
+                                        <div className={classes.subtext}>
+                                            Fee items to set the fee set
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </Link>
 
                             <div style={{ height: " 50px" }} />
 
-                            <Link to='/feesets_sp' style={{textDecoration:"none"}}>
+                            <Link to='/feesets_sp' style={{ textDecoration: "none" }}>
 
-                            <div>
-                                <div className="circletext inline item marleft">
-                                    6
-                                </div>
                                 <div>
-                                    <div className={classes.textsetting}>
-                                        Fee Sets
+                                    <div className="circletext inline item marleft">
+                                        6
                                     </div>
-                                    <div className={classes.subtext}>
-                                        A group of fee types
+                                    <div>
+                                        <div className={classes.textsetting}>
+                                            Fee Sets
+                                        </div>
+                                        <div className={classes.subtext}>
+                                            A group of fee types
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </Link>
 
                             <div style={{ height: " 50px" }} />
 
-                            <Link to='/bankacc_sp' style={{textDecoration:"none"}}>
+                            <Link to='/bankacc_sp' style={{ textDecoration: "none" }}>
 
-                            <div>
-                                <div className="circletext inline item marleft">
-                                    7
-                                </div>
                                 <div>
-                                    <div className={classes.textsetting}>
-                                        Bank Account
+                                    <div className="circletext inline item marleft">
+                                        7
                                     </div>
-                                    <div className={classes.subtext}>
-                                        Setting the channel to earn
+                                    <div>
+                                        <div className={classes.textsetting}>
+                                            Bank Account
+                                        </div>
+                                        <div className={classes.subtext}>
+                                            Setting the channel to earn
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
+
+                            <div style={{ height: " 50px" }} />
+
+                            <Link to='/d' style={{ textDecoration: "none" }}>
+
+                                <div>
+                                    <div className="circletext inline item marleft">
+                                        8
+                                    </div>
+                                    <div>
+                                        <div className={classes.textsetting}>
+                                            Initial Expense
+                                        </div>
+                                        <div className={classes.subtext}>
+                                            Setting initial meter reading
+                                        </div>
+                                        <div className={classes.subtext} style={{position: "absolute", right: 189}}>
+                                            in eachline
+                                        </div>
+
+                                    </div>
+                                </div>
                             </Link>
 
                         </div>

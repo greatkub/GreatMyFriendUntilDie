@@ -8,9 +8,9 @@ import Floorcom from './STRoomComp/Floorcom.js';
 import axios from 'axios';
 import { useEffect } from 'react';
 import DisplayDialog from './DisplayDialog.js';
-import DropFloor from '../../Components/Dropdown/DropFloor.js';
+import DropFloor from '../../Components/Dropdown/DropBuilding.js';
 import Arraylist from '../../Components/Anouncement/Arraylist.js';
-import DropBuilding from '../../Components/Dropdown/DropFloor.js';
+import DropBuilding from '../../Components/Dropdown/DropBuilding.js';
 import DropStatus from '../../Components/Dropdown/DropStatus.js';
 import { Button } from '@material-ui/core';
 import DropIsAvailable from '../../Components/Dropdown/DropIsAvailable.js';
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 export default function STRoompage({ isOpened }) {
     const classes = useStyles();
     useEffect(() => {
-        axios('/room/room-types/King Solomon')
+        axios('/room/room-types/Great')
             .then(response => {
                 console.log(response.data)
                 setAllFloor(response.data);
@@ -184,6 +184,8 @@ export default function STRoompage({ isOpened }) {
                                         floorName={item.floorName}
                                         allFloor={allFloor[index].rooms}
                                     />
+                                    
+                                    
                                 ))
                                 :
                                 allFloor.filter(floor => floor.floorName == dropFloorSelect).map((item, index) => (
@@ -196,6 +198,10 @@ export default function STRoompage({ isOpened }) {
                                     />
 
                                 ))}
+
+                                <div style={{height:180}}>
+
+                                </div>
 
 
 
@@ -211,6 +217,7 @@ export default function STRoompage({ isOpened }) {
                                 : null
 
                         })} */}
+
 
                         </div>
 

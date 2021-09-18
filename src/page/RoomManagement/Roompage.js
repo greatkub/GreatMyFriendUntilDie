@@ -8,11 +8,12 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Dropdown } from 'react-bootstrap';
-import DropBuilding from '../../Components/Dropdown/DropFloor';
-import DropFloor from '../../Components/Dropdown/DropBuilding';
+import DropBuilding from '../../Components/Dropdown/DropBuilding';
+import DropFloor from '../../Components/Dropdown/DropFloor';
 import DropStatus from '../../Components/Dropdown/DropStatus';
 import { Button } from '@material-ui/core';
 import DropIsAvailable from '../../Components/Dropdown/DropIsAvailable.js';
+import { render } from '@testing-library/react';
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -80,17 +81,54 @@ export default function Roompage({ isOpened }) {
     const [keptDropFloor, setKeptDropFloor] = useState("")
     const [keptDropBuilding, setKeptDropBuilding] = useState("")
 
+    const [numBed, setNumBed] = useState([])
+    const [numPeople, setNumPeople] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingLV1, setIsLoadingLV1] = useState(false)
+
+    const [currentBuilding, setCurrentBuilding] = useState("Great")
+    const [floorUrl, setFloorUrl] = useState(`/dropdown/floors/${currentBuilding}`)
+    // const floorUrl = `/building/floors/${currentBuilding}`
+
     useEffect(() => {
-        axios('/room/room-beds/King Solomon')
+        axios(`/room/room-beds/${currentBuilding}`)
             .then(response => {
                 console.log(response.data)
+                numWholive()
+
                 setAllFloor(response.data);
+                // setFloorUrl(`/dropdown/floors/Great`)
+
             })
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
             })
-    }, []);
+    });
 
+    function numWholive() {
+        var a = 0
+        var b = 0
+
+        for (var i = 0; i < allFloor.length; i++) {
+            console.log(`floor ${i}`)
+            for (var j = 0; j < allFloor[i].rooms.length; j++) {
+                a += allFloor[i].rooms[j].numberOfBed
+                for (var x = 0; x < allFloor[i].rooms[j].beds.length; x++) {
+                    b += allFloor[i].rooms[j].numberOfBed[x].beds
+                }
+                numPeople.push(b)
+                b = 0
+            }
+            numBed.push(a)
+            a = 0
+        }
+        console.log("End")
+        setIsLoading(true)
+        setNumPeople(numPeople)
+
+    }
+
+    
     return (
         <ScrollView>
             <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
@@ -124,7 +162,10 @@ export default function Roompage({ isOpened }) {
                                 </div>
                                 <div style={{ height: 4 }} />
 
-                                <DropBuilding />
+                                <DropBuilding
+                                    save={currentBuilding => setCurrentBuilding(currentBuilding)}
+                                />
+
                             </div>
 
                             <div style={{ width: 12 }} />
@@ -136,22 +177,23 @@ export default function Roompage({ isOpened }) {
                                 <div style={{ height: 4 }} />
 
                                 <DropFloor
-                                    url='/filter/filter-building/King David'
+                                    url={floorUrl}
+
                                 />
-                                
+
                             </div>
 
                             <div style={{ width: 12 }} />
 
 
-                            <div>
+                            {/* <div>
                                 <div className={classes.textDrop}>
                                     Status
                                 </div>
                                 <div style={{ height: 4 }} />
 
                                 <DropIsAvailable />
-                            </div>
+                            </div> */}
 
                             <div style={{ width: 12 }} />
 
@@ -171,20 +213,27 @@ export default function Roompage({ isOpened }) {
 
                     <div>
                         <div style={{ height: 20 }} />
+                        {isLoading &&
+                            allFloor.map((item, index) => (
 
-                        {allFloor.map((item, index) => (
+                                <Floorsection
 
-                            <Floorsection
-                                floorName={item.floorName}
-                                allFloor={allFloor[index].rooms}
+                                    floorName={item.floorName}
+                                    allFloor={allFloor[index].rooms}
+                                    numBed={numBed[index]}
+                                    numPeople={numPeople[index]}
 
-                            />
+                                />
 
-                        ))}
+                            ))
+
+                        }
+
                     </div>
                 </div>
             </div>
         </ScrollView>
 
     )
+
 }

@@ -18,25 +18,25 @@ function DropGender(props) {
 
     const [buildings, setBuilding] = useState([]);
 
-    const api = axios.create({
-        baseURL: '/dropdown/floors/King Solomon'
-        // 'https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/testimnew'
-        // baseURL: '/announcement/type-announcements'
-    })
+    // const api = axios.create({
+    //     baseURL: '/dropdown/floors/King Solomon'
+    //     // 'https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/testimnew'
+    //     // baseURL: '/announcement/type-announcements'
+    // })
 
 
-    const getType = async () => {
-        let data = await api.get('/').then(({ data }) => data);
-        // this.setState({ news: data })
-        setBuilding(data)
+    // const getType = async () => {
+    //     let data = await api.get('/').then(({ data }) => data);
+    //     // this.setState({ news: data })
+    //     setBuilding(data)
 
-    }
+    // }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        getType();
+    //     getType();
 
-    }, []);
+    // }, []);
 
     const handleChange = (event) => {
         // console.log(event.target.value);
@@ -48,6 +48,7 @@ function DropGender(props) {
         <div style={{ display: 'flex' }}>
             <select onChange={handleChange} style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A' }} >
 
+                <option >Not Specify</option>
                 <option value={1} >Male</option>
                 <option value={2}>Female</option>
 

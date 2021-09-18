@@ -13,24 +13,22 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 
 
-function DropFloor(props) {
+function DropBuilding(props) {
 
 
-    const [floors, setFloors] = useState([]);
+    const [buildings, setBuilding] = useState([]);
 
     const api = axios.create({
         baseURL: '/dropdown/buildings'
         // 'https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/testimnew'
         // baseURL: '/announcement/type-announcements'
-
-
     })
 
 
     const getType = async () => {
         let data = await api.get('/').then(({ data }) => data);
         // this.setState({ news: data })
-        setFloors(data)
+        setBuilding(data)
 
     }
 
@@ -52,8 +50,8 @@ function DropFloor(props) {
 
                 <option >Not Specify</option>
 
-                {floors.map(floors =>
-                    <option key={floors.id} value={floors.floorName}>Floor {floors.floorName}</option>
+                {buildings.map(buildings =>
+                    <option  value={buildings.text}>{buildings.text}</option>
                 )}
 
             </select>
@@ -63,4 +61,4 @@ function DropFloor(props) {
     );
 
 }
-export default DropFloor;
+export default DropBuilding;

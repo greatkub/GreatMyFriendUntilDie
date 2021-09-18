@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
 import { useEffect } from 'react';
-import DropBuilding from '../../Components/Dropdown/DropFloor';
+import DropBuilding from '../../Components/Dropdown/DropBuilding';
 import DropFloor from '../../Components/Dropdown/DropBuilding';
 import DropStatus from '../../Components/Dropdown/DropStatus';
 

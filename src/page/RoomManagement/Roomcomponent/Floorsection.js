@@ -80,13 +80,16 @@ export default function Floorsection(props) {
     return (
         <div>
             <Paper className={classes.papercard}>
+              
                 <div className={classes.headfloor}>
                     <div className={classes.floortext}>
                         Floor {props.floorName}
                     </div>
                     <div className={classes.numinroom}>
                         <PersonIcon className={classes.personicon} />
-                        <div className={classes.aligninicon}>10 / 20</div>
+
+                        <div className={classes.aligninicon}>{props.numPeople} / {props.numBed}</div>
+
                     </div>
                 </div>
                 <Divider style={{ backgroundColor: "#AAAAAA", marginTop: 81 }} />
@@ -100,6 +103,7 @@ export default function Floorsection(props) {
                         roomTypeName = {sub.roomTypeName}
                         numberOfBed = {sub.numberOfBed}
                         />
+
                     ))}
 
                 </div>
