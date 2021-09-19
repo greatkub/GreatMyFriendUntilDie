@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     frame: {
         width: '1163px',
         height: '232px',
-        backgroundColor: 'red',
         position: "relative"
     },
 
@@ -165,12 +164,15 @@ export default function STRoompage({ isOpened }) {
 
 
                             <div className={classes.titleText} style={{ position: 'absolute', bottom: 0 }}>
-                                King Solomon
+                                {allFloor.length > 0 ? allFloor[0].buildingName : ""}
                             </div>
 
                             <div style={{ height: '20px' }}>
 
                             </div>
+                        </div>
+                        <div style={{ height: '20px' }}>
+
                         </div>
                         <div>
                             {/* {allFloor.filter(floor => floor.floorName == '2').map((item, index) => ( */}
@@ -184,8 +186,8 @@ export default function STRoompage({ isOpened }) {
                                         floorName={item.floorName}
                                         allFloor={allFloor[index].rooms}
                                     />
-                                    
-                                    
+
+
                                 ))
                                 :
                                 allFloor.filter(floor => floor.floorName == dropFloorSelect).map((item, index) => (
@@ -199,9 +201,9 @@ export default function STRoompage({ isOpened }) {
 
                                 ))}
 
-                                <div style={{height:180}}>
+                            <div style={{ height: 180 }}>
 
-                                </div>
+                            </div>
 
 
 
@@ -226,7 +228,7 @@ export default function STRoompage({ isOpened }) {
             </ScrollView>
 
             <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
-                <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21 ,zIndex: 1, position: 'absolute', left: 540, top: 40}}>
+                <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 540, top: 40 }}>
                     SAVE
                 </Button>
                 <div style={{

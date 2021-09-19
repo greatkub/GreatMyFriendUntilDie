@@ -186,6 +186,13 @@ export default function DisplayDialog(props) {
             "NumberofBeds": parseInt(getNumberofBeds),
             "FeeSetTypeId": getFeeSetTypeId,
             "RoomIds": props.allSelcted
+        }).then(response => {
+            alert("Assign RoomType Scuccessfully.")            
+        })
+        .catch(error => {
+            console.log('Error getting fake data: ' + error);
+            alert("Assign Fail.")            
+
         })
         console.log("assignFee?")
         console.log(props.allSelcted)

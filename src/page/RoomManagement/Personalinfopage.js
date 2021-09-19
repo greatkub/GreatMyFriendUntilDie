@@ -271,7 +271,7 @@ export default function Personalinfopage({ isOpened }) {
     })
 
     const apiEdit = axios.create({
-        baseURL: `/user/edit-user/room/27/user/13`
+        baseURL: `/user/edit-user/room/${id}/user/${currentUserId}`
     })
 
 
@@ -293,34 +293,43 @@ export default function Personalinfopage({ isOpened }) {
     }
 
     const editTenant = async () => {
-        let res = await apiEdit.post('/', {
-            "Address": "11/22 M.3 Soi 9/9",
-            "District": "Bang Bo",
-            "SubDistrict": "Bang Bo",
-            "Province": "Bangkok",
-            "ZipCode": "54321",
-            "Email": "u6113112@au.edu",
-            "PhoneNumber": "0819999896",
-            "User": {
-                "FirstName": "LL",
-                "LastName": "KiL",
-                "GenderId": 1,
-                "BirthDate": "1999-02-20",
-                "IdentificationNo": "1234567890987",
-                "ProfileUrl": "https://firebasestorage.googleapis.com/v0/b/habitat-34ee0.appspot.com/o/16473212_1918745521679927_8257466333135884922_n.jpeg?alt=media&token=a4da4376-5f9b-4657-a5fd-1cc0b4f7993d"
-            },
-            "Bed": {
-                "RoomId": 27
-            }
-        }
-        ).then(response => {
+
+        console.log(id +"room id")
+        console.log(currentUserId +"currentUserId")
+
+        let res = await axios({
+            url: `/user/edit-user/room/${id}/user/${currentUserId}`,
+            method: 'post',
+            data: {
+                "Address": "11/22 M.3 Soi 9/9",
+                "District": "Bang Bo",
+                "SubDistrict": "Bang Bo",
+                "Province": "Bangkok",
+                "ZipCode": "54321",
+                "Email": "u6113112@au.edu",
+                "PhoneNumber": "0819999896",
+                "User": {
+                    "FirstName": addFirstName,
+                    "LastName": "KiL",
+                    "GenderId": 1,
+                    "BirthDate": "1999-02-20",
+                    "IdentificationNo": "1234567890987",
+                    "ProfileUrl": "https://firebasestorage.googleapis.com/v0/b/habitat-34ee0.appspot.com/o/16473212_1918745521679927_8257466333135884922_n.jpeg?alt=media&token=a4da4376-5f9b-4657-a5fd-1cc0b4f7993d"
+                },
+                "Bed": {
+                    "RoomId": parseInt(id)
+                }
+            }   
+        }).then(response => {
             alert('The tenant has been edited')
             console.log('Saved');
 
         }).catch(error => {
             console.log('Edit Eta: ' + error);
+            alert('Fail')
+
             console.log(id)
-            console.log(currentUserId)
+            console.log(currentUserId + "This user")
         })
     }
 
@@ -362,9 +371,25 @@ export default function Personalinfopage({ isOpened }) {
 
 
 
-    useEffect(() => {
+    //  useEffect( async () => {
+    //     // setIsLoading(false)
+    //     await axios(`/user/number-of-bed/${id}`)
+    //         .then(response => {
+    //             setNumberOfBed(response.data[0].numberOfBed)
+    //             // setIsLoading(true)
+
+    //         })
+    //         .catch(error => {
+    //             console.log('Error getting fake data: ' + error);
+    //         })
+
+    // }, []);
+
+
+
+    useEffect( async () => {
         // setIsLoading(false)
-        axios(`/user/number-of-bed/${id}`)
+        await axios(`/user/number-of-bed/${id}`)
             .then(response => {
                 setNumberOfBed(response.data[0].numberOfBed)
                 // setIsLoading(true)
@@ -373,19 +398,12 @@ export default function Personalinfopage({ isOpened }) {
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
             })
-
-    }, []);
-
-
-
-    useEffect(() => {
-        // setIsLoading(false)
-        axios(`/user/user-room/${id}`)
+        await axios(`/user/user-room/${id}`)
             .then(response => {
-                console.log(response.data)
+                console.log(response.data, "allData")
                 setAllData(response.data);
-                setCurrentUser(allData[currentBed].userId)
-                console.log(currentUserId)
+                setCurrentUser(response.data[currentBed].userId)
+                console.log(currentUserId + "From axious use effect")
                 setIsLoading(true)
 
 
@@ -479,6 +497,7 @@ export default function Personalinfopage({ isOpened }) {
         if (allData.length > 0 && currentBed == i) {
             setCurrentUser(allData[currentBed].userId)
             previous = i
+            console.log(allData[currentBed].userId +"in if")
             // console.log("hi")
             // setSave(true)
             // console.log(canSave)
@@ -573,7 +592,6 @@ export default function Personalinfopage({ isOpened }) {
                                         {[...Array(getNumberOfBed)].map((bed, index) => {
                                             return (
                                                 <Button className={currentBed == index ? classes.segmentbtnBlue : classes.segmentbtnWhite} onClick={() => newhandleClick(index)}>
-                                                    {/* { && allData[index].room[0].bedName} */}
                                                     {allData.length >= index + 1 ? allData[index].room[0].bedName : "Vacant"}
 
 

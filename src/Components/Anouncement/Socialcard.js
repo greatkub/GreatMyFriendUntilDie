@@ -174,10 +174,16 @@ function Social() {
       "AnnounceDate": datecreate,
       "Description": descrip,
       "ImageUrl": "https://cdn.wallpapersafari.com/36/96/7cRSqV.png",
-      "Likes": 0,
-      "Comments": 0,
-      "StaffId": 5
+      "StaffId": 1
+    }
+    ).then(response => {
+      alert("Post Success")
+      console.log(response.data)
     })
+      .catch(error => {
+        alert("Post Fail")
+
+      })
   }
 
   const [title, setTitle] = useState("")
@@ -340,7 +346,7 @@ function Social() {
             </Typography>
             {allData.map((value, index) => {
               return value.type === "Important News" ?
-                <Link to={`/detailpage/${value.id}`} onClick={()=> console.log(value.id)}>
+                <Link to={`/detailpage/${value.id}`} onClick={() => console.log(value.id)}>
                   <ImpNews
                     key={index}
                     Name={value.title}

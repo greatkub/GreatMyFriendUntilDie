@@ -113,11 +113,13 @@ export default function CreateRoom(props) {
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
             })
-    });
+        console.log("In useeffect")
+    },[]);
+
     // building/floor-room/building/5
 
     const api = axios.create({
-        baseURL: `/building/floor-room/building/4`
+        baseURL: `/building/floor-room/building/8`
     })
 
     const addFloorandRoom = async () => {
@@ -134,38 +136,24 @@ export default function CreateRoom(props) {
         const roomObject = {
             "room_number": "101"
         }
-        console.log(arrayFloor)
         // console.log(allroom)
-
-
 
         for (var i = 0; i < arrayFloor.length; i++) {
 
-
-
             for (var j = 0; j < parseInt(inputRoomToAdd); j++) {
-
-
                 const formattedNumber = ("0" + (j + 1)).slice(-2)
                 const roomNumber = String(i + 1) + formattedNumber
                 const roomObject = {
                     "room_number": roomNumber
                 }
                 arrayFloor[i].Rooms.push(roomObject)
-                // console.log()
-                // console.log(String(i+1) + formattedNumber)
-
-
-
+                console.log(roomNumber)
             }
-
-
-            // keptSample.push(sampleObject)
-
         }
 
-
         setArrayFloor(arrayFloor)
+        console.log(arrayFloor)
+
         console.log("end")
 
     }
@@ -177,16 +165,20 @@ export default function CreateRoom(props) {
                 <div className="container ">
                     <div style={{ width: '100%', height: '650px' }}>
                         <div style={{ width: '100%', height: '550px' }}>
-                            {/* <button onClick={() => console.log("hi")}>
 
-                            </button> */}
+                            {/* <Link to='/st_initialize'> */}
+                            <button onClick={() => console.log(arrayFloor)}>
+
+                            </button>
+                            {/* </Link> */}
+
 
                             <Card className={classes.Card} variant="outlined">
                                 <Table aria-label="caption table">
                                     <TableHead >
                                         <TableRow>
                                             <TableCell className={classes.heder}>
-                                                <div style={{display: 'flex'}}>
+                                                <div style={{ display: 'flex' }}>
                                                     <h4>Rooms</h4>
                                                     <input
                                                         placeholder="No of Room"
@@ -214,14 +206,17 @@ export default function CreateRoom(props) {
                                         <div className="container">
                                             <h5 className={classes.heder}>King Solomon</h5>
 
-                                            {arrayFloor.length > 0 ? arrayFloor.map((set) => {
+                                            {arrayFloor != undefined && arrayFloor.length > 0 ? arrayFloor.map((set) => {
+                                                  {console.log(set)}
                                                 return (
+                                                  
                                                     <div>
                                                         <div style={{ width: "100%", minHeight: "200px", border: "1px solid #AAAAAA", borderRadius: 5 }}>
                                                             <div style={{ height: "86.5px", width: "100%", borderBottom: "1px solid #AAAAAA" }}>
                                                                 Floor {set.FloorName}
                                                             </div>
                                                             {set.Rooms.map((r, index) => {
+
                                                                 return (
                                                                     <div style={{ display: 'flex', height: 50, width: "100%", borderBottom: "1px solid #AAAAAA" }}>
                                                                         <div>
@@ -314,25 +309,25 @@ export default function CreateRoom(props) {
             </Link> */}
 
 
-            <Link to="/initial">
+            {/* <Link to="/initial"> */}
 
-                <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
-                    <Button onClick={addFloorandRoom}
-                        style={{
-                            backgroundColor: "#485D84", width: 406,
-                            height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1,
-                            position: 'absolute', left: 540, top: 40
-                        }}>
-                        SAVE
-                    </Button>
-                    <div style={{
-                        backgroundColor: '#385CA8', opacity: 0.5
-                        , width: "100%", height: 200, position: 'relative'
+            <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
+                <Button onClick={addFloorandRoom}
+                    style={{
+                        backgroundColor: "#485D84", width: 406,
+                        height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1,
+                        position: 'absolute', left: 540, top: 40
                     }}>
+                    SAVE
+                </Button>
+                <div style={{
+                    backgroundColor: '#385CA8', opacity: 0.5
+                    , width: "100%", height: 200, position: 'relative'
+                }}>
 
-                    </div>
                 </div>
-            </Link>
+            </div>
+            {/* </Link> */}
 
         </div>
 
