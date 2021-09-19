@@ -265,10 +265,9 @@ const Expensesave = event => {
  const [xpense, setXpense] = useState([])
   React.useEffect(() => {
     const fetchData = () =>{
-     axios.get('/rentingtransaction/electricity-water-expenses/6')
+     axios.get('/rentingtransaction/electricity-water-expenses/2')
     .then(r => {    
       setXpense(r.data)
-
     })
   };
   fetchData()
@@ -283,8 +282,7 @@ console.log(xpense)
             <ScrollView>
             <div style={{ width: '100%', height: '650px' }}>
   
-    <Tab.Container  defaultActiveKey="home" >
-
+    <Tab.Container  defaultActiveKey="home">
     <div className={classes.root}>
         <main className={classes.content}>
           <div className={classes.toolbar} />
@@ -298,7 +296,7 @@ console.log(xpense)
                   <Nav.Link eventKey="home">Electricity</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link  eventKey="link-1">Water</Nav.Link>
+                  <Nav.Link eventKey="link-1">Water</Nav.Link>
                 </Nav.Item>  
               </Nav>          
         <TableBody>
@@ -307,9 +305,8 @@ console.log(xpense)
     <Tab.Content>
         <Tab.Pane eventKey="home">  
         
-     <input 
-       type="date" 
-        />    
+        <input 
+            type="date"/>    
    
           <div className="App">
             <Table  aria-label="caption table">

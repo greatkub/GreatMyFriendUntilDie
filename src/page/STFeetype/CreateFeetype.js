@@ -554,14 +554,14 @@ export default function CreateFeetype(props) {
     const handleClose = () => {
         setOpen(false);
     };
-
+  
     const [feetype, setFeetype] = useState([]);
     const [userId, setUserId] = useState("");
     const [addFeetypename, setAddfeetypename] = useState("");
     const [addFeeprice, setAddfeeprice] = useState("");
     const [modalEdit, setModalEdit] = useState(false);
     const [modaldelete, setModalDelete] = useState(false);
-
+    const { id } = useParams();
     useEffect(() => {
         axios('/feetype/fee-types')
             .then(response => {
@@ -591,6 +591,12 @@ export default function CreateFeetype(props) {
         setOpen(false)
     };
 
+  /* {
+        "id": 4,
+        "FeeTypeName": "Cleaning",
+        "FeeTypePrice": 520
+    }*/
+
     const deletetable = (id) => {
         axios.post(`/feetype/fee-type/${id}`)
         .then((result) => {
@@ -619,25 +625,37 @@ export default function CreateFeetype(props) {
         setModalDelete(!modaldelete);
     }
 
-     const UpdateFeetype = () => {
-        axios.post("/feetype/edit-fee-type/3", {
-            "id": 3,
+     /*const UpdateFeetype = (id) => {
+        axios.post("/feetype/edit-fee-type/" +id, feetype, {
+            "id": parseInt(id),
             "FeeTypeName": addFeetypename,
             "FeeTypePrice": parseInt(addFeeprice)
         }).then(() => {
             setFeetype([
                 {
                     ...feetype,
-                 
+                    id: parseInt(id),
                     FeeTypeName: addFeetypename,
                     FeeTypePrice: parseInt(addFeeprice)
                 },
             ]);
         });
         setOpen(false)
+    };*/
+
+    const UpdateFeetype = () => {
+        axios.post("/feetype/edit-fee-type/4",{ 
+            "id": 4,
+            "FeeTypeName": addFeetypename,
+            "FeeTypePrice": parseInt(addFeeprice)
+        },
+
+        ).then((response) => {
+            window.location.href = '/feetype_sp';
+            console.log(response);
+        })
     };
 
-   
     //TODO Check edit
     // const EditTextfeild = (
     //     <div className={classes.modal}>
@@ -694,9 +712,9 @@ export default function CreateFeetype(props) {
                     <Card className={classes.Cards} variant="outlined">
                         <Table>
                             <tbody>
-                            {feetype.map((row) => (
+                            {feetype.map((row, key) => (
                                 <TableRow>
-                                    <TableCell>{row.userId}</TableCell>
+                                    <TableCell>{key.id}</TableCell>
                                     <TableCell style={{width: 500, alignItems: "center"}}><h6
                                         className={classes.FontTable}> {row.feeTypeName} </h6></TableCell>
                                     <TableCell>
@@ -737,7 +755,7 @@ export default function CreateFeetype(props) {
                             <h6>Fee type name</h6>
                             <input maxlength="40" size="40"
                                    type="text"
-                                   id="addfeetypename"
+                                   id="addFeetypename"
                                 // name="Feetype name"
                                    fullWidth
                                 //value={addFeetypename}
@@ -762,20 +780,16 @@ export default function CreateFeetype(props) {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions className={classes.dialogPaper3}>
-                        <Button
-                            className={classes.Cursor}
-                            variant="contained" color="primary" disableElevation
-                            onClick={addFeetype}
-                            style={{backgroundColor: '#485D84'}}>
-                            Create
-                        </Button>
+
+                        <Button className={classes.Cursor} variant="contained" 
+                                style={{backgroundColor:'#485D84'}} color="primary" 
+                                onClick={addFeetype} disableElevation> 
+                                Create </Button>
+
                         <div className={classes.dialogButton}>
-                            <Button className={classes.Cursor}
-                                    type={"button"}
-                                    variant="contained" disableElevation
-                                    onClick={handleClose}>
-                                cancel
-                            </Button>
+                            <Button className={classes.Cursor} type={"button"}
+                                    variant="contained" disableElevation onClick={handleClose}>
+                                    cancel</Button>
                         </div>
                     </DialogActions>
                 </Dialog>
@@ -786,7 +800,7 @@ export default function CreateFeetype(props) {
                     aria-labelledby="edit-apartment"
                     fullWidth={true}>
                     <DialogTitle id="edit-apartment" className={classes.dialogPaper2}>Edit Fee Type</DialogTitle>
-                    <DialogContent className={classes.dialogPaper}>
+                        <DialogContent className={classes.dialogPaper}>
                         <DialogContentText>
                             <h6>Fee type name</h6>
                             <input
@@ -795,47 +809,40 @@ export default function CreateFeetype(props) {
                                 type="text"
                                 maxlength="40" size="40"
                                 // className={classes.inputMaterial}
-                                id="FeetypeName"
+                                id="addfeeprice"
+                                value={addFeetypename.feeTypeName}
                                 onChange={(event) => {
                                     setAddfeetypename(event.target.value);
-                                }}
-                                value={addFeetypename.feeTypeName}/>
+                                }}/>
                         </DialogContentText>
                         <DialogContentText>
                             <h6>Price</h6>
                             <input
-                                // name="FeetypePrice"
-                                // label="FeetypePrice"
                                 type="text"
                                 maxlength="40" size="40"
-                                id="FeetypePrice"
-                                // className={classes.inputMaterial}
+                                id="addFeeprice"
+                                value={addFeeprice.feeTypePrice}
                                 onChange={(event) => {
                                     setAddfeeprice(event.target.value);
-                                }}
-                                value={addFeeprice.feeTypePrice}/>
+                                }}/>
                         </DialogContentText>
                     </DialogContent>
+
                     <DialogActions className={classes.dialogPaper3}>
-                        <Button
-                            className={classes.Cursor}
-                            variant="contained" color="primary" disableElevation
-                            onClick={() => UpdateFeetype()}
-                            style={{backgroundColor: '#485D84'}}>
-                            Edit
+                        <Button className={classes.Cursor}
+                                variant="contained" color="primary" disableElevation
+                                style={{backgroundColor: '#485D84'}} onClick={() => UpdateFeetype()}>Edit
                         </Button>
+
                         <div className={classes.dialogButton}>
-                            <Button className={classes.Cursor}
-                                    type={"button"}
-                                    variant="contained" disableElevation
-                                    onClick={() => EditModal()}>
-                                cancel
+                            <Button className={classes.Cursor} disableElevation
+                                    variant="contained" type={"button"} onClick={() => EditModal()}> cancel
                             </Button>
                         </div>
                     </DialogActions>
                 </Dialog>
-
-                <div className="container-fruid ">
+                
+                <div className="container-fruid">
                     <NavLink to="/feesets">
                         <Button className={classes.Btn}
                                 variant="contained" color="primary" disableElevation

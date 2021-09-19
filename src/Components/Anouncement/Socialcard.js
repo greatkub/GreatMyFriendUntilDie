@@ -10,7 +10,6 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import Divider from '@material-ui/core/Divider';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import Dialog from "@material-ui/core/Dialog";
-
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -19,7 +18,6 @@ import Typography from '@material-ui/core/Typography';
 import General from "../../Components/Anouncement/General";
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
-
 import "../../Css/Announcement/Socialcard.css";
 import { Grid } from '@material-ui/core';
 import Arraylist from './Arraylist';
@@ -29,6 +27,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import { Update } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 //import DropFloor from '../Dropdown/DropFloor';
+import {storage } from '../../base'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,15 +63,13 @@ const useStyles = makeStyles((theme) => ({
       Btn: {
         marginleft: '5%',
       },
-
     },
+},
 
-  },
   importimgbtn: {
     height: '38px',
     width: '38px',
     paddingRight: theme.spacing(5),
-
   }
 
 }));
@@ -101,10 +98,6 @@ const useStyles2 = makeStyles({
   // paper: { minWidth: "500px" },
 });
 
-
-
-
-
 const DialogActions2 = withStyles((theme) => ({
   root: {
     paddingBottom: theme.spacing(5),
@@ -119,14 +112,50 @@ const api = axios.create({
 })
 
 
-
-
 function Social() {
 
   const classes2 = useStyles2();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [currentAnnounce, setCurrentAnnounce] = useState(0)
+
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
+  const [progress, setProgress] = useState(0);
+
+  const handleChange = e => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = () => {
+    const uploadTask = storage.ref(`/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref()
+          .child(image.name)
+          .getDownloadURL()
+          .then(url => {
+            setUrl(url);
+          });
+      }
+    );
+  };
+
+  console.log("image: ", image);
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -166,6 +195,7 @@ function Social() {
         console.log('Error getting fake data: ' + error);
       })
   }, []);
+
   // onClick={this.createNew}
   const addNews = async () => {
     let res = await api.post('/', {
@@ -173,10 +203,11 @@ function Social() {
       "TypeId": parseInt(currentAnnounce),
       "AnnounceDate": datecreate,
       "Description": descrip,
-      "ImageUrl": "https://cdn.wallpapersafari.com/36/96/7cRSqV.png",
+      //"ImageUrl": "https://cdn.wallpapersafari.com/36/96/7cRSqV.png",
+      "ImageUrl": url,
       "Likes": 0,
       "Comments": 0,
-      "StaffId": 5
+      "StaffId": 1
     })
   }
 
@@ -197,8 +228,6 @@ function Social() {
   const [datecreate, setDatecreate] = useState("")
   const [descrip, setDescrip] = useState("")
 
-
-
   //   const handleChange = (e) => {
   //     setTitle({value: e.target.value})
   // }
@@ -206,9 +235,6 @@ function Social() {
 
   return (
     <div>
-
-
-
       <div className="row" style={{ marginLeft: '-15px', marginRight: '0px', border: 'none' }}>
         <Datetoday />
       </div>
@@ -305,16 +331,36 @@ function Social() {
         <DialogActions2 >
 
           <IconButton className={classes.importimgbtn} onClick={imagefunction}>
-            <ImageIcon className={classes2.importimgbtn} style={{ color: '#4A4A4A' }} /> </IconButton>
-          {/* <input type="file"></input> */}
+            <ImageIcon className={classes2.importimgbtn} style={{ color: '#4A4A4A' }} /> 
+            <input clasName={classes.Choosefile}
+                 //size="40"
+                type="file" 
+                onChange={handleChange} />
+        
+                <button 
+                    onClick={handleUpload}>Upload
+                 </button>
+                 <br/>
+                {url}
+                <br />
+            </IconButton>
+
+
+
+          {/* <input type="file">
+          
+          
+          
+          </input> */}
           <Button id="announceBT" className={classes.Btn} variant="contained" color="primary" disableElevation
 
             onClick={addNews}>
             <p id="textAnnounceBt"> Announce</p>
           </Button>
+
+
           <div className="spacing" />
           <Button id="cancelBT" className={classes.Btn} variant="contained" color="primary" disableElevation
-
             onClick={handleClose}>
             <p id="cancelAnnounceBt">Cancel</p>
           </Button>

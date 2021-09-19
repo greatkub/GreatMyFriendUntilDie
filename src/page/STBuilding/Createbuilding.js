@@ -106,8 +106,6 @@ export default function Createbuilding(props) {
     const [inputText, setInputText] = useState("");
     const [items, setItems] = useState([]);
 
-
-
     const [building, setBuilding] = useState("");
     const [address, setAddress] = useState("");
     const [province, setProvince] = useState("");

@@ -271,26 +271,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 export default function (props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
  
-  const {id} = useParams
+  const {id} = useParams()
   const [allroom, setAllroom] = useState([]);
   useEffect(() => {
-    axios('/building/rooms/3')
+    axios('/building/rooms/'+id)
         .then(r => {
             console.log("hi" + r.data)
             setAllroom(r.data);
+           
         })
         .catch(error => {
             console.log('Error getting fake data: ' + error);
         })
-}, [id]);
+}, []);
 
 
-  ///const [roomId, setRoomId] = useState("")
+  const [roomId, setRoomId] = useState("")
   const [setupdate, setUpdate] = useState("")
   const [electricityReading, setElectricityReading] = useState("")
   const [waterReading, setWaterReading] = useState("")
@@ -300,71 +300,19 @@ export default function (props) {
     axios.post("/InitializeExpenses/initialize-expenses", 
     [
         {
-          "roomId": 3,
+          "roomId": parseInt(id),
           "SetupDate": setupdate,
           "ElectricityReading": electricityReading,
           "WaterReading": waterReading
         },
 
-        {
+       /* {
           "roomId": 2,
           "SetupDate": setupdate,
           "ElectricityReading": electricityReading,
           "WaterReading": waterReading
-        },
+        },*/
 
-       
-
-       /* {
-          "roomId": 4,
-          "SetupDate": setupdate,
-          "ElectricityReading": electricityReading,
-          "WaterReading": waterReading
-        },
-
-        {
-          "roomId": 5,
-          "SetupDate": setupdate,
-          "ElectricityReading": electricityReading,
-          "WaterReading": waterReading
-        },
-        
-        {
-          "roomId": 6,
-          "SetupDate": setupdate,
-          "ElectricityReading": electricityReading,
-          "WaterReading": waterReading
-        },
-
-        {
-          "roomId": 7,
-          "SetupDate": setupdate,
-          "ElectricityReading": electricityReading,
-          "WaterReading": waterReading
-        },
-
-        {
-          "roomId": 8,
-          "SetupDate": setupdate,
-          "ElectricityReading": electricityReading,
-          "WaterReading": waterReading
-        },
-
-        {
-          "roomId": 9,
-          "SetupDate": setupdate,
-          "ElectricityReading": electricityReading,
-          "WaterReading": waterReading
-        },
-
-        {
-          "roomId": 10,
-          "SetupDate": setupdate,
-          "ElectricityReading": electricityReading,
-          "WaterReading": waterReading
-        }*/
-        
-        
     ]).then((response)=>{   
       //window.location.href = '/feetype_sp';
       console.log(response);
@@ -387,7 +335,6 @@ console.log(allroom)
                          <h4>Initial Expense</h4>  
                          <br/>
                           <TextField
-
                               type ="date"
                               size="small" 
                               variant="outlined"    
@@ -424,7 +371,7 @@ console.log(allroom)
                           <TableCell align="left">{r.roomNumber}</TableCell> 
                             <TableCell align="center">
                                 <input
-                                    id={isItemSelected}
+                                    //id={isItemSelected}
                                     size="small" 
                                     variant="outlined"     
                                     onChange={(event)=> {

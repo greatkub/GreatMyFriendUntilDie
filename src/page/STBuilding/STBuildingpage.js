@@ -122,7 +122,8 @@ export default function STBuildingpage({ isOpened }) {
                                         }
                                              
                                         Edit={
-                                            <Link to={`editbuilding_sp/${value.id}`}  style={{ textDecoration: "none" }}>
+                                            <Link to={`editbuilding_sp/${value.id}`}  
+                                                  style={{ textDecoration: "none" }}>
                                             <Button className={classes.buttontop}>
                                               Edit
                                             </Button>

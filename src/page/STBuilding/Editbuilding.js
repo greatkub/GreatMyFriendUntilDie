@@ -102,15 +102,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Createbuilding(props) {
 
     const classes = useStyles()
-   
     const { id } = useParams();
 
     useEffect(() => { 
         Axios.get("/building/building/" +id )
-            .then(response =>
-                
+            .then(response =>       
                 {
-
                 /*setBuilding(response.data.building);
                 setAddress(response.data.address);
                 setProvince(response.data.province);
@@ -132,9 +129,7 @@ export default function Createbuilding(props) {
                 setZipCode(data[0].zipCode)
                 setEmail(data[0].email)
                 setPhoneNo(data[0].phoneNo)
-
-                console.log(data)
-                     
+                console.log(data)                     
             }
             
         )
@@ -142,9 +137,6 @@ export default function Createbuilding(props) {
                 console.log('Error getting fake data: ' + error);
                 })             
     }, []);
-
-
-
 
       const [buildingName, setBuildingName] = useState('');
       const [address, setAddress] = useState('');
@@ -213,8 +205,6 @@ export default function Createbuilding(props) {
 
     };
 
-
-  
     return (
         <div className={classes.fame}>
             <div className={classes.titleframe}>

@@ -1,4 +1,4 @@
-    import React, {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
     import { makeStyles } from '@material-ui/core/styles';
     import Card from '@material-ui/core/Card';
     import CardActions from '@material-ui/core/CardActions';
@@ -213,54 +213,38 @@
         setOpen(false);
       };
     
-      const [price, setPrice]= useState("");
       const [feetype, setFeetype] =useState([]);
-      //const [addFeetypename, setAddfeetypename]= useState(false);
-      //const [addFeeprice, setAddfeeprice]= useState("");
-      //const [feesetname, setFeesetname]= useState("");
-      //const [check, setCheck]= React.useState(false)
-      //const [data, setData]= React.useState(false)
-      //const [arrayList, setArrayList] = React.useState([]);
       const [selected, setSelected] = React.useState([]);
       const [addFeesetname, setAddfeesetname]= useState("");
       const [roomprice, setRoomprice]= useState("");
   
       useEffect(() => {
-        axios('/feetype/fee-types')
+        axios('')
         .then(response => {
              console.log(response.data)
         setFeetype(response.data);
         
-    })
+        })
         .catch(error => {
         console.log('Error getting fake data: ' + error);
         })
         }, []);
 
-       const deletetable=(id) =>{
-        axios.post(`/feetype/fee-type/${id}`)
-        .then(() => {
-          setFeetype(
-            feetype.filter((row) => {
-              return row.id != id;
-            })
-          );
-        });
-      };
-    
-    const AddFeeSet = event => {
+        
+    const UpdateFeeSet = event => {
       event.preventDefault();
-        axios.post("/feeset/create-feeset", 
-        {
+        axios.post("/feeset/create-feeset",{
+
           "FeeSetName": addFeesetname,
           "RoomPrice": parseInt(roomprice),
           "FeeTypeIds":selected
+
         }).then((response)=>{
           window.location.href = '/feesets';
           console.log(response);
         })
       };
-    
+           
     const handleClick = (event, name) => {
       const selectedIndex = selected.indexOf(name);
     
@@ -299,7 +283,8 @@
                 <TableBody>
                 <br/>
                 <div className="container ">
-                  <div style={{ display: "flex" }} className={classes.setwidth2}>
+             
+                <div style={{ display: "flex" }} className={classes.setwidth2}>
                         <div style={{ width: "45%" }} >
                             {/*<div htmlFor="Phone" className={classes.eachtitle} style={{paddingLeft: "98px", paddingBottom: 5 }}>Phone Number</div>*/}
                             <input
@@ -399,6 +384,7 @@
       </DialogContent>      
        </Dialog>
           </h5> 
+        
                     <Card className={classes.Cards} variant="outlined">
                       <Table >
                         <TableBody>      
@@ -406,30 +392,33 @@
                         const isItemSelected = isSelected(row.id);
                         const labelId = `enhanced-table-checkbox-${index}`;
                         return(      
-                          <TableRow 
-                              onClick={(event) => handleClick(event, row.id)}
-                              role="checkbox"
-                              aria-checked={isItemSelected}
-                              tabIndex={-1}
-                              //key={index.id}
-                              selected={isItemSelected} >       
-                            <TableCell>
-                              <Checkbox
-                                  color="primary"
-                                  checked={isItemSelected}
-                                  inputProps={{ "aria-labelledby": labelId }}/>
-                            </TableCell>
-                             <TableCell align="Left">
-                                <h5> {row.feeTypeName} </h5>
-                             </TableCell>
-                             <TableCell>
-                                <div className={classes.PriceTag}>
-                                  <h6 className={classes.PriceTagFont}> {row.feeTypePrice} THB </h6>
-                                </div>
-                              </TableCell>
-                            </TableRow>
-                          );
-                      })}
+                      <TableRow 
+                          onClick={(event) => handleClick(event, row.id)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          //key={index.id}
+                          selected={isItemSelected}
+                          >       
+                    <TableCell>
+                        <Checkbox
+                          color="primary"
+                          checked={isItemSelected}
+                          inputProps={{ "aria-labelledby": labelId }}
+                      />
+                  </TableCell>
+                  <TableCell align="Left">
+                    <h5> {row.feeTypeName} </h5>
+                  </TableCell>
+                 
+                  <TableCell>
+                    <div className={classes.PriceTag}>
+                      <h6 className={classes.PriceTagFont}> {row.feeTypePrice} THB </h6>
+                    </div>
+                    </TableCell>
+                </TableRow>
+                );
+            })}
             </TableBody>                     
           </Table>  
               </Card>
@@ -449,20 +438,11 @@
     </Card>   
     </div>
           </ScrollView>
-         {/* <Link to="/feesets">
-            <Button
-              onClick={AddFeeSet}
-               className={classes.savebutton}
-               variant="contained" color="primary" disableElevation
-               style={{ backgroundColor: '#485D84' }} >
-               Save
-           </Button>
-          </Link>*/}
+         
         </div>        
   </div>    
       );
     }
     
-
 
 

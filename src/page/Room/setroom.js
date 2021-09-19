@@ -100,7 +100,6 @@ const useStyles = makeStyles((theme) => ({
     top: 620,
     left: "35%"
 },
-
 }));
 
 export default function (props) {

@@ -100,8 +100,6 @@ export default function DialogDetail(props) {
         console.log(fee)
     }
 
-
-
     return (props.trigger) ? (
         <div className={classes.popup} onClick={() => handlerClick()}>
 

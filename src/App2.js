@@ -36,7 +36,7 @@ import Login from './page/Account/Login';
 import Registration from './page/Account/Registration';
 import Settingroom from './page/Room/setroom';
 import Notedetails from './page/Petition/Petitiondetails';
-
+import Photo from './photo';
 function App2() {
 
   // const [ word , setWord] = useState('Bob')
@@ -50,6 +50,7 @@ function App2() {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route path="/registration" exact={true} component={Registration} />
+
         </Switch>
       </Router>
 
@@ -64,7 +65,8 @@ function App2() {
 
 
         <div className='main' style={{backgroundColor:"#F3F7FC", position: 'relative'}}>
-       
+        <Route path="/photo" exact={true}  render={(props) => <Photo isOpened = {word} {...props} />} />
+
           <Route exact path="/bill" exact={true} render={(props) => <Billpage isOpened = {word} {...props} />} />
           <Route exact path="/announce" exact={true} render={(props) => <Announcep isOpened = {word}  {...props} />}/>
 
@@ -93,6 +95,7 @@ function App2() {
           <Route path="/roomtype_sp" exact={true}  render={(props) => <STRoompage isOpened = {word} {...props} />} />
           <Route path="/initial/:id" exact={true}  render={(props) => <Initial isOpened = {word} {...props} />} />
 
+        
 
           <Route path="/building_sp" exact={true}  render={(props) => <STBuildingpage isOpened = {word} {...props} />} />
           <Route path="/addbuilding/" exact={true}  render={(props) => <Createbuilding isOpened = {word} {...props} />} />
