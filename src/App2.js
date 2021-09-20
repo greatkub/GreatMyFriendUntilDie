@@ -103,7 +103,7 @@ function App2() {
           <Route path="/testnewpage" exact={true} render={(props) => <Initialize isOpened={word} {...props} />} />
 
           {/* <Route path="/testnewpage" exact={true} render={(props) => <Testjmae2 keptArray={arrayFloor => setArrayFloor(arrayFloor)} />} /> */}
-          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
 
 
