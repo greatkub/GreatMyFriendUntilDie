@@ -488,6 +488,7 @@ export default function (props) {
 
   const PetitionNote=(id) =>{
     axios.post(`/petition/delete-petition/${id}`)
+    
     .then(() => {
       setAllroom(
         allroom.filter((row) => {

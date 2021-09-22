@@ -63,7 +63,8 @@ export default function Expensepage({ isOpened }) {
 import { ScrollView } from 'react-native';
 import React, {useEffect,useState} from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Datetoday from '../../Components/AllComponent/Datetoday.js'
+import { makeStyles, useTheme,withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -78,7 +79,10 @@ import moment from 'moment';
 import NumberFormat from 'react-number-format';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Savebtn from "../../Components/Button/Save";
+import InputBase from '@material-ui/core/InputBase';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import { Button } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -166,7 +170,60 @@ const useStyles = makeStyles((theme) => ({
     margin: '1%'
   },
 
+  scrollspace: {
+    height: "730px",
+    width: '1163px',
+    margin: 'auto',
+    paddingLeft: 110,
+    transition: 'all 0.5s ease'
+
+},
+scrollspace36: {
+    height: "730px",
+    width: '1163px',
+    margin: 'auto',
+    paddingLeft: 36,
+    transition: 'all 0.5s ease'
+
+},
+
 }));
+
+
+const BootstrapInput = withStyles((theme) => ({
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
+}))(InputBase);
 
 export default function Expense() {
   const classes = useStyles();
@@ -265,7 +322,7 @@ const Expensesave = event => {
  const [xpense, setXpense] = useState([])
   React.useEffect(() => {
     const fetchData = () =>{
-     axios.get('/rentingtransaction/electricity-water-expenses/2')
+     axios.get('/rentingtransaction/electricity-water-expenses/12')
     .then(r => {    
       setXpense(r.data)
     })
@@ -280,15 +337,17 @@ console.log(xpense)
     <div className="container">
             <div>
             <ScrollView>
-            <div style={{ width: '100%', height: '650px' }}>
-  
+        <div style={{ width: '100%', height: '650px' }}>
+            <div>
+
+    <div className={classes.frame}>
     <Tab.Container  defaultActiveKey="home">
     <div className={classes.root}>
         <main className={classes.content}>
           <div className={classes.toolbar} />
             <div class="container d-flex-end">  
               <div class="container d-flex-start" >
-                <h4 className={classes.Tabmove}>Exppense</h4>   
+                <h4 className={classes.Tabmove}>Expense</h4>   
               </div>    
           <Table>
               <Nav variant="pills"className={classes.Tabmove}>
@@ -305,9 +364,22 @@ console.log(xpense)
     <Tab.Content>
         <Tab.Pane eventKey="home">  
         
-        <input 
-            type="date"/>    
-   
+        {/*<input 
+            type="date"/>*/}  
+
+          <div className="col">    
+              <Paper component="form" className={classes.Searchstyle}>
+              <BootstrapInput
+                type="date"
+                  size="small"
+                  variant="outlined" 
+                  //label="Date"     
+                  
+                              
+                />
+            </Paper>
+          </div>          
+
           <div className="App">
             <Table  aria-label="caption table">
             {xpense.map((build)=>{
@@ -416,8 +488,8 @@ console.log(xpense)
                         <TableCell>Previous Date</TableCell>
                         <TableCell>Previous Reaading</TableCell>
                         <TableCell>Current Reading</TableCell>
-                        <TableCell >Usage</TableCell>    
-                        <TableCell>Remark</TableCell>         
+                        {/*<TableCell >Usage</TableCell>    
+                        <TableCell>Remark</TableCell>*/}
                       </TableRow>
                     </TableHead>  
                       {f.rooms.map((r)=>{
@@ -484,7 +556,9 @@ console.log(xpense)
 </div>
   
 </Tab.Container>
-</div>             
+</div>  
+</div>
+</div>           
       </ScrollView> 
       <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
                 <Button 

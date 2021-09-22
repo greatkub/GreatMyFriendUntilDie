@@ -13,16 +13,14 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
-import Grid from '@material-ui/core/Grid';
-import Feecard from "../../Components/Feeset/Feecard";
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import Input from "@material-ui/core/Input";
 import TextField from '@material-ui/core/TextField';
 import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
 import {BrowserRouter as Router, Route, Link, NavLink, Switch} from "react-router-dom";
 import { ScrollView } from 'react-native';
+//import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
-//import Savebtn from "../../Components/Button/Save";
 
 import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
@@ -77,107 +75,9 @@ const useStyles = makeStyles((theme) => ({
   buttongenerate: {
     width: "157px",
     height: "30.8px",
-    //position: "absolute",
-    //top: 620,
-    //left: "35%"
+    
 },
   }));
-
-
-/*export default function App() {
-
-  const [inputfloorToAdd, setInputfloorToAdd] = useState(1);
-  const [committedFloorToAdd, setCommittedFloorToAdd] = useState([]);
-
-  // const fields: JSX.Element[] = [];
-  // for (let i = 1; i <= committedFieldsToAdd; i++) {
-  //   fields.push(<Field id={i} key={i} />);
-  // }
-
-  return (
-    <div>
-      <div>
-        <label>Number of Floor</label>
-        <input
-          type="number"
-          value={inputfloorToAdd}
-          onChange={(e) => setInputfloorToAdd(parseInt(e.currentTarget.value))}
-        />
-      </div>
-      <button
-        onClick={() => {
-          setCommittedFloorToAdd(inputfloorToAdd);
-        }}
-      >
-        Add fields
-      </button>
-
-      <TableHead>
-        <TableRow>
-          <TableCell>Floor</TableCell>
-          <TableCell align="right">Number</TableCell>
-          <TableCell align="right">LLLL</TableCell>
-          <TableCell align="right">AAAA</TableCell>
-        </TableRow>
-      </TableHead>
-
-    
-      {[...Array(committedFloorToAdd)].map((value, index) => (
-        <Floor id={index + 1} key={index} />
-      ))}
-    </div>
-  );
-}
-
-const Floor = ({ id }) => (
-  <Grid container spacing={3}>
-    <Grid container item xs={12}>
-      <div>
-        <div>
-          <TableContainer>
-            <Table aria-label="simple table">
-              <TableBody>
-                <TableRow>
-                  <TableCell align="right" id={`floor${id}`}>
-                    Floor{id}
-                  </TableCell>
-                  <TableCell align="right" id={`floor${id}`}>
-                    Text{id}
-                  </TableCell>
-                  <TableCell align="right" id={`floor${id}`}>
-                    Number{id}
-                  </TableCell>
-                  <TableCell align="right" id={`floor${id}`}>
-                    aaaa{id}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-      </div>
-    </Grid>
-  </Grid>
-);*/
-
-/*const CustomTableCell = ({ row, name, onChange }) => {
-    const classes = useStyles();
-    const { isEditMode } = row;
-    return (
-      <TableCell align="left" className={classes.tableCell}>
-        {isEditMode ? (
-          <Input
-            value={row[name]}
-            name={name}
-            onChange={(e) => onChange(e, row)}
-            className={classes.input}
-          />
-        ) : (
-          row[name]
-        )}
-      </TableCell>
-    );
-  };*/
 
 
 export default function SetFloor(props) {
@@ -285,7 +185,7 @@ export default function SetFloor(props) {
                         </TableRow>
                      </TableHead>  
 
-                         {/* {Array generate each floor loop} */}
+                      
                         {[...Array(committedfloorToAdd)].map((value, index) => (
 
                     <TableBody>
@@ -298,7 +198,7 @@ export default function SetFloor(props) {
                         </TableCell>
                         <TableCell align="center"><input placeholder="Number of Floor" /></TableCell> 
                         <TableCell align="left">
-                        <Button> <DeleteSweepOutlinedIcon/></Button> 
+                        <Button> <DeleteOutlinedIcon/></Button> 
                         </TableCell>
                         </TableRow>   
                     </TableBody>     
@@ -308,7 +208,7 @@ export default function SetFloor(props) {
                   <div className="container-fruid ">
                   <NavLink to='/setting'>
       <Button >
-          {/*<Savebtn save="save"/>*/}
+          
       </Button>
       </NavLink>         
               </div>  

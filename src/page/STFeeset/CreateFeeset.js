@@ -226,7 +226,7 @@
       const [roomprice, setRoomprice]= useState("");
   
       useEffect(() => {
-        axios('/feetype/fee-types')
+        axios('/feetype/fee-types/')
         .then(response => {
              console.log(response.data)
         setFeetype(response.data);
@@ -320,7 +320,7 @@
                                 placeholder="Room Price"
                                 type="text"
                                 style={{ position: "absolute", width: "36%", left: 470 }}
-                                //name="lastName"
+                                
                                 onChange={(event) => {
                                   setRoomprice(event.target.value);
                               }} 
@@ -363,7 +363,6 @@
                           color="primary"
                           checked={isItemSelected}
                           inputProps={{ "aria-labelledby": labelId }}
-
                       />
                   </TableCell>
 

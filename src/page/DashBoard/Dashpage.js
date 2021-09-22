@@ -11,8 +11,6 @@ import { schemeCategory10 } from "d3-scale-chromatic";
 import axios from "axios";
 import moment from 'moment';
 
-
-
 const useStyles = makeStyles((theme) => ({
     frame: {
         width: '1163px',
@@ -156,7 +154,7 @@ export default function Dashpage({ isOpened }) {
       };
 
     useEffect(()=>{
-        axios.get('/history/barchart/2').then(response =>{
+        axios.get('/history/barchart/1').then(response =>{
         console.log(response.data);
         setBardash(response.data);
         })
@@ -166,7 +164,7 @@ export default function Dashpage({ isOpened }) {
   }, []);
 
     useEffect(()=>{
-        axios.get('/history/dashboard-graph/2').then(response =>{
+        axios.get('/history/dashboard-graph/1').then(response =>{
         console.log(response.data);
         setLinedash(response.data);
     })
@@ -176,7 +174,7 @@ export default function Dashpage({ isOpened }) {
 }, []);
 
     useEffect(()=>{
-        axios.get('/history/room/2')
+        axios.get('/history/room/1')
         .then(response =>{
         console.log(response.data);
         setVacants(response.data);

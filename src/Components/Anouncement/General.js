@@ -23,16 +23,11 @@ const useStyles = makeStyles((theme) => ({
     height: 80,
     borderRadius: 8,
     boxShadow: "1px 1px 3px #E8E8E8"
-
-
   },
   image: {
     width: 100,
     height: 63,
     position: 'relative',
-
-
-
   },
   img: {
     // margin: 'auto',
@@ -43,8 +38,14 @@ const useStyles = makeStyles((theme) => ({
     height: 63,
     objectFit: 'cover',
     borderRadius: 8
-
   },
+
+  move: {
+    marginRight: "-17%",
+    marginTop: "2%"
+    
+  },
+
 }));
 
 export default function ComplexGrid(props) {
@@ -52,7 +53,6 @@ export default function ComplexGrid(props) {
   const str = props.Date
 
   return (
-
       <div className={classes.root}>
         <CardActionArea className={classes.paper}>
           <Grid container spacing={2}>
@@ -62,7 +62,9 @@ export default function ComplexGrid(props) {
             <Grid item xs={12} sm container>
               <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs>
-
+                <Typography className={classes.move} variant="body2" style={{ cursor: 'pointer' }}>
+                    {props.remove}
+                  </Typography>
                   <p id="generalcelldate">
 
                     {moment(str.replace(/[^a-zA-Z0-9]/g, "")).format("L")}
@@ -70,9 +72,7 @@ export default function ComplexGrid(props) {
                   <p id="generalcelltitle" >{props.Name} </p>
                 </Grid>
                 <Grid item>
-                  <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                    {props.remove}
-                  </Typography>
+                 
                 </Grid>
               </Grid>
               <Grid item>

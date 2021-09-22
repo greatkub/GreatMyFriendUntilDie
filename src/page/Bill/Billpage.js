@@ -322,7 +322,7 @@ const BootstrapInput = withStyles((theme) => ({
       },
     },
   }))(InputBase);
-  
+
 export default function Billpage({isOpened}) {
     const classes = useStyles();
     const [bill, setBill] = useState([]);
@@ -336,7 +336,7 @@ export default function Billpage({isOpened}) {
     
     React.useEffect(() => {
         const fetchData = () =>{
-         axios.get('/bill/bills/1/date/2021-09-16')
+         axios.get('/bill/bills/12/date/09-06-2021')
          .then(r => 
           setBill(r.data))
         }
@@ -552,9 +552,7 @@ export default function Billpage({isOpened}) {
                                     <InfoOutlinedIcon/>
                                 </Link>
                               </TableCell>
-
-                              <TableCell></TableCell>
-                              
+                              <TableCell></TableCell> 
                             </TableRow>  
                             )})}   
                                

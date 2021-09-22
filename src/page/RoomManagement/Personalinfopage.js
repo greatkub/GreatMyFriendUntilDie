@@ -14,14 +14,6 @@ import { useParams } from 'react-router-dom'
 import { TrendingUpTwoTone } from '@material-ui/icons';
 import DropGender from '../../Components/Dropdown/DropGender.js';
 
-// import SegmentedControl from 'rn-segmented-control';
-// import { SegmentedControl } from 'segmented-control'
-// import SegmentedControl from '@react-native-segmented-control/segmented-control';
-
-//this 3 import has to unibstall
-
-
-
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -209,7 +201,7 @@ export default function Personalinfopage({ isOpened }) {
 
     const [allData, setAllData] = useState([])
 
-    //groupsubmit//
+  
     const [addFirstName, setAddFirstName] = useState("")
     const [addLastName, setAddLastName] = useState("")
     const [addDateBirth, setAddDateBirth] = useState("")

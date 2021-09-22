@@ -13,6 +13,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import "./../../Css/Announcement/detail.css"
 import { Divider } from '@material-ui/core';
+import moment from 'moment';
+
 import Comment from './Comment';
 
 
@@ -42,17 +44,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "8.5px",
     display: "block",
     marginLeft: "70px",
-    
-    
-    
 
   },
 
   heder:{
-    
     height: "105px",
 
-    
   },
 
   typography: {
@@ -64,17 +61,11 @@ const useStyles = makeStyles((theme) => ({
 
   },
 
-
-
 }));
-
-
 
 
 export default function Detail(props) {
   const classes = useStyles();
- 
-
   return (
     <div >
       <Paper className={classes.paper}>
@@ -102,6 +93,8 @@ export default function Detail(props) {
                 <div style={{height:"20px"}}/>
 
                 <Typography className={classes.typography} style={{paddingBottom:"50px"}}>
+
+
                   {props.description}
                 </Typography>
               {/* </Grid> */}

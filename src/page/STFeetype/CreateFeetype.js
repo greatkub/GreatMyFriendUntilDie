@@ -573,11 +573,20 @@ export default function CreateFeetype(props) {
             })
     }, []);
 
-    const addFeetype = () => {
-        axios.post("/feetype/fee-type/", {
+    const addFeetype = async () => {
+        /*axios.post("/feetype/fee-type/", {
             "FeeTypeName": addFeetypename,
-            "FeeTypePrice": parseInt(addFeeprice)
+            "FeeTypePrice": parseInt(addFeeprice)*/
 
+      await axios({
+            url: "/feetype/fee-type/", 
+            method: "POST", 
+            data: { 
+                "id": id,
+                "FeeTypeName": addFeetypename,
+                "FeeTypePrice": parseInt(addFeeprice)
+            }
+      
         }).then(() => {
             setFeetype([
                 {
@@ -644,8 +653,8 @@ export default function CreateFeetype(props) {
     };*/
 
     const UpdateFeetype = () => {
-        axios.post("/feetype/edit-fee-type/4",{ 
-            "id": 4,
+        axios.post("/feetype/edit-fee-type/14",{ 
+            "id": 14,
             "FeeTypeName": addFeetypename,
             "FeeTypePrice": parseInt(addFeeprice)
         },
@@ -732,7 +741,9 @@ export default function CreateFeetype(props) {
                                     <TableCell>
                                         <div className={classes.BGIcons}>
                                             <DeleteIcon onClick={()=>{deletetable(row.id)}}
-                                             className={classes.IconSizeTable}>
+                                             className={classes.IconSizeTable}
+                                             
+                                             >
                                             <Button ></Button> 
                                             </DeleteIcon>
                                         </div>
@@ -777,10 +788,10 @@ export default function CreateFeetype(props) {
                                     setAddfeeprice(event.target.value);
                                 }}
                             />
+                            
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions className={classes.dialogPaper3}>
-
                         <Button className={classes.Cursor} variant="contained" 
                                 style={{backgroundColor:'#485D84'}} color="primary" 
                                 onClick={addFeetype} disableElevation> 

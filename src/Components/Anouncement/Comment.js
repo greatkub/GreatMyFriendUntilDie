@@ -18,6 +18,8 @@ import axios from 'axios';
 import Cardcomment from './Cardcomment';
 import { useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
+import DeleteIcon from '@material-ui/icons/Delete';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 0px 0px 0 #ffffff"
 
   },
-  
 
   image: {
     width: 300,
@@ -66,9 +67,9 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-const api = axios.create ({
+/*const api = axios.create ({
   baseURL: '/comment/comment'
-})
+})*/
 
 
 export default function Comment(props) {
@@ -89,23 +90,42 @@ export default function Comment(props) {
       })
     }, []);
 
+
     const [message, setMessage] = useState("")
     const [date, setDate] = useState("2021-07-21")
     ///const [postid, setPostid] = useState(3)
     ///const [personid, setPersonid] = useState(5)
 
     const addNews = async () => {
-      let res = await api.post('/', {
+      await axios({ 
+        url: "/comment/comment",
+        method: "POST",
+        data:{
+          "Message": message,
+          "CommentDate": "2021-07-05",
+          "PostAnnouncementId": 162,
+          "UserId": 2
+        }
+
       //   "Message": message,
       //   "PostAnnouncementId": 10,
       //  "UserId": personid
 
-       "Message": message,
-       "PostAnnouncementId": 1,
-       "StaffId": 1
        })
      }
-  
+
+     const deletetable=(id) =>{
+      axios.post(`/comment/comment/${id}`)
+      .then(() => {
+        setAllData(
+          allData.filter((row) => {
+            return row.feeSetId != id;
+      })
+        );
+      });
+    };
+
+    
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} style={{position:"relative"}}>
@@ -141,14 +161,19 @@ export default function Comment(props) {
                     key={index}
                     id={value.id}
                     message={value.message}
-                    commentDate={value.commentDate}
+                    commentDate={moment(value.commentDate).format("L")}
                     role={value.role}
                     firstName={value.firstName}
                     lastName={value.lastName}
-                    profileUrl={value.profileUrl}            
+                    profileUrl={value.profileUrl}     
+                    remove={      
+                      <DeleteIcon
+                          style={{ marginTop:"100%", color:'#4A4A4A'}}
+                          onClick={()=>{deletetable(value.id)}}
+                          size="small"/>}
+
                   />
                   
-
                 :null
                 })}
               </ScrollView>

@@ -14,7 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import Grid from '@material-ui/core/Grid';
 import Feecard from "../../Components/Feeset/Feecard";
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Tab from 'react-bootstrap/Tab'
 import Nav from 'react-bootstrap/Nav'
 import TabContainer from 'react-bootstrap/TabContainer'
@@ -28,6 +28,7 @@ import { NavLink, Link } from "react-router-dom";
 //import Savebtn from "../../Components/Button/Save";
 import InfoIcon from '@material-ui/icons/Info';
 import axios from "axios";
+import EditIcon from '@material-ui/icons/Edit';
 import Savebtn from "../../Components/Button/Save";
 import { ScrollView } from 'react-native';
 
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     width: '110%',
     padding: theme.spacing(3),
     margin: '4%',
+    marginTop: '-20%'
   },
 
   bullet: {
@@ -109,6 +111,32 @@ const useStyles = makeStyles((theme) => ({
     left: "39%"
 },
 
+Goup:{
+  marginTop:"-20%"
+},
+
+BGIcons: {
+  height: "32px",
+  width: "32px",
+  backgroundColor: '#F8F8F8',
+  borderRadius: '20px',
+  margin: 'auto',
+  padding: '10%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textAlign: "center",
+  cursor: 'pointer'
+},
+
+IconSize: {
+  width: '3%',
+  height: '3%',
+  marginLeft: '2%',
+  cursor: 'pointer'
+
+},
+
 }));
 
 export default function Bill(props) {
@@ -147,7 +175,6 @@ export default function Bill(props) {
   return (
       <div className="container ">
         <div>
-      
         <Card className={classes.Card} variant="outlined">
             <Table  aria-label="caption table">
                 <TableHead >
@@ -182,17 +209,29 @@ export default function Bill(props) {
                               <InfoIcon  style={{ display: "flex", flexWrap: 'wrap' }}
                                 onClick={handleClickOpen}
                                       size="small"/>}
-                              /*Edit={
-                                  <DeleteOutlinedIcon 
-                                  onClick={()=>{deletetable(row.feeSetId)}}
-                                    size="small"/>}*/
+                                      
+                                   /*  Edit={
+
+                                        <Link to={`editfeeset/${row.feeSetId}`}  
+                                              //style={{ textDecoration: "none" }}
+                                     >
+
+
+                                      <EditIcon   
+                                       style={{ marginTop:"-5%", color: "black"}}
+                                      />
+                                      </Link>
+                                      }  */       
 
                               delete={
-                                  <DeleteOutlinedIcon 
-                                  style={{ marginTop:"25%"}}
+                             
+                                  <DeleteIcon
+                                  className={classes.IconSizeTable}
+                                  //style={{ marginTop:"105%"}}
                                   onClick={()=>{deletetable(row.feeSetId)}}
                                   size="small"/>}
                              />    
+                           
                         </div> 
             <Dialog 
                 open={open} 

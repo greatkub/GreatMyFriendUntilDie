@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom'
+import moment from 'moment';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -84,7 +85,7 @@ export default function Detailpage({ isOpened, props }) {
                             <Detail
                                 id={item.id}
                                 title={item.title}
-                                announceDate={item.announceDate}
+                                announceDate={moment(item.announceDate).format("L")}
                                 type={item.type}
                                 imageUrl={item.imageUrl}
                                 likes={item.likes}

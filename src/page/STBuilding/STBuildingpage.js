@@ -6,8 +6,8 @@ import axios from 'axios';
 import Cardsection from './Cardsection';
 import { ScrollView } from 'react-native';
 
-
 const useStyles = makeStyles((theme) => ({
+
     frame: {
         width: '1163px',
         height: '113px',
@@ -55,6 +55,26 @@ const useStyles = makeStyles((theme) => ({
             height: "31.5px"
         },
     },
+
+    buttontop3: {
+        //backgroundColor: '#ffff',
+        borderRadius: "5px",
+        textTransform: "none",
+        fontSize: "13px",
+        //color: '#485D84',
+        fontWeight: 'normal',
+        width: "107.6px",
+        height: "31.5px",
+        // position: "absolute",
+
+        '&:hover': {
+            //backgroundColor: '#485D84',
+            //color: '#fff',
+            width: "107.6px",
+            height: "31.5px"
+        },
+    },
+
     fametop: {
         height: "123px",
         width: "100%",
@@ -100,8 +120,8 @@ export default function STBuildingpage({ isOpened }) {
                                 </Button>
                             </Link>
                         </div>
-
                     </div>
+
                     <div className={classes.frame} style={{ display: "flex", flexWrap: 'wrap', paddingLeft: 79, paddingTop: 48.54 }}>
                         <ScrollView style={{ width: "100%", height: "100%" }}>
                             <div style={{ display: "flex", flexWrap: 'wrap' }}>
@@ -114,26 +134,26 @@ export default function STBuildingpage({ isOpened }) {
                                         vacant={value.vacant} 
                                         Manage={
 
-                                            <Link to='/setting2' style={{ textDecoration: "none" }}>
+                                            <Link to='/setting2'
+                                                  style={{ textDecoration: "none" }}>
                                             <Button className={classes.buttontop}>
                                               Manage
                                             </Button>
                                         </Link>
                                         }
-                                             
+    
                                         Edit={
                                             <Link to={`editbuilding_sp/${value.id}`}  
                                                   style={{ textDecoration: "none" }}>
-                                            <Button className={classes.buttontop}>
+                                            <Button variant="outlined" className={classes.buttontop3} >
                                               Edit
                                             </Button>
                                         </Link>
-                                        }              
+                                        }    
+                                   
                                     />
                                 ))}
-                              
                             </div>
-
                         </ScrollView>
                     </div>
                 </div>

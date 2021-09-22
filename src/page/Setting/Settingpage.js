@@ -322,6 +322,7 @@ export default function Settingpage({ isOpened }) {
 
                            {/* <Link to='/bankacc_sp' style={{textDecoration:"none"}} >*/}
                            <Link onClick={handleClickOpen} style={{textDecoration:"none"}} >
+                               
                             <div>
                                 <div className="circletext inline item marleft">
                                     7
@@ -349,6 +350,9 @@ export default function Settingpage({ isOpened }) {
                         SAVE
                         </Link>
                     </Button>
+
+
+
                 <Dialog open={open} onClose={handleClose}
                         aria-labelledby="edit-apartment"
                         fullWidth={true}>

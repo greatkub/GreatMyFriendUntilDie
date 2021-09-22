@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 export default function STRoompage({ isOpened }) {
     const classes = useStyles();
     useEffect(() => {
-        axios('/room/room-types/VMC')
+        axios('/room/room-types/VMS')
             .then(response => {
                 console.log(response.data)
                 setAllFloor(response.data);
@@ -163,7 +163,7 @@ export default function STRoompage({ isOpened }) {
 
 
                             <div className={classes.titleText} style={{ position: 'absolute', bottom: 0 }}>
-                                VMC
+                               
                             </div>
 
                             <div style={{ height: '20px' }}>

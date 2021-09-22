@@ -96,11 +96,9 @@ const useStyles = makeStyles((theme) => ({
     buttondown2: {
         width: 107.5,
         height: 31.5,
-        backgroundColor: "#FFFFFF",
-        color: "#4A4A4A",
-        border: " 1px solid #AAAAAA"
-
-
+        //backgroundColor: "#FFFFFF",
+        //color: "#FFFFF",
+        //border: " 1px solid #AAAAAA"
     }
 
 }));
@@ -136,18 +134,18 @@ export default function Cardsection(props) {
                     <Button className={classes.buttondown1}>
                         {props.Manage}
                     </Button>
-                    <Button className={classes.buttondown1}>
+                    
+                    {/*<Button className={classes.buttondown1}>
                         {props.Edit}
-                    </Button>
+                    </Button>*/}
+
                     <div style={{ width: 10 }}></div>
 
-                    {/*<Button className={classes.buttondown2}>
+                    <Button className={classes.buttondown2}>
                         {props.Edit}
-    </Button>*/}
+                    </Button>
 
                 </div>
-
-
             </Paper>
     )
 }

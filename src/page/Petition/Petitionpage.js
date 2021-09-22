@@ -292,6 +292,7 @@ export default function Petitionpage({ isOpened }) {
     fetchData()
   }, [])
 
+
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = note.map((n) => n.roomNumber);
@@ -435,8 +436,9 @@ const Petitionstatus =() => {
                                     Room {info.roomNumber}
                                 </Link>
                             </TableCell> 
+                            
                              <TableCell>
-                               {info.title} - {info.description.length > 100 ?
+                            {info.buildingName} - {info.title}- {info.description.length > 100 ?
                                       `${info.description.substring(0, 100)}...` : 
                                       info.description} </TableCell> 
                             <TableCell align="right">{info.statusInfo}</TableCell> 

@@ -7,16 +7,11 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Paper } from '@material-ui/core';
 import { Save } from '@material-ui/icons';
-
-
-
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 
 function Arraylist(props) {
-
-  
     const [news,setNews] = useState([]);
-
     const api = axios.create({
         baseURL: props.url
         // 'https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/testimnew'
@@ -47,7 +42,8 @@ function Arraylist(props) {
 
     return (
         <div >
-            <select onChange={handleChange} style={{ backgroundColor: 'white' }} >
+
+            <select onChange={handleChange} style={{ backgroundColor: 'white' , width:"442%" }} >
                 {/* {this.newstype.myarray.map(data=>(
                         <option title={data}>{data}</option>
                     ))} */}

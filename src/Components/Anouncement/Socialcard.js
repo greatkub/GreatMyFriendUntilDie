@@ -17,7 +17,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Typography from '@material-ui/core/Typography';
 import General from "../../Components/Anouncement/General";
 import Button from '@material-ui/core/Button';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../../Css/Announcement/Socialcard.css";
 import { Grid } from '@material-ui/core';
 import Arraylist from './Arraylist';
@@ -26,8 +26,13 @@ import moment from 'moment';
 import ImageIcon from '@material-ui/icons/Image';
 import { Update } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
+import PublishIcon from "@material-ui/icons/Publish";
+
 //import DropFloor from '../Dropdown/DropFloor';
+import DeleteIcon from "@material-ui/icons/Delete";
+
 import {storage } from '../../base'
+import zIndex from '@material-ui/core/styles/zIndex';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
     Font: {
       fontFamily: [
         '"Helvetica Neue"',
-
 
       ].join(','),
     },
@@ -94,7 +98,31 @@ const useStyles2 = makeStyles({
     height: '38px',
     width: '38px',
     marginLeft: '28px'
-  }
+  },
+   Up:{
+     marginLeft: "50%"
+   },
+   Searchstyle: {
+    width: 280,
+  },
+  hidearrowBt: {
+    backgroundColor:'#ffff',
+    width: 20,
+    height: 20,
+    position: 'absolute',
+    zIndex:1
+  },
+
+  headBuilding: {
+    marginLeft: '-25px',
+    paddingTop: '14px'
+  
+},
+
+
+Description:{
+  marginTop: '25px'
+}
   // paper: { minWidth: "500px" },
 });
 
@@ -113,7 +141,7 @@ const api = axios.create({
 
 
 function Social() {
-
+  
   const classes2 = useStyles2();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -126,11 +154,35 @@ function Social() {
   const handleChange = e => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
+      //handleUpload()
+      const uploadTask = storage.ref(`/${e.target.files[0].name}`).put(e.target.files[0]);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref()
+            .child(e.target.files[0].name)
+            .getDownloadURL()
+            .then(url => {
+              setUrl(url);
+            });
+        }
+      );
+
     }
   };
 
   const handleUpload = () => {
-    const uploadTask = storage.ref(`/${image.name}`).put(image);
+    /*const uploadTask = storage.ref(`/${image.name}`).put(image);
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -151,7 +203,7 @@ function Social() {
             setUrl(url);
           });
       }
-    );
+    );*/
   };
 
   console.log("image: ", image);
@@ -171,6 +223,7 @@ function Social() {
 
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState(allData);
+
   // const handleSearch = (event) => {
   //   let value = event.target.value.toLowerCase();
   //   let result = [];
@@ -187,9 +240,9 @@ function Social() {
 
     axios('/announcement/announcements')
       .then(response => {
-        console.log("hi" + response.data)
-        setAllData(response.data);
-        setFilteredData(response.data);
+      console.log("hi" + response.data)
+      setAllData(response.data);
+      setFilteredData(response.data);
       })
       .catch(error => {
         console.log('Error getting fake data: ' + error);
@@ -201,7 +254,7 @@ function Social() {
     let res = await api.post('/', {
       "Title": title,
       "TypeId": parseInt(currentAnnounce),
-      "AnnounceDate": datecreate,
+      //"AnnounceDate": datecreate,
       "Description": descrip,
       //"ImageUrl": "https://cdn.wallpapersafari.com/36/96/7cRSqV.png",
       "ImageUrl": url,
@@ -209,10 +262,11 @@ function Social() {
       "Comments": 0,
       "StaffId": 1
     })
+    window.location.href = '/announce';
   }
 
-  const DeleteAnnounce =(id)=>{
-    axios.post(`/announcement/announcement/${id}`)
+  const deleteAnnounce =(id)=>{
+    axios.post(`/announcement/deleted-announcement/${id}`)
     .then(()=>{
       setAllData(
         allData.filter((row)=>{
@@ -220,7 +274,6 @@ function Social() {
         })
       )
     })
-
   }
 
   const [title, setTitle] = useState("")
@@ -231,7 +284,6 @@ function Social() {
   //   const handleChange = (e) => {
   //     setTitle({value: e.target.value})
   // }
-
 
   return (
     <div>
@@ -246,6 +298,7 @@ function Social() {
         onClick={handleClickOpen}>
         Compose
       </Button>    */}
+
       <Dialog
         classes={{ paper: classes2.dialog }}
         open={open}
@@ -278,26 +331,25 @@ function Social() {
                   />
                 </p>
               </div>
-
-              <div >
+              <div>
                 <form>
-                  <label id="typetitle" htmlFor="Province" >Type</label>
-                  <div className="spacing9"></div>
-                  <Arraylist
-                    url='/announcement/type-announcements'
-                    save={currentAnnounce => setCurrentAnnounce(currentAnnounce)}
+                  <label id="titletitle"htmlFor="Province" >Type</label>
+                  <div className={classes2.hidearrowBt} style={{right:310,top:60}}/>
+                  <div className="spacing12"></div>
+                    <Arraylist   
+                        url='/announcement/type-announcements'
+                        save={currentAnnounce => 
+                          setCurrentAnnounce(currentAnnounce)}
                   />
                 </form>
-
-
               </div>
               <div className="spacing12"></div>
 
-              <div >
+              {/* <div>
                 <p>
                   <label id="datetitle" htmlFor="Date">Date</label>
                   <div className="spacing12"></div>
-                  <input
+                 <input
                     className="dateinput"
                     placeholder="Date"
                     type="date"
@@ -308,19 +360,19 @@ function Social() {
                     }}
                   />
                 </p>
-              </div>
+                  </div> */}
 
               <div className="Description">
-                <label id="descriptiontitle" htmlFor="Date">Description</label>
-
-                <textarea className="Des"
-                  placeholder="Description"
-                  type="text"
-                  name="Description"
-                  noValidate
-                  onChange={(event) => {
-                    setDescrip(event.target.value)
-                  }}
+                <label style={{ padding: '1%', marginLeft: '-1%', marginTop: '1%' }}id="descriptiontitle"htmlFor="Date">Description</label>
+                  <textarea className="Des"
+                       style={{ padding: '2%' }}
+                        placeholder="Description"
+                        type="text"
+                        name="Description"
+                        noValidate
+                        onChange={(event) => {
+                          setDescrip(event.target.value)
+                    }}
                 />
               </div>
 
@@ -328,37 +380,49 @@ function Social() {
           </div>
 
         </DialogContent>
-        <DialogActions2 >
-
+        <DialogActions2>
           <IconButton className={classes.importimgbtn} onClick={imagefunction}>
-            <ImageIcon className={classes2.importimgbtn} style={{ color: '#4A4A4A' }} /> 
-            <input clasName={classes.Choosefile}
-                 //size="40"
-                type="file" 
-                onChange={handleChange} />
-        
-                <button 
-                    onClick={handleUpload}>Upload
-                 </button>
-                 <br/>
-                {url}
-                <br />
+           {/* <ImageIcon className={classes2.importimgbtn} style={{ color: '#4A4A4A' }} />*/}
+            
             </IconButton>
 
+             {/* <div className="App">
+                <input clasName={classes.Choosefile}
+                //size="small"
+                type="file" 
+                onChange={handleChange} />
 
+        
+                
+              
+                <Button htmlFor="raised-button-file"
+                        className="shapefile-icon"
+                        component="label">
+        <PublishIcon />
+                </Button>
+                </div>*/}
 
-          {/* <input type="file">
-          
-          
-          
-          </input> */}
+<div className="App">
+      <input
+        style={{ display: "none" }}
+        id="raised-button-file"
+        type="file"
+        onChange={handleChange} 
+      />
+      <Button
+        htmlFor="raised-button-file"
+        className="shapefile-icon"
+        component="label"
+      >
+        <ImageIcon/>
+      </Button>
+    </div>
+                 
           <Button id="announceBT" className={classes.Btn} variant="contained" color="primary" disableElevation
 
             onClick={addNews}>
             <p id="textAnnounceBt"> Announce</p>
           </Button>
-
-
           <div className="spacing" />
           <Button id="cancelBT" className={classes.Btn} variant="contained" color="primary" disableElevation
             onClick={handleClose}>
@@ -390,24 +454,29 @@ function Social() {
             {allData.map((value, index) => {
               
               return value.type === "Important News" ?
-                <Link to={`/detailpage/${value.id}`} onClick={()=> console.log(value.id)}>
                   <ImpNews
                     key={index}
-                    Name={ value.title}
+                    Name={   
+                    <>
+                      <Link to={`/detailpage/${value.id}`} 
+                          style={{ textDecoration: 'none', color: '#4A4A4A' }}
+                          onClick={()=> console.log(value.id)}>
+                          {value.title}
+                      </Link>
+                    </>
+                    }
                     img={value.imageUrl}
                     //cell={value.description}
                     Date={value.announceDate}  
                     ID={value.id}       
+                    delete={
+                      <IconButton 
+                       onClick={()=>{deleteAnnounce(value.id)}}> 
+                       <DeleteIcon/></IconButton >
+                    }
                     />
                    
-                </Link>
-
-
                 : null
-
-                
-
-
             })}
           </div>
         </div>
@@ -415,7 +484,6 @@ function Social() {
 
         <div className="colorG">
           <div className="newH" >
-
             <Button id="Buttoncompose" className="customButton" variant="contained" color="primary" disableElevation
               style={{ backgroundColor: '#485D84' }}
               onClick={handleClickOpen}>
@@ -434,13 +502,30 @@ function Social() {
               return value.type !== "Important News" ?
                 <General
                   key={index}
-                  Name={value.title}
+                  Name={   
+                    <>
+                    <Link to={`/detailpage/${value.id}` } 
+                          style={{ textDecoration: 'none', color: '#4A4A4A'}}
+                          onClick={()=> console.log(value.id)}>
+                      {value.title}
+                      </Link>
+                    </>
+                    }
                   //cell={value.description}
                   img={value.imageUrl}
                   Date={value.announceDate}
-                  //ID ={index.id}             
-                />
+                  //ID ={index.id}       
+                  remove={
+                    /*<IconButton aria-label="delete" onClick={deleteUserHandler}>
+                      <DeleteIcon />
+                  </IconButton>*/
 
+                    <IconButton className={classes.Btn}  
+                        onClick={()=>{deleteAnnounce(value.id)}}> 
+                         <DeleteIcon/>     
+                    </IconButton>}     
+                        
+                />
                 : null
             })}
           </div>

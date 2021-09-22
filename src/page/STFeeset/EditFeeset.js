@@ -21,7 +21,7 @@ import React, {useState, useEffect} from "react";
     import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
     import EditIcon from '@material-ui/icons/Edit';
     import AddIcon from '@material-ui/icons/Add';
-    import { BrowserRouter as Rounter, Route, Link, NavLink, Switch } from 'react-router-dom';
+    import { BrowserRouter as Rounter, Route, Link, NavLink, Switch, useParams } from 'react-router-dom';
     import Checkbox from '@material-ui/core/Checkbox';
     
     //import "../../Css/Fee/Fee.css"
@@ -214,58 +214,68 @@ import React, {useState, useEffect} from "react";
       };
     
       const [feetype, setFeetype] =useState([]);
-      const [selected, setSelected] = React.useState([]);
-      const [addFeesetname, setAddfeesetname]= useState("");
-      const [roomprice, setRoomprice]= useState("");
-  
+      const [feeTypes, setFeeTypes] = React.useState([]);
+      const [feeTypeName, setFeeTypeName] = React.useState("");
+      const [feeSetName, setFeeSetName]= useState("");
+      const [roomPrice, setRoomprice]= useState("");
+      const {id} =useParams();
+      
       useEffect(() => {
-        axios('')
-        .then(response => {
+        axios.get('/feeset/fee-sets/'+id)
+        .then(response => 
+          {
              console.log(response.data)
+
+        const {data} =response
         setFeetype(response.data);
-        
+        setFeeSetName(data[0].feeSetName)
+        setRoomprice(data[0].roomPrice)
+        setFeeTypes(data[0].feeTypes)
+        setFeeTypeName(data[0].feeTypeName)
+        console.log(data)
+
         })
         .catch(error => {
         console.log('Error getting fake data: ' + error);
         })
-        }, []);
+  }, []);
 
-        
-    const UpdateFeeSet = event => {
-      event.preventDefault();
-        axios.post("/feeset/create-feeset",{
+  const UpdateFeeset = event => {
+    event.preventDefault();
+      axios.post("/feeset/edit-fee-set/" +id, 
+      {
+        "FeeSetId": parseInt(id),
+        "FeeSetName": feeTypes,
+        "RoomPrice": parseInt(roomPrice),
+        "FeeTypeIds":feeTypes
+      }).then((response)=>{
+        window.location.href = '/feesets';
+        console.log(response);
+      })
+    };
 
-          "FeeSetName": addFeesetname,
-          "RoomPrice": parseInt(roomprice),
-          "FeeTypeIds":selected
-
-        }).then((response)=>{
-          window.location.href = '/feesets';
-          console.log(response);
-        })
-      };
-           
+      
     const handleClick = (event, name) => {
-      const selectedIndex = selected.indexOf(name);
+      const selectedIndex = feeTypes.indexOf(name);
     
       let newSelected = [];
      if (selectedIndex === -1) {
-        newSelected = newSelected.concat(selected, name);
+        newSelected = newSelected.concat(feeTypes, name);
       } else if (selectedIndex === 0) {
-        newSelected = newSelected.concat(selected.slice(1));
-      } else if (selectedIndex === selected.length - 1) {
-        newSelected = newSelected.concat(selected.slice(0, -1));
+        newSelected = newSelected.concat(feeTypes.slice(1));
+      } else if (selectedIndex === feeTypes.length - 1) {
+        newSelected = newSelected.concat(feeTypes.slice(0, -1));
       } else if (selectedIndex > 0) {
         newSelected = newSelected.concat(
-          selected.slice(0, selectedIndex),
-          selected.slice(selectedIndex + 1)
+          feeTypes.slice(0, selectedIndex),
+          feeTypes.slice(selectedIndex + 1)
         );
       }
-      setSelected(newSelected);
+      setFeeTypes(newSelected);
     };
-    console.log(selected)
+    console.log(feeTypes)
     
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (name) => feeTypes.indexOf(name) !== -1;
       return (
           <div className="container ">
           <div>
@@ -288,31 +298,33 @@ import React, {useState, useEffect} from "react";
                         <div style={{ width: "45%" }} >
                             {/*<div htmlFor="Phone" className={classes.eachtitle} style={{paddingLeft: "98px", paddingBottom: 5 }}>Phone Number</div>*/}
                             <input
+                                id="feeSetName"
                                 className={classes.setrow}
                                 placeholder="Name"
                                 type="text"
-                                //name="Phone Number"
+                                value={feeSetName}
                                 style={{ position: "absolute", width: "36%", right: 480 }}
                                 onChange={(event) => {
-                                  setAddfeesetname(event.target.value);
+                                  setFeeSetName(event.target.value);
                               }} 
                               />
                         </div>
                         <div style={{ width: "45%" }}>
                             {/*<div htmlFor="lastName" className={classes.eachtitle} style={{ paddingLeft: "80px", paddingBottom: 5 }}>Email</div>*/}
                             <input
+
                                 className={classes.setrow}
                                 placeholder="Room Price"
                                 type="text"
+                                value={roomPrice}
                                 style={{ position: "absolute", width: "36%", left: 470 }}
-                                //name="lastName"
+
                                 onChange={(event) => {
                                   setRoomprice(event.target.value);
                               }} 
                                />
                         </div>
                     </div>
-
 
                     <h5 className={classes.head}> 
                         Select Fee Types <Button onClick={handleClickOpen}>
@@ -338,9 +350,9 @@ import React, {useState, useEffect} from "react";
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={index.id}
-                          selected={isItemSelected}
-
+                          //key={index.id}
+                          feeTypes={isItemSelected}
+                          //value={feeTypes}
                           >       
                     <TableCell>
                         <Checkbox
@@ -352,9 +364,9 @@ import React, {useState, useEffect} from "react";
                       />
                   </TableCell>
 
-
                   <TableCell align="Left">
                     {row.feeTypeName == 'Electricity'|| row.feeTypeName =='Water' ? row.feeTypeName+"(price/unit)": row.feeTypeName }
+                
 
                   </TableCell>
                   <TableCell align="right">
@@ -408,12 +420,16 @@ import React, {useState, useEffect} from "react";
                       />
                   </TableCell>
                   <TableCell align="Left">
+
                     <h5> {row.feeTypeName} </h5>
                   </TableCell>
                  
                   <TableCell>
                     <div className={classes.PriceTag}>
-                      <h6 className={classes.PriceTagFont}> {row.feeTypePrice} THB </h6>
+                      <h6 className={classes.PriceTagFont}> 
+                      {row.feeTypePrice} THB 
+                      
+                    </h6>
                     </div>
                     </TableCell>
                 </TableRow>
@@ -428,7 +444,7 @@ import React, {useState, useEffect} from "react";
 
          <div className="container-fruid ">
           <Button 
-              onClick={AddFeeSet}
+              onClick={UpdateFeeset}
               className={classes.Btn}
               variant="contained" color="primary" disableElevation
               style={{ backgroundColor: '#485D84' }}>

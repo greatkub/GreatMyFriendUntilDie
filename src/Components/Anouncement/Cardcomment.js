@@ -110,11 +110,8 @@ export default function Cardcomment(props) {
                 <div style={{fontSize:"9.7px" , fontWeight:'bold', color:"#D8D8D8", position:"absolute", bottom:0, left:0, marginLeft:84}}>
                     {props.commentDate}
                 </div>
-                
-
             </Grid>
             <Grid item>
-              
             </Grid>
           </Grid>
         </Grid>

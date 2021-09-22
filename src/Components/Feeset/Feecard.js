@@ -77,7 +77,15 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     width: 450,
     
-  }
+  },
+
+  Goup:{
+    marginLeft:"-11%",
+    marginTop:"-11%"
+  },
+  InfoUp:{
+    marginTop:"-1%"
+  },
 
 }));
 
@@ -113,9 +121,10 @@ export default function Feetype(props) {
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <Typography gutterBottom variant="h5">
-                  {props.Set} 
-                  <Button size="small">{props.info}</Button>   
+                <Typography className={classes.Goup}
+                          gutterBottom variant="h5">
+                        {props.Set} 
+                  <Button className={classes.InfoUp} size="small">{props.info}</Button>
                 {/*<Button 
                         onClick={handleClickOpen} size="small">
                 <InfoIcon size="small"/>{props.dialogaction}</Button>*/}
