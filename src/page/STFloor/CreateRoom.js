@@ -9,9 +9,10 @@ import TableCell from "@material-ui/core/TableCell";
 import Table from '@material-ui/core/Table';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
-import { ScrollView } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import { BrowserRouter as Rounter, Route, Link, NavLink, Switch } from 'react-router-dom';
 import { Paper } from '@material-ui/core';
+import { useParams } from 'react-router';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -90,8 +91,15 @@ const useStyles = makeStyles((theme) => ({
         left: "35%"
     },
 
+    inputbox : {
+        width: 128,
+        height: 39
+    }
+
 
 }));
+
+
 
 export default function CreateRoom(props) {
     const classes = useStyles();
@@ -101,31 +109,57 @@ export default function CreateRoom(props) {
     const [arrayFloor, setArrayFloor] = useState(2)
 
     const [getRoomName, setRoomName] = useState()
+    const { id } = useParams()
 
+    const [buildingName, setBuildName] = useState([])
 
-    useEffect(() => {
-        setArrayFloor(props.allFloor)
-        axios('/building/rooms/1')
+    useEffect(async () => {
+        console.log(id + "in Use Eff first row")
+        console.log()
+        await axios(`/building/building/id/${id}`)
             .then(response => {
-                // console.log("hi" + response.data)
-                setAllroom(response.data);
+                console.log(response.data, "in response")
+                setBuildName(response.data[0].buildingName)
+
             })
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
             })
-        console.log("In useeffect")
+
+
+    }, []);
+
+    useEffect(() => {
+        setArrayFloor(props.allFloor)
+        // axios('/building/rooms/1')
+        //     .then(response => {
+        //         // console.log("hi" + response.data)
+        //         setAllroom(response.data);
+        //     })
+        //     .catch(error => {
+        //         console.log('Error getting fake data: ' + error);
+        //     })
+        // console.log("In useeffect")
     },[]);
 
     // building/floor-room/building/5
 
+
     const api = axios.create({
-        baseURL: `/building/floor-room/building/8`
+        baseURL: `/building/floor-room/building/${id}`
     })
 
     const addFloorandRoom = async () => {
         let res = await api.post('/',
             arrayFloor
-        )
+        ).then(response => {
+            alert("Add Room successfully")
+            window.location.href = `/st_initialize/${id}`;
+        })
+            .catch(error => {
+                alert("Fail")
+                console.log('Error getting fake data: ' + error);
+            })
 
     }
 
@@ -167,9 +201,9 @@ export default function CreateRoom(props) {
                         <div style={{ width: '100%', height: '550px' }}>
 
                             {/* <Link to='/st_initialize'> */}
-                            <button onClick={() => console.log(arrayFloor)}>
+                            {/* <button onClick={() => console.log(arrayFloor)}>
 
-                            </button>
+                            </button> */}
                             {/* </Link> */}
 
 
@@ -204,29 +238,31 @@ export default function CreateRoom(props) {
                                     <TableBody>
 
                                         <div className="container">
-                                            <h5 className={classes.heder}>King Solomon</h5>
+                                            <h5 className={classes.heder}> {buildingName}</h5>
 
                                             {arrayFloor != undefined && arrayFloor.length > 0 ? arrayFloor.map((set) => {
-                                                  {console.log(set)}
+                                                { console.log(set) }
                                                 return (
-                                                  
+
                                                     <div>
                                                         <div style={{ width: "100%", minHeight: "200px", border: "1px solid #AAAAAA", borderRadius: 5 }}>
                                                             <div style={{ height: "86.5px", width: "100%", borderBottom: "1px solid #AAAAAA" }}>
-                                                                Floor {set.FloorName}
+                                                                <h4> Floor {set.FloorName} </h4>
                                                             </div>
                                                             {set.Rooms.map((r, index) => {
 
                                                                 return (
                                                                     <div style={{ display: 'flex', height: 50, width: "100%", borderBottom: "1px solid #AAAAAA" }}>
                                                                         <div>
-                                                                            {r.room_number}
+                                                                            <h4>  {r.room_number}</h4>
                                                                         </div>
+
                                                                         <input
                                                                             onChange={e => r.room_number = e.target.value}
                                                                         >
 
                                                                         </input>
+
                                                                         <button>
                                                                             delete
                                                                         </button>
@@ -309,8 +345,7 @@ export default function CreateRoom(props) {
             </Link> */}
 
 
-            {/* <Link to="/initial"> */}
-
+            {/* <Link to={`/st_initialize/${id}`}> */}
             <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
                 <Button onClick={addFloorandRoom}
                     style={{

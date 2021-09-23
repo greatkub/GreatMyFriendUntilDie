@@ -14,7 +14,7 @@ import DropBuilding from '../../Components/Dropdown/DropBuilding.js';
 import DropStatus from '../../Components/Dropdown/DropStatus.js';
 import { Button } from '@material-ui/core';
 import DropIsAvailable from '../../Components/Dropdown/DropIsAvailable.js';
-
+import { useParams } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -80,10 +80,20 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function STRoompage({ isOpened }) {
+export default function STRoompage({ isOpened,props }) {
     const classes = useStyles();
-    useEffect(() => {
-        axios('/room/room-types/Great')
+    const [buildName,setBuildName] = useState("")
+    const {id} = useParams()
+
+    // https://habitat1.azurewebsites.net/api/v1/building/buildings
+    useEffect( async () => {
+        console.log(id + "in Use Eff first row")
+        await axios(`/building/building/id/${id}`)
+        .then(response => {
+            console.log(response.data, "in response")
+            setBuildName(response.data[0].buildingName)
+
+            axios(`/room/room-types/${response.data[0].buildingName}`)
             .then(response => {
                 console.log(response.data)
                 setAllFloor(response.data);
@@ -91,10 +101,17 @@ export default function STRoompage({ isOpened }) {
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
             })
+
+        })
+        .catch(error => {
+            console.log('Error getting fake data: ' + error);
+        })
+        console.log(buildName[0] + "This Build Name ")
+
+       
     }, []);
     const [allFloor, setAllFloor] = useState([]);
     const [buttonPopup, setButtonPopup] = useState(false)
-
 
     const [dropFloorSelect, setDropFloorSelect] = useState("2")
 
@@ -179,6 +196,7 @@ export default function STRoompage({ isOpened }) {
                             {true ?
                                 allFloor.map((item, index) => (
 
+
                                     <Floorcom
                                         // key={index}
                                         getcurrentSelect={currentSelect => setCurrentSelect(currentSelect)}
@@ -186,8 +204,6 @@ export default function STRoompage({ isOpened }) {
                                         floorName={item.floorName}
                                         allFloor={allFloor[index].rooms}
                                     />
-
-
                                 ))
                                 :
                                 allFloor.filter(floor => floor.floorName == dropFloorSelect).map((item, index) => (
@@ -198,8 +214,8 @@ export default function STRoompage({ isOpened }) {
                                         floorName={item.floorName}
                                         allFloor={allFloor[findpositionElement()].rooms}
                                     />
-
                                 ))}
+
 
                             <div style={{ height: 180 }}>
 
@@ -228,7 +244,9 @@ export default function STRoompage({ isOpened }) {
             </ScrollView>
 
             <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
-                <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 540, top: 40 }}>
+                <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 540, top: 40 }}
+                onClick={()=> window.location.href = `/rooms`}
+                >
                     SAVE
                 </Button>
                 <div style={{

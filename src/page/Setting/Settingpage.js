@@ -1,12 +1,24 @@
-import React from 'react'
+
+import React,{useEffect,useState} from 'react'
 import ComplexGrid from '../../Components/Setting/Setting'
 import { Button } from '@material-ui/core'
 import { styled } from '@material-ui/styles';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import './../../Css/Setup/Settingpage.css'
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { Row } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import Card from '@material-ui/core/Card';
+import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs'
+import Axios from "axios";
 
+import Nav from 'react-bootstrap/Nav'
+import { useParams } from 'react-router';
 
 const useStyles = makeStyles({
     flexGrow: {
@@ -122,8 +134,74 @@ const useStyles = makeStyles({
 
 })
 
-export default function Settingpage({ isOpened }) {
+export default function Settingpage({ isOpened, props }) {
     const classes = useStyles();
+
+    const { id } = useParams()
+    const [promptPay, setPromptPay] = React.useState("");
+
+    const [eWallet, setEWallet] = React.useState("");
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true)
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const BankAccountsave = () => {
+        Axios.post("/bankaccount/promptpay/1", {
+            "id": 1,
+            "promptPay": promptPay
+
+        }).then((response) => {
+            alert("Add Success")
+            //window.location.href = '/building_sp';
+            console.log(response);
+            setOpen(false)
+
+        })
+        
+    };
+
+    const Ewalletsave = () => {
+        Axios.post("/bankaccount/e-wallet/1", {
+            "id": 1,
+            "e_wallet": eWallet
+
+        }).then((response) => {
+            //window.location.href = '/building_sp';
+            console.log(response);
+        })
+    };
+
+    useEffect(() => {
+        Axios.get('/bankaccount/e-wallet/1')
+            .then(response => {
+
+
+                const { data } = response;
+                setEWallet(data[0].eWallet)
+            })
+            .catch(error => {
+                console.log('Error getting fake data: ' + error);
+            })
+    }, []);
+
+    useEffect(() => {
+        Axios('/bankaccount/promptpay/1')
+            .then(response => {
+                const { data } = response;
+                setPromptPay(data[0].promptPay);
+            })
+            .catch(error => {
+                console.log('Error getting fake data: ' + error);
+            })
+    }, []);
+
+
 
     return (
         <div style={{ width: '100%' }}>
@@ -135,6 +213,7 @@ export default function Settingpage({ isOpened }) {
                     <div className={classes.topicsetup}>
                         Setting
                     </div>
+
 
                     <div className={classes.incontainer}>
 
@@ -158,7 +237,7 @@ export default function Settingpage({ isOpened }) {
 
                             <div style={{ height: " 50px" }} />
 
-                            <Link to='/floors_sp' style={{ textDecoration: "none" }}>
+                            <Link to={`/stCreateFloor/${id}`} style={{ textDecoration: "none" }}>
                                 <div>
                                     <div className="circletext inline item marleft">
                                         2
@@ -175,12 +254,13 @@ export default function Settingpage({ isOpened }) {
                             </Link>
 
                             <div style={{ height: " 50px" }} />
-                            <Link to='/rooms_sp' style={{ textDecoration: "none" }}>
+                            <Link to='/settingroom' style={{ textDecoration: "none" }}>
 
                                 <div>
                                     <div className="circletext inline item marleft">
                                         3
                                     </div>
+
                                     <div>
                                         <div className={classes.textsetting}>
                                             Rooms
@@ -189,12 +269,14 @@ export default function Settingpage({ isOpened }) {
                                             Manage and set up room
                                         </div>
                                     </div>
+
                                 </div>
+
                             </Link>
 
                             <div style={{ height: " 50px" }} />
 
-                            <Link to='/roomtype_sp' style={{ textDecoration: "none" }}>
+                            <Link to={`/roomtype_sp/${id}`} style={{ textDecoration: "none" }}>
 
                                 <div>
                                     <div className="circletext inline item marleft">
@@ -214,8 +296,7 @@ export default function Settingpage({ isOpened }) {
                         </div>
                         <div className={classes.mdblue}>
                             <div style={{ height: " 47px" }} />
-
-                            <Link to='/feetype_sp' style={{ textDecoration: "none" }}>
+                            <Link to=  {`/feetype_sp/${id}`} style={{ textDecoration: "none" }}>
 
                                 <div>
                                     <div className="circletext inline item marleft">
@@ -233,9 +314,7 @@ export default function Settingpage({ isOpened }) {
                             </Link>
 
                             <div style={{ height: " 50px" }} />
-
-                            <Link to='/feesets_sp' style={{ textDecoration: "none" }}>
-
+                            <Link to={`/feesets_sp/${id}`} style={{ textDecoration: "none" }}>
                                 <div>
                                     <div className="circletext inline item marleft">
                                         6
@@ -253,8 +332,8 @@ export default function Settingpage({ isOpened }) {
 
                             <div style={{ height: " 50px" }} />
 
-                            <Link to='/bankacc_sp' style={{ textDecoration: "none" }}>
-
+                            {/* <Link to='/bankacc_sp' style={{ textDecoration: "none" }}> */}
+                            <Link onClick={handleClickOpen} style={{textDecoration:"none"}} >
                                 <div>
                                     <div className="circletext inline item marleft">
                                         7
@@ -272,7 +351,7 @@ export default function Settingpage({ isOpened }) {
 
                             <div style={{ height: " 50px" }} />
 
-                            <Link to='/d' style={{ textDecoration: "none" }}>
+                            <Link to={`/st_initialize/${id}`} style={{ textDecoration: "none" }}>
 
                                 <div>
                                     <div className="circletext inline item marleft">
@@ -280,13 +359,13 @@ export default function Settingpage({ isOpened }) {
                                     </div>
                                     <div>
                                         <div className={classes.textsetting}>
-                                            Initial Expense
+                                            Initial Expenses
                                         </div>
                                         <div className={classes.subtext}>
                                             Setting initial meter reading
                                         </div>
-                                        <div className={classes.subtext} style={{position: "absolute", right: 189}}>
-                                            in eachline
+                                        <div className={classes.subtext} style={{ position: "absolute", right: 189 }}>
+                                            in each line
                                         </div>
 
                                     </div>
@@ -297,11 +376,95 @@ export default function Settingpage({ isOpened }) {
 
                     </div>
 
-                    <Button className={classes.button2}>
-                        SAVE
-                    </Button>
+                    <Link to={`/stCreateFloor/${id}`}>
+                        <Button className={classes.button2}>
+                            SAVE
+                        </Button>
+                    </Link>
 
+                    {/* stCreateFloor */}
+                    <Dialog open={open} onClose={handleClose}
+                        aria-labelledby="edit-apartment"
+                        fullWidth={true}>
+                    <DialogTitle id="edit-apartment" className={classes.dialogPaper2}>Bank</DialogTitle>
+                    <DialogContent className={classes.dialogPaper}>
+                    <Tabs
+                        defaultActiveKey="home"
+                        transition={false}
+                        id="noanim-tab-example"
+                        className="mb-3"
+                    >
+                        <Tab eventKey="home" title="Prompt pay">
+                            <DialogContentText>
+                            <h6>Mobile No./Citizen ID/Tax ID</h6>
+                                <input maxlength="40" size="40"
+                                   id
+                                   type="text"
+                                   fullWidth    
+                                   contenteditable="true"
+                                   value={promptPay}
+                                   onChange={(event) => {
+                                    setPromptPay(event.target.value);
+                                }              
+                            }/>
 
+                            </DialogContentText>
+                            <DialogActions className={classes.dialogPaper3}>
+                                <Button
+                                    onClick={BankAccountsave }
+                                    className={classes.Cursor}
+                                    variant="contained" 
+                                    color="primary" 
+                                    disableElevation
+                                    style={{backgroundColor: '#485D84'}}>
+                                Create
+                        </Button>
+                        <div className={classes.dialogButton}>
+                            <Button className={classes.Cursor}
+                                    type={"button"}
+                                    variant="contained" disableElevation
+                                    onClick={handleClose}>
+                                cancel
+                            </Button>
+                        </div>
+                    </DialogActions>
+                        </Tab>
+
+                        <Tab eventKey="profile" title="E-wallet">
+                        <DialogContentText>
+                        <h6>Reference Number</h6>
+                            <input maxlength="40" size="40"
+                                   type="text"
+                                   fullWidth    
+                                   value={eWallet}
+                                   onChange={(event) => {
+                                    setEWallet(event.target.value);
+                                }}
+                                 />
+                             </DialogContentText>
+                             <DialogActions className={classes.dialogPaper3}>
+                                <Button
+                                    onClick={Ewalletsave}
+                                    className={classes.Cursor}
+                                    variant="contained" 
+                                    color="primary" 
+                                    disableElevation
+                                    style={{backgroundColor: '#485D84'}}>
+                                Create
+                        </Button>
+                        <div className={classes.dialogButton}>
+                            <Button className={classes.Cursor}
+                                    type={"button"}
+                                    variant="contained" disableElevation
+                                    onClick={handleClose}>
+                                cancel
+                            </Button>
+                        </div>
+                    </DialogActions>
+                        </Tab>
+                    </Tabs>
+                    </DialogContent>
+                </Dialog>
 
                 </div>
             </div>

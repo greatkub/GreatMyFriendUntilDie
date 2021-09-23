@@ -12,6 +12,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import TextField from '@material-ui/core/TextField';
 import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
 import { ScrollView } from 'react-native';
+import { useParams } from 'react-router';
 
 import axios from 'axios';
 import { BrowserRouter as Rounter, Route, Link, NavLink, Switch } from 'react-router-dom';
@@ -65,9 +66,10 @@ export default function Initialize(props) {
     const [allroom, setAllroom] = useState([]);
     const [isLoading, setLoading] = useState(true)
     const [addDate, setAddDate] = useState("")
+    const {id} = useParams()
 
     useEffect(() => {
-        axios('/building/rooms/4')
+        axios(`/building/rooms/${id}`)
             .then(response => {
                 console.log("hi" + response.data)
                 setAllroom(response.data);
@@ -155,6 +157,7 @@ export default function Initialize(props) {
             
         }).then(response => {
             alert("post success")
+            window.location.href = `/feetype_sp/${id}`;
         })
         .catch(error => {
             alert("post fail")
@@ -228,9 +231,9 @@ export default function Initialize(props) {
                 <ScrollView>
 
                     <div className="container">
-                        <button onClick={() => console.log(finalroom)}>
+                        {/* <button onClick={() => console.log(finalroom)}>
 
-                        </button>
+                        </button> */}
                         <div>
                             <div style={{ width: '100%', height: '650px' }}>
 
@@ -335,6 +338,7 @@ export default function Initialize(props) {
                             SAVE
                         </Button>
                     {/* </Link > */}
+                    
                     <div
                         style={{
                             backgroundColor: '#385CA8',

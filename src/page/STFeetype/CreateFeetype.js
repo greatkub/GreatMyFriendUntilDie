@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {makeStyles} from '@material-ui/core/styles';
+import React, { useState, useEffect } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import TableHead from "@material-ui/core/TableHead";
@@ -14,12 +14,13 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import {BrowserRouter as Rounter, Route, Link, NavLink, Switch} from 'react-router-dom';
+import { BrowserRouter as Rounter, Route, Link, NavLink, Switch } from 'react-router-dom';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Modal from '@material-ui/core/Modal';
 import axios from "axios";
 import CloseIcon from '@material-ui/icons/Close';
 import Chip from '@material-ui/core/Chip';
+import { useParams } from "react-router";
 
 // import "../../Css/Fee/Fee.css"
 // import "./Fee.css"
@@ -198,6 +199,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFeetype(props) {
 
+    const { id } = useParams()
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
     const handleClickOpen = () => {
@@ -239,7 +241,8 @@ export default function CreateFeetype(props) {
                     FeeTypePrice: parseInt(addFeeprice)
                 },
             ]);
-            window.location.href = '/createfeetype';
+            // window.location.href = '/createfeetype';
+            window.location.href = `/feetype_sp/${id}`;
         });
         setOpen(false)
     };
@@ -247,8 +250,8 @@ export default function CreateFeetype(props) {
     const deletetable = (id) => {
         axios.post(`/feetype/fee-type/${id}`).then(() => {
             setFeetype(feetype.filter((row) => {
-                    return row.id != id;
-                })
+                return row.id != id;
+            })
             );
         });
     };
@@ -331,47 +334,59 @@ export default function CreateFeetype(props) {
     //         </div>
     //     </div>
     // )
+    function handlerClick() {
+        // await props.getId(id)
+        // window.location.href = `/roomtype_sp/${id}`;
+        window.location.href = `/feesets_sp/${id}`;
+
+        
+
+    }
 
     return (
         <div className={classes.frame}>
             <Card className={classes.Card} variant="outlined">
                 <h4 className={classes.TitleMargin}> Fee Types
-                    <AddCircleIcon className={classes.IconSize} onClick={handleClickOpen} color="primary"/>
+                    <AddCircleIcon className={classes.IconSize} onClick={handleClickOpen} color="primary" />
                 </h4>
-                
-                <hr/>
+
+                <hr />
 
                 <div className="container">
                     <Card className={classes.Cards} variant="outlined">
                         <Table>
                             <tbody>
-                            {feetype.map((row) => (
-                                <TableRow>
-                                    <TableCell>{row.userId}</TableCell>
-                                    <TableCell style={{width: 500, alignItems: "center"}}><h6
-                                        className={classes.FontTable}> {row.feeTypeName} </h6></TableCell>
-                                    <TableCell>
-                                        <div className={classes.PriceTag}>
-                                            <h6 className={classes.PriceTagFont}> {row.feeTypePrice} THB </h6>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell>
-                                        <div className={classes.BGIcons}>
-                                            <EditIcon className={classes.IconSizeTable}
-                                                      onClick={() => selectFeetype(row, "Edit")}/>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell>
-                                        <div className={classes.BGIcons}>
-                                            <DeleteIcon className={classes.IconSizeTable}>
+                                {feetype.map((row) => (
+                                    <TableRow>
+                                        <TableCell>{row.userId}</TableCell>
+                                        <TableCell style={{ width: 500, alignItems: "center" }}><h6
+                                            className={classes.FontTable}> {row.feeTypeName} </h6></TableCell>
+                                        <TableCell>
+                                            <div className={classes.PriceTag}>
+                                                <h6 className={classes.PriceTagFont}> {row.feeTypePrice} THB </h6>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className={classes.BGIcons}>
+                                                <EditIcon className={classes.IconSizeTable}
+                                                    onClick={() => selectFeetype(row, "Edit")} />
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className={classes.BGIcons}>
+                                                {/* <DeleteIcon className={classes.IconSizeTable}>
                                                 onClick={() => {
                                                 deletetable(row.id)
                                             }}
-                                            </DeleteIcon>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                                            </DeleteIcon> */}
+                                                <DeleteIcon onClick={() => { deletetable(row.id) }}
+                                                    className={classes.IconSizeTable}>
+                                                    <Button ></Button>
+                                                </DeleteIcon>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
                             </tbody>
                         </Table>
                     </Card>
@@ -387,13 +402,13 @@ export default function CreateFeetype(props) {
                         <DialogContentText>
                             <h6>Fee type name</h6>
                             <input maxlength="40" size="40"
-                                   type="text"
+                                type="text"
                                 // name="Feetype name"
-                                   fullWidth
+                                fullWidth
                                 //value={addFeetypename}
-                                   onChange={(event) => {
-                                       setAddfeetypename(event.target.value);
-                                   }}
+                                onChange={(event) => {
+                                    setAddfeetypename(event.target.value);
+                                }}
                             />
                         </DialogContentText>
                         <DialogContentText>
@@ -415,14 +430,14 @@ export default function CreateFeetype(props) {
                             className={classes.Cursor}
                             variant="contained" color="primary" disableElevation
                             onClick={addFeetype}
-                            style={{backgroundColor: '#485D84'}}>
+                            style={{ backgroundColor: '#485D84' }}>
                             Create
                         </Button>
                         <div className={classes.dialogButton}>
                             <Button className={classes.Cursor}
-                                    type={"button"}
-                                    variant="contained" disableElevation
-                                    onClick={handleClose}>
+                                type={"button"}
+                                variant="contained" disableElevation
+                                onClick={handleClose}>
                                 cancel
                             </Button>
                         </div>
@@ -448,7 +463,7 @@ export default function CreateFeetype(props) {
                                 onChange={(event) => {
                                     setAddfeetypename(event.target.value);
                                 }}
-                                value={addFeetypename.feeTypeName}/>
+                                value={addFeetypename.feeTypeName} />
                         </DialogContentText>
                         <DialogContentText>
                             <h6>Price</h6>
@@ -462,7 +477,7 @@ export default function CreateFeetype(props) {
                                 onChange={(event) => {
                                     setAddfeeprice(event.target.value);
                                 }}
-                                value={addFeeprice.feeTypePrice}/>
+                                value={addFeeprice.feeTypePrice} />
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions className={classes.dialogPaper3}>
@@ -470,14 +485,14 @@ export default function CreateFeetype(props) {
                             className={classes.Cursor}
                             variant="contained" color="primary" disableElevation
                             onClick={() => UpdateFeetype()}
-                            style={{backgroundColor: '#485D84'}}>
+                            style={{ backgroundColor: '#485D84' }}>
                             Edit
                         </Button>
                         <div className={classes.dialogButton}>
                             <Button className={classes.Cursor}
-                                    type={"button"}
-                                    variant="contained" disableElevation
-                                    onClick={() => EditModal()}>
+                                type={"button"}
+                                variant="contained" disableElevation
+                                onClick={() => EditModal()}>
                                 cancel
                             </Button>
                         </div>
@@ -485,12 +500,12 @@ export default function CreateFeetype(props) {
                 </Dialog>
 
                 <div className="container-fruid ">
-                    <NavLink to="/setting">
-                        <Button className={classes.Btn}
-                                variant="contained" color="primary" disableElevation
-                                style={{backgroundColor: '#485D84'}}>Save
-                        </Button>
-                    </NavLink>
+                    {/* <Link to={`/roomtype_sp/${idthis}`}> */}
+                    <Button className={classes.Btn} onClick={() => handlerClick()}
+                        variant="contained" color="primary" disableElevation
+                        style={{ backgroundColor: '#485D84' }}>Save
+                    </Button>
+                    {/* </Link> */}
                 </div>
             </Card>
         </div>

@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cardsection from './Cardsection';
 import { ScrollView } from 'react-native';
+import { Redirect } from 'react-router-dom';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -67,21 +69,31 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function STBuildingpage({ isOpened }) {
+export default function STBuildingpage({ isOpened, props }) {
 
     const classes = useStyles();
     const [building, setBuilding] = useState([])
+    const [nowId, setNowId] = useState([])
 
     useEffect(() => {
         axios('/building/buildings')
             .then(response => {
                 console.log(response.data)
                 setBuilding(response.data);
+                
             })
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
             })
     }, []);
+
+    useEffect(() => {
+        console.log(nowId)
+        // return(
+        //     <Link to='/setting2' />
+        // )
+
+    }, [nowId])
 
     return (
         <div style={{ width: '100%' }}>
@@ -92,6 +104,7 @@ export default function STBuildingpage({ isOpened }) {
                         <div style={{ display: "flex", paddingTop: "52px" }}>
                             <div className={classes.title}>
                                 Residence
+                              
                             </div>
                             <div style={{ width: "41px" }} />
                             <Link to='/addbuilding' style={{ textDecoration: "none" }}>
@@ -102,6 +115,7 @@ export default function STBuildingpage({ isOpened }) {
                         </div>
 
                     </div>
+
                     <div className={classes.frame} style={{ display: "flex", flexWrap: 'wrap', paddingLeft: 79, paddingTop: 48.54 }}>
                         <ScrollView style={{ width: "100%", height: "100%" }}>
                             <div style={{ display: "flex", flexWrap: 'wrap' }}>
@@ -112,9 +126,35 @@ export default function STBuildingpage({ isOpened }) {
                                         tenant={value.tenant}
                                         overdue={value.overdue}
                                         vacant={value.vacant}
+                                        id={value.id}
+                                        // getid={nowId => setNowId(nowId)}
+                                        Manage={
+                                            <Link to={`/setting2/${value.id}`}
+                                                style={{ textDecoration: "none" }}>
 
-                                        Manage={"Manage"}
-                                        Edit={"Edit"}
+                                                <Button className={classes.buttontop} >
+
+                                                    Manage
+
+                                                </Button>
+
+                                             </Link> 
+                                        }
+                                        Edit={
+
+                                            <Link to={`editbuilding_sp/${value.id}`}
+
+                                                style={{ textDecoration: "none" }}>
+
+                                                <Button className={classes.buttontop}>
+
+                                                    Edit
+
+                                                </Button>
+
+                                            </Link>
+
+                                        }
                                     />
                                 ))}
                             </div>

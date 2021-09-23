@@ -231,7 +231,7 @@ export default function DisplayDialog(props) {
                     </div>
                     <div style={{ height: '10.5px' }} />
                     <div className={classes.subTitle}>
-                        Room: 102 • 104 • 107 • 104 • 107 • 104 • 107 • 104 • 107
+                        {/* Room: 102 • 104 • 107 • 104 • 107 • 104 • 107 • 104 • 107 */}
                     </div>
                     <div style={{ height: '32.5px' }} />
 

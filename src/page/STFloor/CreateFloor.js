@@ -10,6 +10,8 @@ import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
 import { BrowserRouter as Router, Route, Link, NavLink, Switch } from "react-router-dom";
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
+import { useParams } from 'react-router';
+import { useEffect } from 'react';
 
 //import Savebtn from "../../Components/Button/Save";
 
@@ -84,10 +86,28 @@ export default function CreateFloor(props) {
 
 
     const [keptSample, setKeptSample] = useState([])
-
+    const { id } = useParams()
     const roomObject = {
         "room_number": "101"
     }
+
+    const [buildingName, setBuildName] = useState([])
+
+    useEffect(async () => {
+        console.log(id + "in Use Eff first row")
+        await axios(`/building/building/id/${id}`)
+            .then(response => {
+                console.log(response.data, "in response")
+                setBuildName(response.data[0].buildingName)
+
+            })
+            .catch(error => {
+                console.log('Error getting fake data: ' + error);
+            })
+
+
+    }, []);
+
     function habdlerClick() {
         console.log("This all floor" + inputfloorToAdd)
         setCommittedFloorToAdd(inputfloorToAdd);
@@ -117,41 +137,47 @@ export default function CreateFloor(props) {
     }
 
 
-    function habdlerClick() {
-        console.log("This all floor" + inputfloorToAdd)
-        setCommittedFloorToAdd(inputfloorToAdd);
+    // function habdlerClick() {
+    //     console.log("This all floor" + inputfloorToAdd)
+    //     setCommittedFloorToAdd(inputfloorToAdd);
 
 
-        for (var i = 0; i < inputfloorToAdd; i++) {
+    //     for (var i = 0; i < inputfloorToAdd; i++) {
 
 
-            const sampleObject = {
-                "FloorName": `${i + 1}`,
-                "FloorNumber": i + 1,
-                "Rooms": [],
+    //         const sampleObject = {
+    //             "FloorName": `${i + 1}`,
+    //             "FloorNumber": i + 1,
+    //             "Rooms": [],
 
-            }
-
-
-            keptSample.push(sampleObject)
-
-        }
-        // sampleObject.FloorName = 3
-
-        props.keptArray(keptSample)
-        console.log(keptSample)
-
-        // console.log(sampleObject)
+    //         }
 
 
-    }
+    //         keptSample.push(sampleObject)
+
+    //     }
+    //     // sampleObject.FloorName = 3
+
+    //     props.keptArray(keptSample)
+    //     console.log(keptSample)
+
+    //     // console.log(sampleObject)
+
+
+    // }
+    function deleteItem(i) {
+        // const { items } = this.state;
+        keptSample.splice(i, 1);
+        // this.setState({ items });
+        setKeptSample(keptSample)
+      }
 
     return (
-        <div style={{width: '100%' }}>
-                    <ScrollView>
+        <div style={{ width: '100%' }}>
+            <ScrollView>
 
-            <div className="container" style={{ position: 'relative'}}>
-                <div>
+                <div className="container" style={{ position: 'relative' }}>
+                    <div>
                         <div style={{ width: '100%', height: '650px' }}>
 
 
@@ -197,7 +223,7 @@ export default function CreateFloor(props) {
                                             <Card className={classes.Cards} variant="outlined">
                                                 <Table >
                                                     <TableHead >
-                                                        <h5 className={classes.heder}>King Solomon</h5>
+                                                        <h5 className={classes.heder}>{buildingName}</h5>
                                                         <TableRow>
                                                             <TableCell align="left">Floor</TableCell>
                                                             <TableCell align="center">Edit Name Floor</TableCell>
@@ -214,7 +240,7 @@ export default function CreateFloor(props) {
                                                                 <TableCell align="left" numfloor={`floor${index}`}>
                                                                     {index + 1}
                                                                 </TableCell>
-                                                                
+
                                                                 <TableCell align="center">
                                                                     <input placeholder="Number of Room" placeholder={index + 1} onChange={e => value.FloorName = e.target.value} />
                                                                 </TableCell>
@@ -223,7 +249,9 @@ export default function CreateFloor(props) {
 
                                                             </TableCell> */}
                                                                 <TableCell align="left">
-                                                                    <Button> <DeleteSweepOutlinedIcon /></Button>
+                                                                    <Button  onClick={()=> deleteItem(index)}> <DeleteSweepOutlinedIcon /></Button>
+                                                                    {/* <button onClick={()=> console.log(keptSample)}></button> */}
+
                                                                 </TableCell>
                                                             </TableRow>
                                                         </TableBody>
@@ -244,25 +272,16 @@ export default function CreateFloor(props) {
                                 </Table>
                             </Card>
                         </div>
+                    </div>
+
+
+
                 </div>
 
-                {/* <Link to="/settingroom" onClick={() => props.keptArray(keptSample)}>
-                <Button
-                    className={classes.buttonsubmit}
-                    variant="contained" color="primary" disableElevation
-                    style={{ backgroundColor: '#485D84' }} >
-                    Save
-                </Button>
-            </Link> */}
 
-
-
-            </div>
-
-           
             </ScrollView>
             <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
-                <Link to="/settingroom" onClick={() => props.keptArray(keptSample)}>
+                <Link to={`/settingroom/${id}`} onClick={() => props.keptArray(keptSample)}>
 
                     <Button
                         style={{
@@ -270,7 +289,7 @@ export default function CreateFloor(props) {
                             height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1,
                             position: 'absolute', left: 540, top: 40
                         }}>
-                        SAVE
+                        Next
                     </Button>
 
                     <div style={{

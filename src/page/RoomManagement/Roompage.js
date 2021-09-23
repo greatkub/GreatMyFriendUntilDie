@@ -86,7 +86,7 @@ export default function Roompage({ isOpened }) {
     const [isLoading, setIsLoading] = useState(false)
     const [isLoadingLV1, setIsLoadingLV1] = useState(false)
 
-    const [currentBuilding, setCurrentBuilding] = useState("Great")
+    const [currentBuilding, setCurrentBuilding] = useState("Demo")
     const [floorUrl, setFloorUrl] = useState(`/dropdown/floors/${currentBuilding}`)
     // const floorUrl = `/building/floors/${currentBuilding}`
 

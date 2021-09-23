@@ -573,9 +573,9 @@ export default function Personalinfopage({ isOpened }) {
 
                             </div>
 
-                            <button onClick={() => console.log(addGender)}>
+                            {/* <button onClick={() => console.log(addGender)}>
 
-                            </button>
+                            </button> */}
 
 
                         </div>
@@ -695,7 +695,7 @@ export default function Personalinfopage({ isOpened }) {
 
                                         <div className={classes.block_sm2}>
                                             <div className={classes.headname}>
-                                                Date of Birth Picker
+                                                Date of Birth
                                             </div>
                                             <div style={{ height: 4 }}></div>
                                             <input
@@ -716,7 +716,7 @@ export default function Personalinfopage({ isOpened }) {
                                         <div className={classes.grab4} />
                                         <div className={classes.block_sm2}>
                                             <div className={classes.headname}>
-                                                Gender Dropdown
+                                                Gender
                                             </div>
                                             <div style={{ height: 28 }}></div>
                                             <DropGender className={classes.input_md} style={{ marginTop: '30px' }}

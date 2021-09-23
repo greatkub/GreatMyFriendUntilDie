@@ -110,44 +110,47 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Cardsection(props) {
     const classes = useStyles()
-
+    
+    
     return (
 
-            <Paper className={classes.paperrow}>
-                <div className={classes.roomtext}>
-                    {props.buildingName}
+        <Paper className={classes.paperrow}>
+            <div className={classes.roomtext}>
+                {props.buildingName}
+            </div>
+            <div className={classes.numinroom}>
+                <div className={classes.aligninicon}>{props.numberOfRoom} rooms</div>
+            </div>
+            <div style={{ marginTop: 32.6, marginLeft: 28.3 }}>
+                <div className={classes.typeroom}>
+                    Overdue {props.overdue} rooms
                 </div>
-                <div className={classes.numinroom}>
-                    <div className={classes.aligninicon}>{props.numberOfRoom} rooms</div>
+                <div className={classes.typeroom}>
+                    Tenant {props.tenant} rooms
                 </div>
-                <div style={{ marginTop: 32.6, marginLeft: 28.3 }}>
-                    <div className={classes.typeroom}>
-                        Overdue {props.overdue} rooms
-                    </div>
-                    <div className={classes.typeroom}>
-                        Tenant {props.tenant} rooms
-                    </div>
-                    <div className={classes.typeroom}>
-                        Vacant {props.vacant} rooms
-                    </div>
-
+                <div className={classes.typeroom}>
+                    Vacant {props.vacant} rooms
                 </div>
+            </div>
 
 
-                <div style={{ display: 'flex', position: 'absolute', bottom: 19.4, right: 29.1 }}>
+            <div style={{ display: 'flex', position: 'absolute', bottom: 19.4, right: 29.1 }}>
 
+                {/* <Link to={`/setting2/${props.id}`}> */}
                     <Button className={classes.buttondown1}>
                         {props.Manage}
                     </Button>
-                    <div style={{ width: 10 }}></div>
+                {/* </Link> */}
+                
+                <div style={{ width: 10 }}></div>
 
-                    <Button className={classes.buttondown2}>
-                        {props.Edit}
-                    </Button>
+                <Button className={classes.buttondown2}>
+                    {props.Edit}
+                </Button>
 
-                </div>
+            </div>
 
 
-            </Paper>
+        </Paper>
     )
 }

@@ -3,12 +3,13 @@ import { useState } from 'react'
 import { Link } from "react-router-dom";
 import Exhistorypage from '../../page/ExpenseHistory/Exhistorypage';
 import { Button } from '@material-ui/core';
+import { useParams } from 'react-router';
 
 const Navbar2 = (props) => {
     const [showNav, setShowNav] = useState(false)
     // const [currentClicked, setCurrentClicked] = useState(false)
     const [currentTag, setCurrentTag] = useState(0)
-   
+   const {id} = useParams()
     
 
     function handlerclick () {
@@ -22,7 +23,6 @@ const Navbar2 = (props) => {
     }
 
     return (
-
         <div className={showNav ? 'sidebar active' : 'sidebar'}>
             <div class="logo_content">
                 <div class="logo">
@@ -58,7 +58,7 @@ const Navbar2 = (props) => {
                 <li className={currentTag == 1 ? 'selected' : 'unselected'} onClick={() => isClicked(1)} >
                     <Link to='/expense'>
                         <i class='bx bx-grid-alt'></i>
-                        <span class="links_name">Expense</span>
+                        <span class="links_name">Expenses</span>
                     </Link>
                     {/* <span class="tooltip">Dashboard</span> */}
 
@@ -95,7 +95,7 @@ const Navbar2 = (props) => {
                 <li className={currentTag == 6 ? 'selected' : 'unselected'} onClick={() => isClicked(6)} >
                     <Link to='/announce'>
                         <i class='bx bx-cart-alt'></i>
-                        <span class="links_name">Announcement</span>
+                        <span class="links_name">Announcements</span>
                     </Link>
                     {/* <span class="tooltip">Dashboard</span> */}
 
@@ -104,7 +104,7 @@ const Navbar2 = (props) => {
                 <li className={currentTag == 8 ? 'selected' : 'unselected'} onClick={() => isClicked(8)} >
                     <Link to='/petitionpage'>
                         <i class='bx bx-heart'></i>
-                        <span class="links_name">Petition</span>
+                        <span class="links_name">Petitions</span>
                     </Link>
                     {/* <span class="tooltip">Dashboard</span> */}
                 </li>
@@ -115,9 +115,10 @@ const Navbar2 = (props) => {
                     </a>
 
                 </li> */}
+       
 
                 <li className={currentTag == 7 ? 'selected' : 'unselected'} onClick={() => isClicked(7)}>
-                    <Link to='/setting2'>
+                    <Link to= {`/setting2/${id}`}>
                         <i className='bx bx-heart'></i>
                         <span className="links_name">Setting</span>
                     </Link>
