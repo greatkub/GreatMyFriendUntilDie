@@ -52,6 +52,12 @@ function App2() {
   const [youareinthisBuilding, iWillBeInthisBuilding] = useState()
   const [thisBuildingId, setThisBuildingID] = useState("")
 
+  const [allData, setAllData] = useState("")
+
+  
+
+
+
 
 
   return (
@@ -62,7 +68,9 @@ function App2() {
 
 
         <header>
-         
+          <button onClick={()=> alert(allData)}>
+
+          </button>
         </header>
         <Navbar2 isOpened={word => setWord(word)}>
 
@@ -71,7 +79,7 @@ function App2() {
 
         <div className='main' style={{ backgroundColor: "#F3F7FC", position: 'relative' }}>
           <Route exact path="/bill" exact={true} render={(props) => <Billpage isOpened={word} {...props} />} />
-          <Route exact path="/announce" exact={true} render={(props) => <Announcep isOpened={word}  {...props} />} />
+          <Route exact path="/announce" exact={true} render={(props) => <Announcep isOpened={word} {...props} />} />
 
           {/* <Route exact path="/" exact={true} component={Socialcard}/> */}
           <Route exact path="/expense" exact={true} render={(props) => <Expensepage isOpened={word} {...props} />} />
@@ -92,7 +100,7 @@ function App2() {
           <Route path="/details" exact={true} component={MoreDetail} />
 
           <Route path="/billdetails/:id" exact={true} render={(props) => <DetailBillpage isOpened={word} {...props} />} />
-
+          
           <Route path="/rooms" exact={true} render={(props) => <Roompage isOpened={word} {...props} />} />
           <Route path="/personinfo/:id" exact={true} render={(props) => <Personalinfopage isOpened={word} {...props} />} />
           <Route path="/dashpage" exact={true} render={(props) => <Dashpage isOpened={word} {...props} />} />
@@ -100,8 +108,6 @@ function App2() {
 
 
           <Route path="/building_sp" exact={true} render={(props) => <STBuildingpage isOpened={word} {...props} />} />
-
-
 
           <Route path="/addbuilding" exact={true} render={(props) => <Createbuilding isOpened={word} {...props} />} />
           <Route path="/feetype_sp/:id" exact={true} render={(props) => <CreateFeetype getId={thisBuildingId => setThisBuildingID(thisBuildingId)} isOpened={word} {...props} />} />
@@ -116,7 +122,7 @@ function App2() {
           {/* <Route path="/testnewpage" exact={true}  render={(props) => <Personalinfopage isOpened = {word} {...props} />} /> */}
 
           <Route path="/detailpage/:id" exact={true} render={(props) => <Detailpage isOpened={word} {...props} />} />
-          <Route path="/roomtype_sp/:id" exact={true} render={(props) => <STRoompage  isOpened={word} {...props} />} />
+          <Route path="/roomtype_sp/:id" exact={true} render={(props) => <STRoompage getAllData={allData => setAllData(allData)}  isOpened={word} {...props} />} />
           <Route path="/st_initialize/:id" exact={true} render={(props) => <Initialize isOpened={word} {...props} />} />
           {/* <Route path="/testnewpage" exact={true} render={(props) => <Initialize isOpened={word} {...props} />} /> */}
           <Route path="/editbuilding_sp/:id" exact={true} render={(props) => <EditBuilding isOpened={word} {...props} />} />
@@ -127,7 +133,10 @@ function App2() {
           {/* <Route path="/testnewpage" exact={true} render={(props) => <Verifypage isOpened={word} {...props} />} /> */}
           <Route path="/settingroom/:id" exact={true} render={(props) => <CreateRoomRe allFloor={arrayFloor} isOpened={word} {...props} />} />
           {/* <Route path="/historydetails" exact={true} render={(props) => <Exdetailpage isOpened={word} {...props} />} /> */}
-          <Route path="/testnewpage" exact={true} render={(props) => <Exdetailpage isOpened={word} {...props} />} />
+          {/* <Route path="/testnewpage" exact={true} render={(props) => <Exdetailpage isOpened={word} {...props} />} /> */}
+          
+
+          <Route path="/verify/:id" exact={true} render={(props) => <Verifypage isOpened={word} {...props} />} />
 
 
 

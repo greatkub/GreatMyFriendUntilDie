@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
         transform: 'scale(0.8)',
     },
 
-    title: {
-        fontSize: 14,
-    },
+    // title: {
+    //     fontSize: 14,
+    // },
 
     pos: {
         marginBottom: 12,
@@ -57,7 +57,102 @@ const useStyles = makeStyles((theme) => ({
     Btn: {
         marginLeft: "92%",
         marginTop: "-6%",
-    }
+    },
+    title: {
+        fontSize: '22.6px',
+        color: '#4A4A4A',
+        fontWeight: 'bold',
+        position: 'absolute',
+        top: 26.6,
+        left: 42
+    },
+    mainFame: {
+        width: 755,
+        minHeight: 721,
+        backgroundColor: '#FFFFFF',
+        position: 'relative',
+        border: '0.75px solid #AAAAAA',
+        borderRadius: 5,
+        // flexWrap: 'wrap'
+
+    },
+    mainFameHeader: {
+        height: 150,
+        width: "100%",
+        borderBottom: '0.75px solid #AAAAAA'
+    },
+    inFame: {
+        width: 605,
+        minHeight: 141.5,
+        position: 'relative',
+        borderRadius: '5px',
+        border: '0.75px solid #AAAAAA'
+
+    },
+    inFameHeader: {
+        width: "100%",
+        height: 86.5,
+        // borderBottom: '0.75px solid #AAAAAA',
+
+    },
+
+    title2: {
+        fontSize: '17.4px',
+        color: '#4A4A4A',
+        fontWeight: 400,
+        position: 'absolute',
+        top: 70.6,
+        left: 42
+
+    },
+    title3: {
+        fontSize: '16.18px',
+        color: '#4A4A4A',
+        fontWeight: 'bold',
+        left: 41,
+        top: 13,
+        position: 'absolute'
+
+    },
+    title4: {
+        fontSize: '13px',
+        color: '#4A4A4A',
+        fontWeight: 'bold',
+        top: 46,
+        position: 'absolute'
+    },
+    title5: {
+        fontSize: '13px',
+        color: '#4A4A4A',
+        position: 'absolute'
+    },
+
+    inputbox: {
+        position: 'absolute',
+        height: "31.5px",
+        width: "151px",
+        fontSize: '13px',
+        fontWeight: '400',
+        color: '#4A4A4A',
+        marginTop: '14.7px',
+        top: 86.6,
+        left: 42
+
+    },
+
+    rominfame: {
+        width: '100%',
+        height: 55,
+        position: 'relative'
+    },
+    inputSize: {
+        height: 31.5,
+        width: 149,
+        fontSize: '13px',
+        color: '#4A4A4A',
+        position: 'relative',
+        margin: 'auto'
+    },
 }));
 
 export default function Initialize(props) {
@@ -66,12 +161,12 @@ export default function Initialize(props) {
     const [allroom, setAllroom] = useState([]);
     const [isLoading, setLoading] = useState(true)
     const [addDate, setAddDate] = useState("")
-    const {id} = useParams()
+    const { id } = useParams()
 
     useEffect(() => {
         axios(`/building/rooms/${id}`)
             .then(response => {
-                console.log("hi" + response.data)
+                console.log(response.data)
                 setAllroom(response.data);
                 insertObj()
             })
@@ -80,6 +175,9 @@ export default function Initialize(props) {
                 setLoading(false)
             })
     }, [isLoading]);
+
+
+
 
     /*const [stroom, setStroom] = useState([])
       React.useEffect(() => {
@@ -140,12 +238,11 @@ export default function Initialize(props) {
         setNewArray(allroom)
         setLoading(false)
 
-
     }
     const api = axios.create({
         baseURL: `/InitializeExpenses/initialize-expenses/`
     })
-    
+
 
     const addWaterElec = async () => {
         console.log(finalroom)
@@ -154,20 +251,21 @@ export default function Initialize(props) {
             url: `/InitializeExpenses/initialize-expenses/`,
             method: 'post',
             data: finalroom
-            
+
         }).then(response => {
             alert("post success")
-            window.location.href = `/feetype_sp/${id}`;
+            // window.location.href = `/feetype_sp/${id}`;
+            window.location.href =  `/setting2/${id}`;
         })
-        .catch(error => {
-            alert("post fail")
-            console.log('Error getting fake data: ' + error);
-        })
+            .catch(error => {
+                alert("post fail")
+                console.log('Error getting fake data: ' + error);
+            })
 
 
 
         // let res = await api.post('/',
-        
+
         //     finalroom
 
         // ).then(response => {
@@ -216,10 +314,10 @@ export default function Initialize(props) {
         console.log(onlyRoom)
 
         setfinalroom(onlyRoom)
-        
-        
+
+
         // await addWaterElec()
-        
+
     }
 
 
@@ -229,51 +327,122 @@ export default function Initialize(props) {
         return (
             <div style={{ width: '100%', position: 'relative' }}>
                 <ScrollView>
-
-                    <div className="container">
+                    <div style={{height: 30}}/>
+                    <div style={{position: 'relative', margin: 'auto', height: 700}}>
                         {/* <button onClick={() => console.log(finalroom)}>
 
                         </button> */}
                         <div>
                             <div style={{ width: '100%', height: '650px' }}>
 
-                                <Card className={classes.Card} variant="outlined">
+                                <div className={classes.mainFame}>
                                     <Table aria-label="caption table">
-                                        <TableHead >
-                                            <TableRow>
-                                                <TableCell className={classes.heder}>
-                                                    <h4>Initial Expense</h4>
-                                                    <br />
-                                                    <TextField
-                                                        type="date"
-                                                        size="small"
-                                                        variant="outlined"
-                                                        onChange={e => {setAddDate(e.target.value); handlesubmit()}}
-                                                    />
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
+                                        <TableRow>
+                                            <div className={classes.mainFameHeader}>
+                                                <div className={classes.title}>Initial Expenses</div>
+                                                <div className={classes.title2}>Setup Date</div>
+                                                <br />
+                                                <input className={classes.inputbox}
+                                                    type="date"
+                                                    onChange={e => { setAddDate(e.target.value); handlesubmit() }}
+                                                />
 
-                                            <div className="container">
-                                                {/* <h4>{set.building}</h4> */}
+
+                                            </div>
+                                        </TableRow>
+
+                                        <div style={{ position: 'relative', height: 61.4 }}>
+                                            <div className={classes.title2} style={{ position: 'absolute', top: 18.18, fontWeight: 'bold', left: 73.5 }}>
+                                                {newArray.length > 0 && newArray[0].building}
+                                            </div>
+                                        </div>
+
+
+                                        {newArray.map((set) => {
+                                            return (
+                                                <div className={classes.inFame} style={{ position: 'relative', margin: 'auto', marginBottom: 20 }}>
+                                                    <div className={classes.inFameHeader}>
+                                                        <div className={classes.title3} >
+                                                            Floor {set.floorName}
+
+                                                        </div>
+                                                        {/* display flex */}
+                                                        <div style={{ display: 'flex' }}>
+                                                            <div className={classes.title4} style={{ left: 41 }}>
+                                                                Room
+                                                            </div>
+                                                            <div className={classes.title4} style={{ right: 265 }}>
+                                                                Electricity Reading
+                                                            </div>
+                                                            <div className={classes.title4} style={{ right: 62 }}>
+                                                                Water Reading
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {set.room.map((r) => {
+                                                        { console.log('im here') }
+                                                        return (
+                                                            <div className={classes.rominfame} style={{ borderTop: '0.75px solid #AAAAAA' }}>
+                                                                {/* display flex */}
+                                                                <div style={{ display: 'flex' }}>
+                                                                    <div className={classes.title5} style={{ left: 41, top: 18 }}>
+                                                                        {r.roomNumber}
+                                                                    </div>
+                                                                    
+                                                                    {/* <input className={classes.inputSize} style={{ top: 12, marginLeft: 206 }}
+                                                                        onChange={e => room.room_number = e.target.value}
+
+                                                                    >
+                                                                    </input> */}
+
+                                                                    <input
+                                                                        className={classes.inputSize}
+                                                                        style={{ top: 12, marginLeft: 206 }}
+                                                                        onChange={e => handleaddDateChange(r, e.target.value)}
+                                                                    />
+
+                                                                    {/* <div className={classes.buttonDelete} style={{ right: 44, top: 14 }}>
+                                                                        <DeleteIcon style={{ color: '#4A4A4A', position: 'absolute', width: 16, height: 16, top: 6, right: 6 }} />
+                                                                    </div> */}
+
+                                                                    <input
+                                                                        className={classes.inputSize}
+                                                                        className={classes.inputSize}
+                                                                        style={{ top: 12 }}
+
+                                                                        onChange={e => handleaddDateChange2(r, e.target.value)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })}
+
+                                                </div>
+
+                                            )
+                                        })}
+                                        {/* <TableBody> */}
+
+                                        {/* <div className="container">
                                                 {newArray.map((set) => {
                                                     return (
 
-                                                        <Card className={classes.Cards} variant="outlined">
-                                                            <h5 className={classes.heder}>{set.FloorName}</h5>
+                                                        <div className={classes.inFame} variant="outlined">
+                                                            <div className={classes.inFameHeader}>
+                                                                {set.FloorName}
                                                             <Table>
-                                                                <TableHead >
-                                                                    <h5 className={classes.heder}>Floor{set.FloorNumber}</h5>
-
+                                                                    <div className={classes.inFameHeader}>
+                                                                        Floor {set.floorName}
+                                                                        
                                                                     <TableRow>
                                                                         <TableCell>Rooms</TableCell>
                                                                         <TableCell align="center">Electricity Reading</TableCell>
-
                                                                         <TableCell align="center">Water Reading</TableCell>
                                                                     </TableRow>
+                                                                        </div>
 
-                                                                </TableHead>
+
                                                                 {set.room.map((r) => {
                                                                     return (
                                                                         <TableBody>
@@ -300,24 +469,28 @@ export default function Initialize(props) {
                                                                 })}
 
                                                             </Table>
+                                                            </div>
 
-
-                                                        </Card>
+                                                        </div>
 
                                                     )
                                                 })}
-                                            </div>
+                                            </div> */}
 
-                                        </TableBody>
+                                        {/* </TableBody> */}
 
                                     </Table>
-                                </Card>
+                                    <div style={{ height: 50 }}>
+
+                                    </div>
+                                </div>
 
                                 <div style={{ height: 200 }}>
 
                                 </div>
 
                             </div>
+
                         </div>
 
                     </div>
@@ -325,20 +498,19 @@ export default function Initialize(props) {
                 </ScrollView>
                 <div style={{ position: 'absolute', width: '100%', bottom: -20 }}>
                     {/* <Link to='/feetype_sp' style={{ textDecoration: "none" }}> */}
-                        <Button style={{
-                            backgroundColor: "#485D84",
-                            width: 406, height: 42.87, color: "#FFFFFF",
-                            fontSize: 21, zIndex: 1,
-                            position: 'absolute', left: 540, top: 40
-                        }}
-                            // onClick={() => handlesubmit()}
-                            onClick={addWaterElec}
-
-                        >
-                            SAVE
-                        </Button>
+                    <Button style={{
+                        backgroundColor: "#485D84",
+                        width: 406, height: 42.87, color: "#FFFFFF",
+                        fontSize: 21, zIndex: 1,
+                        position: 'absolute', left: 540, top: 40
+                    }}
+                        // onClick={() => handlesubmit()}
+                        onClick={addWaterElec}
+                    >
+                        SAVE
+                    </Button>
                     {/* </Link > */}
-                    
+
                     <div
                         style={{
                             backgroundColor: '#385CA8',

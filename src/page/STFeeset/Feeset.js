@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -29,12 +29,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 275,
   },
-  heder:{
+  heder: {
     width: '100%',
     padding: theme.spacing(1),
-    marginTop: '4%',  
+    marginTop: '4%',
   },
-  Card:{
+  Card: {
     width: '110%',
     padding: theme.spacing(3),
     margin: '4%',
@@ -51,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
   pos: {
     marginBottom: 12,
   },
-  Btn:{
+  Btn: {
     marginLeft: "92%",
-    marginTop: "-4%",  
+    marginTop: "-4%",
   },
 
   papers: {
@@ -72,10 +72,10 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '100%',
   },
 
-  Dialog:{
+  Dialog: {
     padding: theme.spacing(2),
     width: 450,
-    
+
   },
   PriceTag: {
     height: "24px",
@@ -90,9 +90,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: "center",
-},
-  MoveName:{
-    marginLeft:"45%",
+  },
+  MoveName: {
+    marginLeft: "45%",
   },
 
   buttonsubmit: {
@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: 620,
     left: "39%"
-},
+  },
 
 }));
 
@@ -109,7 +109,7 @@ export default function Feeset(props) {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
-  const handleClickOpen =() =>{
+  const handleClickOpen = () => {
     setOpen(true)
   };
   const handleClose = () => {
@@ -117,134 +117,139 @@ export default function Feeset(props) {
   };
 
   const [allfeeset, setAllfeeset] = useState([]);
-  useEffect(()=>{
-    axios.get('/feeset/fee-sets').then(response =>{
+  useEffect(() => {
+    axios.get('/feeset/fee-sets').then(response => {
       console.log(response.data);
       setAllfeeset(response.data);
     })
-    .catch(error => {
-      console.log('Error data: ' + error);
+      .catch(error => {
+        console.log('Error data: ' + error);
       })
   }, []);
 
-  const deletetable=(id) =>{
+  const deletetable = (id) => {
     axios.post(`/feeset/fee-set/${id}`)
-    .then(() => {
-      setAllfeeset(
-        allfeeset.filter((row) => {
-          return row.feeSetId != id;
-    })
-      );
-    });
+      .then(() => {
+        setAllfeeset(
+          allfeeset.filter((row) => {
+            return row.feeSetId != id;
+          })
+        );
+      });
   };
 
-  const {id} = useParams()
+  const { id } = useParams()
 
   return (
-      <div className="container ">
-        <div>
-      
+    <div className="container ">
+      <div>
+
         <Card className={classes.Card} variant="outlined">
-            <Table  aria-label="caption table">
-                <TableHead >
-                    <TableRow>
-                        <TableCell className={classes.heder}>
-                         <h4>Fee Set</h4>
-                         <NavLink to={`/feesets/${id}`} style={{ textDecoration: 'none' }}>
-                         {/* <Link to={`/feesets_sp/${id}`} style={{ textDecoration: 'none' }}> */}
+          <Table aria-label="caption table">
+            <TableHead >
+              <TableRow>
+                <TableCell className={classes.heder}>
+                  <h4>Fee Set</h4>
+                  <NavLink to={`/feesets/${id}`} style={{ textDecoration: 'none' }}>
+                    {/* <Link to={`/feesets_sp/${id}`} style={{ textDecoration: 'none' }}> */}
 
-                            <Button  
-                            className={classes.Btn}
-                                variant="contained" color="primary" disableElevation
-                                style={{ backgroundColor: '#485D84' }}>Create</Button>
-                                </NavLink>
-                                {/* </Link> */}
+                    <Button
+                      className={classes.Btn}
+                      variant="contained" color="primary" disableElevation
+                      style={{ backgroundColor: '#485D84' }}>Create</Button>
+                  </NavLink>
+                  {/* </Link> */}
 
-                        </TableCell>
-                    </TableRow>
-                </TableHead>  
-                
+                </TableCell>
+              </TableRow>
+            </TableHead>
+
             <TableBody>
-            <br/>
-            <Grid container spacing={0}>
-            {allfeeset.map((row, key)=>{ 
-              return(
-                <Grid item xs={4}>
-                      <div className="col-sm"> 
-                        <Feecard 
-                            Set={row.feeSetName}
-                            key={key.feeSetId}
-                            //Roomprice="Standard"
-                            Electric="Electricity"
-                            Water="water" 
-                            name={row.feeTypeName}
-                              info={
-                              <InfoIcon  style={{ display: "flex", flexWrap: 'wrap' }}
-                                onClick={handleClickOpen}
-                                      size="small"/>}
-                              /*Edit={
-                                  <DeleteOutlinedIcon 
-                                  onClick={()=>{deletetable(row.feeSetId)}}
-                                    size="small"/>}*/
+              <br />
+              <Grid container spacing={0}>
+                {allfeeset.map((row, key) => {
+                  return (
+                    <Grid item xs={4}>
+                      <div className="col-sm">
+                        <Feecard
+                          Set={row.feeSetName}
+                          key={key.feeSetId}
+                          //Roomprice="Standard"
+                          Electric="Electricity"
+                          Water="water"
+                          name={row.feeTypeName}
+                          info={
+                            <InfoIcon style={{ display: "flex", flexWrap: 'wrap' }}
+                              onClick={handleClickOpen}
+                              size="small" />}
+                          /*Edit={
+                              <DeleteOutlinedIcon 
+                              onClick={()=>{deletetable(row.feeSetId)}}
+                                size="small"/>}*/
 
-                              delete={
-                                  <DeleteOutlinedIcon 
-                                  style={{ marginTop:"25%"}}
-                                  onClick={()=>{deletetable(row.feeSetId)}}
-                                  size="small"/>}
-                             />    
-                        </div> 
-            <Dialog 
-                open={open} 
-                onClose={handleClose} 
-                aria-labelledby="edit-apartment">
-              <DialogTitle id="customized-dialog-title" onClose={handleClose}>{row.feeSetName}</DialogTitle>
-          
-              <DialogContent className={classes.Dialog}>
-                {row.feeTypes.map((num)=>(
-                  <DialogContentText>
-                      <DialogActions className="createAccount">
-                        <Grid container spacing={2}>
-                            <Grid item xs={5}> 
-                              {num.feeTypeName}
-                            </Grid>
-                            <Grid item xs={5}>
-                              {num.feeTypePrice}
-                            </Grid>
-                        <Grid item xs={2} sm container>
-                            <Grid item xs container direction="column" spacing={2}>
-                        <Grid item xs={5}>
-                              THB
-                        </Grid>
-                          </Grid>
-                        </Grid> 
-                      </Grid>                    
-                </DialogActions> 
-            </DialogContentText>
-               ))} 
-        </DialogContent> 
-                </Dialog>
-                
-    </Grid> 
-    )})}
-  </Grid>      
-      </TableBody>
-         </Table>    
-            
+                          delete={
+                            <DeleteOutlinedIcon
+                              style={{ marginTop: "25%" }}
+                              onClick={() => { deletetable(row.feeSetId) }}
+                              size="small" />}
+                        />
+                      </div>
+                      <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="edit-apartment">
+                        <DialogTitle id="customized-dialog-title" onClose={handleClose}>{row.feeSetName}</DialogTitle>
+
+                        <DialogContent className={classes.Dialog}>
+                          {row.feeTypes.map((num) => (
+                            <DialogContentText>
+                              <DialogActions className="createAccount">
+                                <Grid container spacing={2}>
+                                  <Grid item xs={5}>
+                                    {num.feeTypeName}
+                                  </Grid>
+                                  <Grid item xs={5}>
+                                    {num.feeTypePrice}
+                                  </Grid>
+                                  <Grid item xs={2} sm container>
+                                    <Grid item xs container direction="column" spacing={2}>
+                                      <Grid item xs={5}>
+                                        THB
+                                      </Grid>
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                              </DialogActions>
+                            </DialogContentText>
+                          ))}
+                        </DialogContent>
+                      </Dialog>
+
+                    </Grid>
+                  )
+                })}
+              </Grid>
+            </TableBody>
+          </Table>
+
         </Card>
-        
-        </div>
-        <CardActions> 
-       
-        <Link to={`/roomtype_sp/${id}`}>
-        <Button
-               className={classes.buttonsubmit}
-               variant="contained" color="primary" disableElevation
-               style={{ backgroundColor: '#485D84' }} >
-               Save
-           </Button>
-           </Link>
-    </CardActions>
+
+      </div>
+      <CardActions>
+
+        {/* <Link to={`/roomtype_sp/${id}`}> */}
+        <Link to={`/setting2/${id}`}>
+
+          {/* window.location.href =  `/setting2/${id}`; */}
+
+          <Button
+            className={classes.buttonsubmit}
+            variant="contained" color="primary" disableElevation
+            style={{ backgroundColor: '#485D84' }} >
+            Save
+          </Button>
+        </Link>
+      </CardActions>
     </div>
   );
 }

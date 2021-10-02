@@ -78,6 +78,9 @@ const useStyles = makeStyles((theme) => ({
             height: "31.5px"
         },
     }
+
+
+    
 }));
 
 export default function STRoompage({ isOpened,props }) {
@@ -92,7 +95,6 @@ export default function STRoompage({ isOpened,props }) {
         .then(response => {
             console.log(response.data, "in response")
             setBuildName(response.data[0].buildingName)
-
             axios(`/room/room-types/${response.data[0].buildingName}`)
             .then(response => {
                 console.log(response.data)
@@ -101,14 +103,12 @@ export default function STRoompage({ isOpened,props }) {
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
             })
-
         })
         .catch(error => {
             console.log('Error getting fake data: ' + error);
         })
         console.log(buildName[0] + "This Build Name ")
 
-       
     }, []);
     const [allFloor, setAllFloor] = useState([]);
     const [buttonPopup, setButtonPopup] = useState(false)
@@ -118,17 +118,17 @@ export default function STRoompage({ isOpened,props }) {
     // const [keptAllSelect, setKeptAllSelect] = useState(props.selectArray)
     const [getcurrentSelect, setCurrentSelect] = useState([])
 
+    
+
+
     function findpositionElement() {
         for (var i = 0; i < allFloor.length; i++) {
             if (allFloor[i].floorName == dropFloorSelect) {
                 return i
             }
-
         }
+        
     }
-
-
-
 
     return (
         <div style={{ width: "100%", height: "100%" }}>
@@ -136,7 +136,6 @@ export default function STRoompage({ isOpened,props }) {
                 allSelcted={getcurrentSelect}
                 trigger={buttonPopup}
                 setTrigger={setButtonPopup} />
-
             <ScrollView
             // scrollEnabled={!buttonPopup}
             >
@@ -149,10 +148,7 @@ export default function STRoompage({ isOpened,props }) {
                                 Room Types
                             </div>
 
-
                             <div style={{ display: "flex", position: "absolute", bottom: 70, width: '100%' }}>
-
-
                                 <div>
                                     <div className={classes.textDrop}>
                                         Floor
@@ -166,7 +162,6 @@ export default function STRoompage({ isOpened,props }) {
 
                                 <div style={{ width: 12 }} />
 
-
                                 <div>
                                     <div className={classes.textDrop}>
                                         Type
@@ -176,9 +171,7 @@ export default function STRoompage({ isOpened,props }) {
                                     <DropStatus />
                                 </div>
 
-
                             </div>
-
 
                             <div className={classes.titleText} style={{ position: 'absolute', bottom: 0 }}>
                                 {allFloor.length > 0 ? allFloor[0].buildingName : ""}
@@ -195,7 +188,6 @@ export default function STRoompage({ isOpened,props }) {
                             {/* {allFloor.filter(floor => floor.floorName == '2').map((item, index) => ( */}
                             {true ?
                                 allFloor.map((item, index) => (
-
 
                                     <Floorcom
                                         // key={index}
@@ -221,8 +213,6 @@ export default function STRoompage({ isOpened,props }) {
 
                             </div>
 
-
-
                             {/* {allData.map((value, index) => {
                             return value.type === "Important News" ?
                                 <ImpNews
@@ -236,7 +226,6 @@ export default function STRoompage({ isOpened,props }) {
 
                         })} */}
 
-
                         </div>
 
                     </div>
@@ -244,20 +233,23 @@ export default function STRoompage({ isOpened,props }) {
             </ScrollView>
 
             <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
+
                 <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 540, top: 40 }}
-                onClick={()=> window.location.href = `/rooms`}
+                onClick={()=> window.location.href = `/setting2/${id}`}
                 >
                     SAVE
                 </Button>
+
                 <div style={{
                     backgroundColor: '#385CA8', opacity: 0.5
                     , width: "100%", height: 200, position: 'relative'
                 }}>
-
+    
                 </div>
+
             </div>
 
         </div>
-
     )
+
 }

@@ -259,6 +259,7 @@ const AddFeeSet = event => {
       "FeeTypeIds":selected
     }).then((response)=>{
       window.location.href = `/feesets_sp/${id}`;
+      
       console.log(response);
     })
   };

@@ -8,6 +8,7 @@ import { Divider } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
 import moment from 'moment';
+import { useParams } from 'react-router';
 
 
 
@@ -192,11 +193,12 @@ export default function Verifypage({ isOpened }) {
     const [allData, setAllData] = useState([])
     const [allTransaction, setAllTransaction] = useState([])
     const [rentTrans, setRentTrans] = useState([])
+    const {id} = useParams()
 
     useEffect(async () => {
         console.log("in Use Eff first row")
 
-        await axios(`/rentingtransaction/electricity-water-expenses/4`)
+        await axios(`/rentingtransaction/verify-expenses/${id}`)
             .then(response => {
                 console.log(response.data, "in response")
                 setAllData(response.data)
@@ -210,10 +212,17 @@ export default function Verifypage({ isOpened }) {
     }, []);
 
     function getAlltrans(data) {
+        setAllTransaction([])
         for (var i = 0; i < data.floors.length; i++) {
 
             for (var j = 0; j < data.floors[i].rooms.length; j++) {
-                allTransaction.push(data.floors[i].rooms[j].userRentingTransaction)
+                for (var e = 0; e < data.floors[i].rooms[j].userRentingTransactionIds.length; e++) {
+
+                    allTransaction.push(data.floors[i].rooms[j].userRentingTransactionIds[e])
+                    console.log(data.floors[i].rooms[j].userRentingTransactionIds[e])
+                }
+                // allTransaction.push(data.floors[i].rooms[j].userRentingTransactionIds)
+                console.log(j)
             }
 
         }
@@ -223,7 +232,9 @@ export default function Verifypage({ isOpened }) {
     }
 
     const sureVeuify = async () => {
-
+        console.log("all trans")
+        console.log(allTransaction)
+        console.log(rentTrans)
         let res = await axios({
             url: `/rentingtransaction/verify-electricity-water-expenses`,
             method: 'post',
@@ -313,6 +324,7 @@ export default function Verifypage({ isOpened }) {
 
                                                 </div>
                                             </div>
+                                            
                                             <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px", height: 0.5 }} />
                                             {floor.rooms.map((room, i) => {
                                                 return (

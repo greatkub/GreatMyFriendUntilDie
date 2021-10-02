@@ -322,7 +322,8 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '16px',
         posiotion: 'absolute',
         marginLeft: '45px',
-        paddingTop: '14px'
+        paddingTop: '14px',
+        width: '100%'
     },
 
     headBuilding: {
@@ -518,21 +519,21 @@ export default function Billpage({ isOpened }) {
                                         <h5 className={classes.headBuilding} id="newannouncetitle"> {rows.buildingName} </h5>
                                         {rows.floors.map((f) => {
                                             return (
-                                                <Paper className={classes.papercard}>
+                                                <Paper className={classes.papercard} style={{border: "1px solid #AAAAAA"}}>
                                                     <h4 className={classes.headfloors}>Floor{f.floorName}</h4>
                                                     <div className={classes.headfloor}>
-                                                        <div style={{ position: 'absolute', paddingTop: '6px' }}>
-                                                            <div className={classes.floortext}>
+                                                        <div style={{ position: 'absolute', paddingTop: '6px', width: '100%' }}>
+                                                            <div className={classes.floortext} style={{marginRight: 72}}>
                                                                 Room
                                                                 <div className={classes.minitext} style={{ paddingLeft: '1px' }}>  </div>
                                                             </div>
-                                                            <div className={classes.floortext}>
+                                                            <div className={classes.floortext} style={{marginRight: 92}}>
                                                                 Bill period
                                                                 <div className={classes.minitext} style={{ paddingLeft: '1px' }}>  </div>
                                                             </div>
-                                                            <div className={classes.floortext}>
+                                                            <div className={classes.floortext} style={{ paddingLeft: '32px' }}>
                                                                 Rent
-                                                                <div className={classes.minitext} style={{ paddingLeft: '275px' }}>(THB) </div>
+                                                                <div className={classes.minitext} style={{ paddingLeft: '292px' }}>(THB) </div>
                                                             </div>
                                                             <div className={classes.floortext}>
                                                                 Electricity
@@ -555,7 +556,7 @@ export default function Billpage({ isOpened }) {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px" }} />
+                                                    <div style={{ marginTop: "50px" }} />
                                                     {f.rooms.filter(val => {
                                                         if (search == '') {
                                                             return val;
@@ -565,74 +566,82 @@ export default function Billpage({ isOpened }) {
                                                             return val
                                                         }
                                                     }).map((n) => {
+                                                        console.log(n)
                                                         return (
-                                                            <TableBody >
-                                                                {n.expenses.map((x) => {
-                                                                    return (
-                                                                        <TableRow>
-                                                                            <TableCell align="right" style={{ paddingLeft: '48px' }}>{n.roomNumber}</TableCell>
-                                                                            <TableCell align="left" style={{ paddingLeft: '74px' }}
-                                                                                tickFormatter={dateFormatter}
-                                                                            >
-                                                                                {moment(x.billPeriod).format("L")}
-                                                                                {/*x.billPeriod*/}
+                                                            <div style={{ width: '1163px' , height: '55px', position: 'relative'}}>
+                                                                {/* {n.expenses.map((x) => {
+                                                                    console.log(x)
+                                                                    return ( */}
+                                                                <div style={{ width: '1163px', postition: 'relative', borderBottom: '1px solid #AAAAAA' }} >
+                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', left: 45, top: 18 }}>
+                                                                        {/* {n.roomNumber} */}
+                                                                        101
+                                                                    </div>
+                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', left: 155 , top: 18}}>
+                                                                        {/* tickFormatter={dateFormatter} */}
+                                                                        27/03/21-27/04/2021
+                                                                        {/* {moment(x.billPeriod).format("L")} */}
 
-                                                                            </TableCell>
-                                                                            <TableCell align="right" style={{ paddingLeft: '73px' }}>
-                                                                                <NumberFormat
-                                                                                    value={x.rent.toFixed(2)}
-                                                                                    displayType="text"
-                                                                                    thousandSeparator={true}
-                                                                                    decimalScale={2} />
-                                                                            </TableCell>
+                                                                    </div>
+                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 791 , top: 18}}>
+                                                                        <NumberFormat
+                                                                            // value={x.rent.toFixed(2)}
+                                                                            displayType="text"
+                                                                            thousandSeparator={true}
+                                                                            decimalScale={2} />
+                                                                        4,700.00
+                                                                    </div>
 
-                                                                            <TableCell align="right" style={{ paddingLeft: '46px' }}>
-                                                                                <NumberFormat
-                                                                                    value={x.electricity.toFixed(2)}
-                                                                                    displayType="text"
-                                                                                    thousandSeparator={true}
-                                                                                    decimalScale={2} />
-                                                                            </TableCell>
-                                                                            <TableCell align="right" style={{ paddingLeft: '55px' }}>
-                                                                                <NumberFormat
-                                                                                    value={x.waterPrice.toFixed(2)}
-                                                                                    displayType="text"
-                                                                                    thousandSeparator={true}
-                                                                                    decimalScale={2} />
-                                                                            </TableCell>
+                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 650, top: 18 }}>
+                                                                        <NumberFormat
+                                                                            // value={x.electricity.toFixed(2)}
+                                                                            displayType="text"
+                                                                            thousandSeparator={true}
+                                                                            decimalScale={2} />
+                                                                        575.00
+                                                                    </div>
+                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 532 , top: 18}}>
+                                                                        <NumberFormat
+                                                                            // value={x.waterPrice.toFixed(2)}
+                                                                            displayType="text"
+                                                                            thousandSeparator={true}
+                                                                            decimalScale={2} />
+                                                                        90.00
+                                                                    </div>
 
-                                                                            <TableCell align="left" style={{ paddingLeft: '75px' }} >
-                                                                                <NumberFormat
-                                                                                    value={x.other.toFixed(2)}
-                                                                                    displayType="text"
-                                                                                    thousandSeparator={true}
-                                                                                    decimalScale={2} />
-                                                                            </TableCell>
-                                                                            <TableCell align="right" style={{ paddingLeft: '45px' }} >
-                                                                                <NumberFormat
-                                                                                    value={x.totalPrice.toFixed(2)}
-                                                                                    displayType="text"
-                                                                                    thousandSeparator={true}
-                                                                                    decimalScale={2} />
-                                                                            </TableCell>
+                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 408, top: 18 }}>
+                                                                        <NumberFormat
+                                                                            // value={x.other.toFixed(2)}
+                                                                            displayType="text"
+                                                                            thousandSeparator={true}
+                                                                            decimalScale={2} />
+                                                                        0.00
+                                                                    </div>
+                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 295 , top: 18}}>
+                                                                        <NumberFormat
+                                                                            // value={x.totalPrice.toFixed(2)}
+                                                                            displayType="text"
+                                                                            thousandSeparator={true}
+                                                                            decimalScale={2} />
+                                                                        5,366.00
+                                                                    </div>
 
-                                                                            <TableCell align="left" style={{ paddingLeft: '62px' }} >
-                                                                                {n.statusInfo}
-                                                                            </TableCell>
+                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 174, top: 18 }}>
+                                                                        {n.statusInfo}
+                                                                    </div>
 
-                                                                            <TableCell style={{ paddingLeft: '69px' }} >
-                                                                                <Link to={`/billdetails/${n.roomId}`}>
-                                                                                    <InfoOutlinedIcon />
-                                                                                </Link>
-                                                                            </TableCell>
+                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 60, top: 16 }}>
+                                                                        <Link to={`/billdetails/${n.roomId}`}>
+                                                                            <InfoOutlinedIcon style={{color: "#485D84"}}/>
+                                                                        </Link>
+                                                                    </div>
 
-                                                                            <TableCell></TableCell>
 
-                                                                        </TableRow>
-                                                                    )
-                                                                })}
+                                                                </div>
+                                                                {/* )
+                                                                })} */}
 
-                                                            </TableBody>
+                                                            </div>
                                                         )
                                                     })}
 

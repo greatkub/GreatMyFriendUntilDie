@@ -192,15 +192,14 @@ export default function CreateRoomRe(props) {
             arrayFloor
         ).then(response => {
             alert("Add Room successfully")
-            window.location.href = `/st_initialize/${id}`;
+            window.location.href = `/setting2/${id}`;
         })
-            .catch(error => {
-                alert("Fail")
-                console.log('Error getting fake data: ' + error);
-            })
-
+        .catch(error => {
+            alert("Fail")
+            console.log('Error getting fake data: ' + error);
+        })
     }
-
+    
     function handlerClick() {
         const a = 100
         // inputRoomToAdd
@@ -213,8 +212,10 @@ export default function CreateRoomRe(props) {
         for (var i = 0; i < arrayFloor.length; i++) {
 
             for (var j = 0; j < parseInt(inputRoomToAdd); j++) {
+                
                 const formattedNumber = ("0" + (j + 1)).slice(-2)
                 const roomNumber = String(i + 1) + formattedNumber
+
                 const roomObject = {
                     "room_number": roomNumber
                 }
@@ -269,7 +270,7 @@ export default function CreateRoomRe(props) {
                                     onClick={() =>
                                         handlerClick()
                                     }
-                                >Generate Floor</Button>
+                                >Generate Room</Button>
                             </div>
 
 
@@ -282,7 +283,7 @@ export default function CreateRoomRe(props) {
 
                         <div className={classes.wrapfame} >
 
-                            <div style={{ position: 'relative', height: 61.4 }}>
+                            <div style={{ position: 'relative', height: 41.4 }}>
                                 <div className={classes.title2} style={{ position: 'relative', top: 16.18 }}>
                                     {buildingName}
                                 </div>
@@ -312,10 +313,10 @@ export default function CreateRoomRe(props) {
                                         </div>
 
 
-                                        {inputRoomToAdd > 0 ? floor.Rooms.map((room, index) => {
+                                        {floor.Rooms.map((room, index) => {
                                             { console.log('im here') }
                                             return (
-                                                <div className={classes.rominfame} style={{ backgroundColor: 'lightBlue' }}>
+                                                <div className={classes.rominfame} style={{borderBottom: '0.75px solid #AAAAAA'}}>
                                                     {/* display flex */}
                                                     <div style={{ display: 'flex' }}>
                                                         <div className={classes.title5} style={{ left: 41, top: 18 }}>
@@ -333,7 +334,7 @@ export default function CreateRoomRe(props) {
                                                     </div>
                                                 </div>
                                             )
-                                        }) : ""}
+                                        }) }
                                         {/* map room here */}
 
                                     </div>

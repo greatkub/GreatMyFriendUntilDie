@@ -13,6 +13,8 @@ import { Button } from '@material-ui/core';
 import { useParams } from 'react-router-dom'
 import { TrendingUpTwoTone } from '@material-ui/icons';
 import DropGender from '../../Components/Dropdown/DropGender.js';
+import moment from 'moment';
+
 // import {storage} from "./config";
 // import SegmentedControl from 'rn-segmented-control';
 // import { SegmentedControl } from 'segmented-control'
@@ -286,6 +288,8 @@ export default function Personalinfopage({ isOpened }) {
         }).then(response => {
             alert('The tenant has been checked out')
             console.log('Saved');
+            window.location.href = `/personinfo/${id}`;
+            
 
         }).catch(error => {
             console.log('Eta: ' + error);
@@ -294,8 +298,8 @@ export default function Personalinfopage({ isOpened }) {
 
     const editTenant = async () => {
 
-        console.log(id +"room id")
-        console.log(currentUserId +"currentUserId")
+        console.log(id + "room id")
+        console.log(currentUserId + "currentUserId")
 
         let res = await axios({
             url: `/user/edit-user/room/${id}/user/${currentUserId}`,
@@ -319,10 +323,11 @@ export default function Personalinfopage({ isOpened }) {
                 "Bed": {
                     "RoomId": parseInt(id)
                 }
-            }   
+            }
         }).then(response => {
             alert('The tenant has been edited')
             console.log('Saved');
+            window.location.href = `/personinfo/${id}`;
 
         }).catch(error => {
             console.log('Edit Eta: ' + error);
@@ -356,8 +361,9 @@ export default function Personalinfopage({ isOpened }) {
                 "room_id": parseInt(id)
             }
         }).then(response => {
-            alert('The tenant has been added')
+            // alert('The tenant has been added')
             console.log('Saved');
+            window.location.href = `/personinfo/${id}`;
 
         }).catch(error => {
             console.log('Eta: ' + error);
@@ -387,7 +393,7 @@ export default function Personalinfopage({ isOpened }) {
 
 
 
-    useEffect( async () => {
+    useEffect(async () => {
         // setIsLoading(false)
         await axios(`/user/number-of-bed/${id}`)
             .then(response => {
@@ -497,7 +503,7 @@ export default function Personalinfopage({ isOpened }) {
         if (allData.length > 0 && currentBed == i) {
             setCurrentUser(allData[currentBed].userId)
             previous = i
-            console.log(allData[currentBed].userId +"in if")
+            console.log(allData[currentBed].userId + "in if")
             // console.log("hi")
             // setSave(true)
             // console.log(canSave)
@@ -659,7 +665,11 @@ export default function Personalinfopage({ isOpened }) {
 
                                             <div style={{ height: 4 }}></div>
                                             <div className={classes.input_md} style={{ paddingLeft: 10 }} >
-                                                {parseInt(allData.length) > currentBed ? allData[currentBed].birthDate : ""}
+                                                {parseInt(allData.length) > currentBed ?
+                                                    moment( allData[currentBed].birthDate  ).format("DD/MM/YYYY")
+                                                // allData[currentBed].birthDate 
+                                                
+                                                : ""} 
                                             </div>
                                         </div>
                                         <div className={classes.grab4} />

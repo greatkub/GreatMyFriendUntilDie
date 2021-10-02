@@ -215,6 +215,14 @@ const useStyles = makeStyles((theme) => ({
         top: 60
 
     }
+
+    , title2bl: {
+        fontSize: '19.4px',
+        color: '#4A4A4A',
+        fontWeight: 'bold',
+        position: 'absolute',
+        top: 184
+    },
 }));
 
 export default function Exdetailpage({ isOpened }) {

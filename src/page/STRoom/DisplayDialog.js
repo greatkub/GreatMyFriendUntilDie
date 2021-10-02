@@ -181,21 +181,41 @@ export default function DisplayDialog(props) {
     })
 
     const assignFee = async () => {
-        let res = await api.post('/', {
-            "RoomTypeName": getRoomTypeName,
-            "NumberofBeds": parseInt(getNumberofBeds),
-            "FeeSetTypeId": getFeeSetTypeId,
-            "RoomIds": props.allSelcted
-        }).then(response => {
-            alert("Assign RoomType Scuccessfully.")            
-        })
-        .catch(error => {
-            console.log('Error getting fake data: ' + error);
-            alert("Assign Fail.")            
 
+        // let res = await api.post('/', {
+        //     "RoomTypeName": getRoomTypeName,
+        //     "NumberofBeds": parseInt(getNumberofBeds),
+        //     "FeeSetTypeId": getFeeSetTypeId,
+        //     "RoomIds": props.allSelcted
+        // }).then(response => {
+        //     alert("Assign RoomType Scuccessfully.")            
+        // })
+        // .catch(error => {
+        //     console.log('Error getting fake data: ' + error);
+        //     alert("Assign Fail.")            
+
+        // })
+        // console.log("assignFee?")
+        // console.log(props.allSelcted)
+
+        let res = await axios({
+            url: `/room/room-type`,
+            method: 'post',
+            data: {
+                "RoomTypeName": getRoomTypeName,
+                "NumberofBeds": parseInt(getNumberofBeds),
+                "FeeSetTypeId": getFeeSetTypeId,
+                "RoomIds": props.allSelcted
+            }
+
+        }).then(response => {
+            alert("post success")
+            // window.location.href = `/feetype_sp/${id}`;
         })
-        console.log("assignFee?")
-        console.log(props.allSelcted)
+            .catch(error => {
+                alert("post fail")
+                console.log('Error getting fake data: ' + error);
+            })
 
     }
 
@@ -291,7 +311,7 @@ export default function DisplayDialog(props) {
                                     <div key={index} className={selectElement === index ? classes.fcframeSelect : classes.fcframe}
                                         onClick={() =>
 
-                                            handleClick2(index, item.feeSetId)
+                                            handleClick2(index, item.feeSetTypeId[0])
 
                                         }>
 

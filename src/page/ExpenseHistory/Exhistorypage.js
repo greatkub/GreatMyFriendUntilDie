@@ -602,7 +602,6 @@ export default function Billpage({ isOpened }) {
                                     </Paper>
                                 </div>
 
-
                                 <div className="col align-self-end">
                                     <Button
                                         className={classes.SearchBtn}
