@@ -254,8 +254,9 @@ export default function Initialize(props) {
 
         }).then(response => {
             alert("post success")
+            console.log(finalroom)
             // window.location.href = `/feetype_sp/${id}`;
-            window.location.href =  `/setting2/${id}`;
+            // window.location.href =  `/setting2/${id}`;
         })
             .catch(error => {
                 alert("post fail")
@@ -389,7 +390,7 @@ export default function Initialize(props) {
                                                                     <div className={classes.title5} style={{ left: 41, top: 18 }}>
                                                                         {r.roomNumber}
                                                                     </div>
-                                                                    
+
                                                                     {/* <input className={classes.inputSize} style={{ top: 12, marginLeft: 206 }}
                                                                         onChange={e => room.room_number = e.target.value}
 

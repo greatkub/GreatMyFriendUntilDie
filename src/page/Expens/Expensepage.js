@@ -715,7 +715,7 @@ import { Divider, Input } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
 import moment from 'moment';
-
+import DropBuilding from '../../Components/Dropdown/DropBuilding.js';
 
 
 
@@ -900,7 +900,8 @@ export default function Verifypage({ isOpened }) {
   const [allTransaction, setAllTransaction] = useState([])
   const [rentTrans, setRentTrans] = useState([])
   const [allRoom, setAllRoom] = useState([])
-  const id = 31
+  const [myDate, setDate] = useState()
+  const id = 38
 
   useEffect(async () => {
     console.log("in Use Eff first row")
@@ -931,6 +932,8 @@ export default function Verifypage({ isOpened }) {
     console.log(allTransaction)
   }
 
+  
+  
   const sureVeuify = async () => {
 
     let res = await axios({
@@ -973,6 +976,7 @@ export default function Verifypage({ isOpened }) {
   const postExpense = async () => {
 
 
+
     let res = await axios({
       url: `/rentingtransaction/electricity-water-expenses`,
       method: 'post',
@@ -981,6 +985,7 @@ export default function Verifypage({ isOpened }) {
     }).then(response => {
       alert("post success")
       // window.location.href = `/feetype_sp/${id}`;
+
     })
       .catch(error => {
         alert("post fail")
@@ -1027,8 +1032,10 @@ export default function Verifypage({ isOpened }) {
         var a = allData[0].floors[floor].rooms[room];
         // a.CurrentDate = new Date().toISOString().substring(0, 10);
         //a.CurrentDate = new Date().toISOString()
+        allData[0].floors[floor].rooms[room].currentDate = getUpdate
         expenseLists.push(allData[0].floors[floor].rooms[room]);
       }
+
       // console.log(i)
       // console.log("hi")
     }
@@ -1037,31 +1044,62 @@ export default function Verifypage({ isOpened }) {
     console.log(expenseLists);
 
     const b = [
-     expenseLists
+      expenseLists
     ]
 
     setKeepstate(expenseLists);
     //console.log(keepstate)
     //console.log(JSON.stringify(keepstate))
-    axios.post("/initializeexpenses/edit-initialize-expenses",
-      //allroom
-      // keepstate
 
-      expenseLists
+    if (allData[0].floors[0].rooms[0].isInitial == true) {
+      axios.post("/initializeexpenses/edit-initialize-expenses",
+        //allroom
+        // keepstate
 
-      // expenseLists
-    ).then((response) => {
-      console.log('done')
-      console.log(response);
-      console.log(keepstate)
-      window.location.href = `/verify/${id}`;
+        expenseLists
 
-    })
-      .catch(error => {
-        console.log(error.response)
+        // expenseLists
+      ).then((response) => {
+        console.log('done')
+        console.log(response);
+        console.log(keepstate)
+        window.location.href = `/verify/${id}`;
+        alert("Success")
+
       })
+        .catch(error => {
+          console.log(error.response)
+          alert("fail")
+        })
+
+    } else {
+      axios.post("/rentingtransaction/electricity-water-expenses",
+        //allroom
+        // keepstate
+
+        expenseLists
+
+        // expenseLists
+      ).then((response) => {
+        console.log('done')
+        console.log(response);
+        console.log(keepstate)
+        window.location.href = `/verify/${id}`;
+        alert("Success Create")
+
+      })
+        .catch(error => {
+          console.log(error.response)
+          alert("fail ")
+        })
+
+    }
+
 
   };
+  const [getUpdate, setupDate] = useState()
+
+
 
   // https://habitat1.azurewebsites.net/api/v1/rentingtransaction/electricity-water-expenses/4
 
@@ -1072,13 +1110,63 @@ export default function Verifypage({ isOpened }) {
           <div>
             <div className={classes.frame} style={{ position: 'relative' }}>
               <Datetoday />
-              <Button onClick={() => editExpense()} style={{ position: 'absolute', width: '100%', height: 200, top: 100, backgroundColor: 'red' }}>
+              {/* <Button onClick={() => editExpense()} style={{ position: 'absolute', width: '100%', height: 200, top: 100, backgroundColor: 'red' }}>
 
-              </Button>
+              </Button> */}
+
 
               <div className={classes.title2} >
                 Expenses
               </div>
+
+
+              {/* <div style={{fontSize: '16px', color: '#4A4A4A', position: 'absolute'}}>
+                Expenses
+              </div> */}
+              <div style={{ position: 'absolute', top: 150, height: 59, display: 'flex', width: '100%' }}>
+                <div>
+                  <div style={{ fontSize: '16px', color: '#4A4A4A' }}>
+                    Current Date
+                  </div>
+
+                  {/* <br /> */}
+                  {/* <div style={{ height: 14.56 }}>
+
+                </div> */}
+                  <input style={{ fontSize: '16px', color: '#4A4A4A', width: 161.8, height: 31.5, position: 'absolute', top: 35 }}
+                    
+                    type="date"
+                    
+                    onChange={e => { setupDate(e.target.value) }}
+                  />
+                </div>
+
+
+                <div style={{ position: 'absolute', right: 175  }}>
+                  <div style={{ fontSize: '16px', color: '#4A4A4A' }}>
+                    Building
+                  </div>
+                  <div style={{ height: 11 }} />
+
+                  <DropBuilding />
+                </div>
+
+
+                <div style={{ position: 'absolute', right: 0 }}>
+                  <div style={{ fontSize: '16px', color: '#4A4A4A' }}>
+                    Floor
+                  </div>
+                  <div style={{ height: 11 }} />
+
+                  <DropBuilding />
+                </div>
+
+
+
+              </div>
+
+
+
 
               <div className={classes.segwrap} style={{ position: 'absolute', top: 101 }}>
                 <div className={currentSelect == 0 ? classes.segmentbtnBlue : classes.segmentbtnWhite}
@@ -1137,7 +1225,6 @@ export default function Verifypage({ isOpened }) {
                           {/* <text className={classes.floortext}>
                             Usage
                           </text> */}
-
                         </div>
                       </div>
 
@@ -1223,9 +1310,10 @@ export default function Verifypage({ isOpened }) {
           style={{
             backgroundColor: "#485D84", width: 406,
             height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1,
-            position: 'absolute', left: 540, top: 40
+            position: 'absolute', left: 540, top: 40,
+            textTransform: 'none'
           }}>
-          SUBMIT
+          Continue
         </Button>
         <div style={{
           backgroundColor: '#385CA8', opacity: 0.5

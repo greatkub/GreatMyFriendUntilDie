@@ -609,7 +609,6 @@ export default function Personalinfopage({ isOpened }) {
 
                                 </div>
 
-
                             </div>
 
                             <Divider />

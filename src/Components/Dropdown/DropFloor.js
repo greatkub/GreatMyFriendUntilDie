@@ -20,11 +20,9 @@ function DropFloor(props) {
 
     const api = axios.create({
         baseURL: props.url
-        
+       
         // 'https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/testimnew'
         // baseURL: '/announcement/type-announcements'
-
-
     })
 
 
@@ -40,6 +38,8 @@ function DropFloor(props) {
         getType();
 
     }, []);
+
+    
 
     const handleChange = (event) => {
         // console.log(event.target.value);

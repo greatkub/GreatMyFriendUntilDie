@@ -97,10 +97,19 @@ export default function Comment(props) {
       let res = await api.post('/', {
       //   "Message": message,
       //   "PostAnnouncementId": 10,
-      //  "UserId": personid       "Message": message,
+      //  "UserId": personid     
+       "Message": message,
+       "CommentDate": date,
        "PostAnnouncementId": postId,
        "StaffId": 1
        })
+       .then(response => {
+        console.log("hooooo"+response.data)
+      })
+      .catch(error => {
+        console.log('Error getting fake data: ' + error);
+        console.log(postId)
+      })
      }
   
   return (

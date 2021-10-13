@@ -103,7 +103,7 @@ export default function STBuildingpage({ isOpened, props }) {
                     <div className={classes.fametop}>
                         <div style={{ display: "flex", paddingTop: "52px" }}>
                             <div className={classes.title}>
-                                Residence
+                                Building
                               
                             </div>
                             <div style={{ width: "41px" }} />

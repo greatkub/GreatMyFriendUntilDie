@@ -49,10 +49,12 @@ function DropStatus(props) {
             <select onChange={handleChange} style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A' }} >
 
                 <option >Not Specify</option>
+                <option value="Paid" >Paid</option>
+                <option  value="Unpaid">Unpaid</option>
 
-                {floors.map(floors =>
-                    <option value={floors.text}>{floors.text}</option>
-                )}
+                {/* {floors.map(status =>
+                    <option value={status.text}>{status.text}</option>
+                )} */}
 
             </select>
             {/* <ArrowDropDownIcon style={{ color: "#000000", position: 'absolute', left: 130, top: 67 }} /> */}

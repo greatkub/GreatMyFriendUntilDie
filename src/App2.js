@@ -68,9 +68,9 @@ function App2() {
 
 
         <header>
-          <button onClick={()=> alert(allData)}>
+          {/* <button onClick={()=> alert(allData)}>
 
-          </button>
+          </button> */}
         </header>
         <Navbar2 isOpened={word => setWord(word)}>
 
@@ -82,7 +82,7 @@ function App2() {
           <Route exact path="/announce" exact={true} render={(props) => <Announcep isOpened={word} {...props} />} />
 
           {/* <Route exact path="/" exact={true} component={Socialcard}/> */}
-          <Route exact path="/expense" exact={true} render={(props) => <Expensepage isOpened={word} {...props} />} />
+          <Route exact path="/expense/:id" exact={true} render={(props) => <Expensepage isOpened={word} {...props} />} />
           {/* <Route path="/expensehistory" exact={true} render={(props) => <Exhistorypage isOpened = {word => setWord(word)} {...props} />} /> */}
 
           {/* <Route path="/expensehistory" exact={true} component={Exhistorypage} /> */}

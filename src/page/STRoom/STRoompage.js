@@ -8,13 +8,14 @@ import Floorcom from './STRoomComp/Floorcom.js';
 import axios from 'axios';
 import { useEffect } from 'react';
 import DisplayDialog from './DisplayDialog.js';
-import DropFloor from '../../Components/Dropdown/DropBuilding.js';
 import Arraylist from '../../Components/Anouncement/Arraylist.js';
 import DropBuilding from '../../Components/Dropdown/DropBuilding.js';
 import DropStatus from '../../Components/Dropdown/DropStatus.js';
 import { Button } from '@material-ui/core';
 import DropIsAvailable from '../../Components/Dropdown/DropIsAvailable.js';
 import { useParams } from "react-router";
+import DropFloor from '../../Components/Dropdown/DropFloor';
+
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -117,6 +118,7 @@ export default function STRoompage({ isOpened,props }) {
 
     // const [keptAllSelect, setKeptAllSelect] = useState(props.selectArray)
     const [getcurrentSelect, setCurrentSelect] = useState([])
+    const [getcurrentSelect2, setCurrentSelect2] = useState([])
 
     
 
@@ -134,6 +136,8 @@ export default function STRoompage({ isOpened,props }) {
         <div style={{ width: "100%", height: "100%" }}>
             <DisplayDialog
                 allSelcted={getcurrentSelect}
+                allSelcted2={getcurrentSelect2}
+
                 trigger={buttonPopup}
                 setTrigger={setButtonPopup} />
             <ScrollView
@@ -156,7 +160,7 @@ export default function STRoompage({ isOpened,props }) {
                                     <div style={{ height: 4 }} />
 
                                     <DropFloor
-                                        url='/filter/filter-building/King David'
+                                        url={`/dropdown/floors/Great1111`}
                                     />
                                 </div>
 
@@ -191,6 +195,7 @@ export default function STRoompage({ isOpened,props }) {
 
                                     <Floorcom
                                         // key={index}
+                                        getcurrentSelect2={currentSelect2 => setCurrentSelect2(currentSelect2)}
                                         getcurrentSelect={currentSelect => setCurrentSelect(currentSelect)}
                                         setTrigger={setButtonPopup}
                                         floorName={item.floorName}
@@ -201,6 +206,8 @@ export default function STRoompage({ isOpened,props }) {
                                 allFloor.filter(floor => floor.floorName == dropFloorSelect).map((item, index) => (
                                     <Floorcom
                                         // key={index}
+                                        getcurrentSelect2={currentSelect2 => setCurrentSelect2(currentSelect2)}
+
                                         getcurrentSelect={currentSelect => setCurrentSelect(currentSelect)}
                                         setTrigger={setButtonPopup}
                                         floorName={item.floorName}
