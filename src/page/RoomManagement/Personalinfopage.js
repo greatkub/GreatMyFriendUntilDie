@@ -399,6 +399,7 @@ export default function Personalinfopage({ isOpened }) {
         await axios(`/user/user-building/${id}`)
         .then(response => {
             setBuildName(response.data)
+            console.log(response.data)
             // setIsLoading(true)
 
         })
@@ -585,7 +586,9 @@ export default function Personalinfopage({ isOpened }) {
                         <div className={classes.frame}>
                             <Datetoday />
                             <div className={classes.titleText}>
-                                {buildName.length > 0 ? `${buildName[0].buildingName} • Room: ${allData[0].room[0].roomNumber}` : ""}
+                                {/* {allData.length > 0 ? `${buildName[0].buildingName} • Room: ${allData[0].room[0].roomNumber}` : ""} */}
+                                {buildName.length > 0 && `${buildName[0].buildingName} • Room: `}
+                                {/* {allData.length} */}
 
                             </div>
 
