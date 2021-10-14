@@ -277,6 +277,7 @@ export default function Personalinfopage({ isOpened }) {
     })
 
 
+    // https://habitat1.azurewebsites.net/api/v1/user/user-building/38
 
 
     const deleteTenant = async () => {
@@ -392,9 +393,18 @@ export default function Personalinfopage({ isOpened }) {
     // }, []);
 
 
-
+    const [buildName, setBuildName] = useState("")
     useEffect(async () => {
         // setIsLoading(false)
+        await axios(`/user/user-building/${id}`)
+        .then(response => {
+            setBuildName(response.data)
+            // setIsLoading(true)
+
+        })
+        .catch(error => {
+            console.log('Error getting fake data: ' + error);
+        })
         await axios(`/user/number-of-bed/${id}`)
             .then(response => {
                 setNumberOfBed(response.data[0].numberOfBed)
@@ -575,7 +585,7 @@ export default function Personalinfopage({ isOpened }) {
                         <div className={classes.frame}>
                             <Datetoday />
                             <div className={classes.titleText}>
-                                {allData.length > 0 ? `King Solomon • Room: ${allData[0].room[0].roomNumber}` : ""}
+                                {buildName.length > 0 ? `${buildName[0].buildingName} • Room: ${allData[0].room[0].roomNumber}` : ""}
 
                             </div>
 

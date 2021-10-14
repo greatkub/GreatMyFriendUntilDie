@@ -222,6 +222,7 @@ export default function CreateFloor(props) {
     const [inputfloorToAdd, setInputfloorToAdd] = useState(null)
     const [committedfloorToAdd, setCommittedFloorToAdd] = useState([]);
     const [numOfFloor, setNumOfFloor] = useState(0)
+    const [presentArrayFloor, setPresentArrayFloor] = useState([])
 
 
     const [keptSample, setKeptSample] = useState([])
@@ -246,6 +247,16 @@ export default function CreateFloor(props) {
                 console.log('Error getting fake data: ' + error);
             })
 
+        await axios(`/building/floors/${id}`)
+            .then(response => {
+                console.log(response.data, "in getAllCurrentFloor")
+
+                setPresentArrayFloor(response.data)
+
+            })
+            .catch(error => {
+                console.log('Error getting fake data: ' + error);
+            })
         
         await axios(`/building/floors/${id}`)
             .then(response => {
@@ -259,6 +270,8 @@ export default function CreateFloor(props) {
             })
 
     }, []);
+
+    
 
     // useEffect(async () => {
     //     await axios(`/building/floors/${id}`)
@@ -472,8 +485,31 @@ export default function CreateFloor(props) {
                                             </div>
                                         </div>
 
-                                        {keptSample.map((value, index) => (
+                                        {presentArrayFloor.length > 0 && presentArrayFloor.map((value, index) => (
+                                            
 
+                                            <div className={classes.rominfame} style={{ borderBottom: '0.75px solid #AAAAAA' }}>
+                                                <div style={{ display: 'flex' }}>
+                                                    <div className={classes.title5} style={{ left: 50, top: 18 }} numfloor={value.floorNumber}>
+                                                        {value.floorName}
+
+                                                    </div>
+                                                    <input className={classes.inputSize} style={{ position: 'absolute', left: 206, top: 12 }}
+                                                        placeholder="Number of Room" placeholder={"Floor " + value.floorNumber} onChange={e => value.floorName = e.target.value} />
+
+                                                    <div className={classes.buttonDelete} style={{ right: 48, top: 14, position: 'absolute' }}>
+                                                        <DeleteIcon style={{ color: '#4A4A4A', position: 'absolute', width: 16, height: 16, top: 6, right: 6 }}
+                                                            onClick={() => deleteHandler(index)} />
+                                                    </div>
+
+                          
+                                                </div>
+                                            </div>
+
+                                        ))}
+
+                                        {keptSample.map((value, index) => (
+                                            
 
                                             <div className={classes.rominfame} style={{ borderBottom: '0.75px solid #AAAAAA' }}>
                                                 <div style={{ display: 'flex' }}>

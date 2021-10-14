@@ -23,7 +23,8 @@ const Navbar2 = (props) => {
     // const [currentClicked, setCurrentClicked] = useState(false)
     const [currentTag, setCurrentTag] = useState(0)
     const { id } = useParams()
-
+    const pathname = window.location.pathname
+    const currentId = pathname.slice(-2)
 
     function handlerclick() {
         setShowNav(!showNav)
@@ -33,6 +34,7 @@ const Navbar2 = (props) => {
     function isClicked(tag) {
         // setCurrentClicked(!currentClicked)
         setCurrentTag(tag)
+
     }
 
     return (
@@ -61,7 +63,7 @@ const Navbar2 = (props) => {
 
                 {/* </li> */}
                 <li className={currentTag == 5 ? 'selected' : 'unselected'} onClick={() => isClicked(5)}>
-                    <Link to='/dashpage'>
+                    <Link to={`/dashpage/${currentId}`}>
                         <i >
                             <EqualizerSharpIcon  style={{color:'#4A4A4A'}} />
                         </i>
@@ -73,7 +75,7 @@ const Navbar2 = (props) => {
                 </li>
 
                 <li className={currentTag == 1 ? 'selected' : 'unselected'} onClick={() => isClicked(1)} >
-                    <Link to='/expense'>
+                    <Link to={`/expense/${currentId}`}>
                         <i>
                             <AppsRoundedIcon style={{color:'#4A4A4A'}}/>
                         </i>
@@ -83,7 +85,7 @@ const Navbar2 = (props) => {
 
                 </li>
                 <li className={currentTag == 2 ? 'selected' : 'unselected'} onClick={() => isClicked(2)} >
-                    <Link to='/bill'>
+                    <Link to={`/bill/${currentId}`}>
                         <i >
                             <InsertDriveFileOutlinedIcon style={{color:'#4A4A4A'}}/>
                         </i>
@@ -94,7 +96,7 @@ const Navbar2 = (props) => {
 
                 </li>
                 <li className={currentTag == 3 ? 'selected' : 'unselected'} onClick={() => isClicked(3)} >
-                    <Link to='/rooms'>
+                    <Link to={`/rooms/${currentId}`}>
                         <i>
                             <BedRoundedIcon style={{color:'#4A4A4A'}}/>
                         </i>
@@ -107,7 +109,7 @@ const Navbar2 = (props) => {
                 </li>
 
                 <li className={currentTag == 4 ? 'selected' : 'unselected'} onClick={() => isClicked(4)} >
-                    <Link to='/expensehistory'>
+                    <Link to={`/expensehistory/${currentId}`}>
                         {/* <i class='bx bx-folder'></i> */}
                         <i>
                             <HistoryIcon style={{color:'#4A4A4A'}}/>
@@ -121,7 +123,7 @@ const Navbar2 = (props) => {
                 </li>
 
                 <li className={currentTag == 6 ? 'selected' : 'unselected'} onClick={() => isClicked(6)} >
-                    <Link to='/announce'>
+                    <Link to={`/announce/${currentId}`}>
 
                         <i>
                             <SmsRoundedIcon style={{color:'#4A4A4A'}}/>
@@ -134,7 +136,7 @@ const Navbar2 = (props) => {
                 </li>
 
                 <li className={currentTag == 8 ? 'selected' : 'unselected'} onClick={() => isClicked(8)} >
-                    <Link to='/petitionpage'>
+                    <Link to={`/petitionpage/${currentId}`}>
                         <i>
                             <AssignmentOutlinedIcon style={{color:'#4A4A4A'}}/>
                         </i>
@@ -152,7 +154,7 @@ const Navbar2 = (props) => {
 
 
                 <li className={currentTag == 7 ? 'selected' : 'unselected'} onClick={() => isClicked(7)}>
-                    <Link to={`/setting2/${id}`}>
+                    <Link to={`/setting2/${currentId}`}>
 
                         <i>
                             <SettingsIcon style={{color:'#4A4A4A'}}/>

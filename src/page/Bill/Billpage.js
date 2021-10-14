@@ -445,6 +445,9 @@ export default function Billpage({ isOpened }) {
         }
         fetchData()
     })
+
+
+
     console.log(bill)
 
     React.useEffect(() => {

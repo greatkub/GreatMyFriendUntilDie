@@ -15,6 +15,7 @@ import { Button } from '@material-ui/core';
 import DropIsAvailable from '../../Components/Dropdown/DropIsAvailable.js';
 import { useParams } from "react-router";
 import DropFloor from '../../Components/Dropdown/DropFloor';
+import DropRoomType from '../../Components/Dropdown/DropRoomType.js';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -81,46 +82,48 @@ const useStyles = makeStyles((theme) => ({
     }
 
 
-    
+
+
 }));
 
-export default function STRoompage({ isOpened,props }) {
+export default function STRoompage({ isOpened, props }) {
     const classes = useStyles();
-    const [buildName,setBuildName] = useState("")
-    const {id} = useParams()
+    const [buildName, setBuildName] = useState("")
+    const { id } = useParams()
 
     // https://habitat1.azurewebsites.net/api/v1/building/buildings
-    useEffect( async () => {
+    useEffect(async () => {
         console.log(id + "in Use Eff first row")
         await axios(`/building/building/id/${id}`)
-        .then(response => {
-            console.log(response.data, "in response")
-            setBuildName(response.data[0].buildingName)
-            axios(`/room/room-types/${response.data[0].buildingName}`)
             .then(response => {
-                console.log(response.data)
-                setAllFloor(response.data);
+                console.log(response.data, "in response")
+                setBuildName(response.data[0].buildingName)
+                axios(`/room/room-types/${response.data[0].buildingName}`)
+                    .then(response => {
+                        console.log(response.data)
+                        setAllFloor(response.data);
+                    })
+                    .catch(error => {
+                        console.log('Error getting fake data: ' + error);
+                    })
+
             })
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
             })
-        })
-        .catch(error => {
-            console.log('Error getting fake data: ' + error);
-        })
         console.log(buildName[0] + "This Build Name ")
 
     }, []);
     const [allFloor, setAllFloor] = useState([]);
     const [buttonPopup, setButtonPopup] = useState(false)
 
-    const [dropFloorSelect, setDropFloorSelect] = useState("2")
+    const [dropFloorSelect, setDropFloorSelect] = useState("")
 
     // const [keptAllSelect, setKeptAllSelect] = useState(props.selectArray)
     const [getcurrentSelect, setCurrentSelect] = useState([])
     const [getcurrentSelect2, setCurrentSelect2] = useState([])
 
-    
+    // /dropdown/room-types/Great1111
 
 
     function findpositionElement() {
@@ -129,8 +132,29 @@ export default function STRoompage({ isOpened,props }) {
                 return i
             }
         }
-        
     }
+
+    const [currentFloor, setCurrentFloor] = useState("")
+
+    useEffect(() => {
+        console.log("hello")
+        console.log(currentFloor)
+        axios(`/filter/filter-floor/building-name/${buildName}/floor/${currentFloor}`)
+            .then(response => {
+                console.log(response.data)
+                // setAllFloor(response.data);
+                setAllFloor([]);
+
+                // setFloorUrl(`/dropdown/floors/Great`)
+
+            })
+            .catch(error => {
+                console.log('Error getting fake data: ' + error);
+            })
+
+
+    },[currentFloor]);
+
 
     return (
         <div style={{ width: "100%", height: "100%" }}>
@@ -159,20 +183,32 @@ export default function STRoompage({ isOpened,props }) {
                                     </div>
                                     <div style={{ height: 4 }} />
 
-                                    <DropFloor
-                                        url={`/dropdown/floors/Great1111`}
-                                    />
+                                
+                                        <DropFloor
+                                            url={`/dropdown/floors/Great1111`}
+                                            save={currentFloor => {
+
+                                                // setDropFloorSelect(dropFloorSelect)
+                                                setCurrentFloor(currentFloor)
+                                            }}
+
+                                        /> 
+                                    
+
                                 </div>
 
                                 <div style={{ width: 12 }} />
 
                                 <div>
                                     <div className={classes.textDrop}>
-                                        Type
+                                        Room Type
                                     </div>
                                     <div style={{ height: 4 }} />
 
-                                    <DropStatus />
+                                    {/* <DropStatus /> */}
+                                    <DropRoomType
+                                        url={`/dropdown/room-types/Great1111`}
+                                    />
                                 </div>
 
                             </div>
@@ -204,6 +240,7 @@ export default function STRoompage({ isOpened,props }) {
                                 ))
                                 :
                                 allFloor.filter(floor => floor.floorName == dropFloorSelect).map((item, index) => (
+
                                     <Floorcom
                                         // key={index}
                                         getcurrentSelect2={currentSelect2 => setCurrentSelect2(currentSelect2)}
@@ -242,7 +279,7 @@ export default function STRoompage({ isOpened,props }) {
             <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
 
                 <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 540, top: 40 }}
-                onClick={()=> window.location.href = `/setting2/${id}`}
+                    onClick={() => window.location.href = `/setting2/${id}`}
                 >
                     SAVE
                 </Button>
@@ -251,7 +288,7 @@ export default function STRoompage({ isOpened,props }) {
                     backgroundColor: '#385CA8', opacity: 0.5
                     , width: "100%", height: 200, position: 'relative'
                 }}>
-    
+
                 </div>
 
             </div>
