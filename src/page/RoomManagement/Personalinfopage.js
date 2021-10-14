@@ -587,7 +587,7 @@ export default function Personalinfopage({ isOpened }) {
                             <Datetoday />
                             <div className={classes.titleText}>
                                 {/* {allData.length > 0 ? `${buildName[0].buildingName} • Room: ${allData[0].room[0].roomNumber}` : ""} */}
-                                {buildName.length > 0 && `${buildName[0].buildingName} • Room: `}
+                                {buildName.length > 0 && `${buildName[0].buildingName} • Room: ${buildName[0].roomName}`}
                                 {/* {allData.length} */}
 
                             </div>

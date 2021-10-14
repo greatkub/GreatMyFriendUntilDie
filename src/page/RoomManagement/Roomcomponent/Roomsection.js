@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#D8D8D8',
         position: 'absolute',
         marginTop: '16px',
-        marginLeft: '81px',
+        marginLeft: '121px',
         borderRadius: '13px',
         fontSize: '13px',
         color: '#4A4A4A',
