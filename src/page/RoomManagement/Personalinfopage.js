@@ -306,7 +306,7 @@ export default function Personalinfopage({ isOpened }) {
             url: `/user/edit-user/room/${id}/user/${currentUserId}`,
             method: 'post',
             data: {
-                "Address": "11/22 M.3 Soi 9/9",
+                "Address": addAddress,
                 "District": "Bang Bo",
                 "SubDistrict": "Bang Bo",
                 "Province": "Bangkok",
