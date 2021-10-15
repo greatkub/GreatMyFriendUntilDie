@@ -136,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
   },
   floortext: {
     display: 'inline',
-    marginRight: '75px',
+    marginRight: '85px',
     color: '#4A4A4A',
     fontSize: '13px',
     fontWeight: 'bold',
@@ -359,32 +359,67 @@ export default function Exdetailpage({ isOpened }) {
           </div>
           <div>
             {/* <ExRoomdetail/> */}
-            <Paper className={classes.papercard}>
-              <div className={classes.headfloor} >
-                Room 101
-                <div style={{ position: 'absolute', paddingTop: '6px' }}>
-                <div className={classes.floortext} style={{ marginRight: 52 }}>
-                   Name
-                  </div>
-                  
-                  <div className={classes.floortext} style={{ marginRight: 72 }}>
-                  Bed
-                  </div>
-                  <div className={classes.floortext} style={{ marginRight: 92 }}>
-                                                                    Bill period
-                                                                    <div className={classes.minitext} style={{ paddingRight: '85%' }}></div>
+                                     <Paper className={classes.papercard} style={{ border: "1px solid #AAAAAA" }}>
+                                                        <h4 className={classes.headfloors}></h4>
+                                                        <div className={classes.headfloor}>
+                                                            <div style={{ position: 'absolute', paddingTop: '6px', width: '100%' }}>
+                                                                <div className={classes.floortext} style={{ marginRight: 72 }}>
+                                                                    Name
+                                                                    <div className={classes.minitext} style={{ paddingLeft: '295px' }}></div>
+                                                                </div>
+                                                                
+                                                                <div className={classes.floortext} style={{ paddingLeft: '102px' }}>
+                                                                    Bed
+                                                                    <div className={classes.minitext} style={{ paddingLeft: '296px' }}> </div>
                                                                 </div>
 
-                                                                <div className={classes.floortext} style={{ paddingLeft: '32px' }}>
+                                                                <div className={classes.floortext}  style={{ right: 27 }}>
+                                                                    Bill Period
+                                                                    <div className={classes.minitext} style={{left:'24%', position: 'absolute' }}> </div>
+
+                                                                </div>
+
+                                                                
+                                                                <div className={classes.floortext}  style={{ right: -12 }}>
                                                                     Rent
-                                                                    <div className={classes.minitext} style={{ paddingLeft: '296px' }}>(THB) </div>
-                                                                </div>
-                                                                <div className={classes.floortext}>
-                                                                    Electricity
-                                                                    <div className={classes.minitext} style={{left:'24%', position: 'absolute' }}>(THB) </div>
+                                                                    <div className={classes.minitext} style={{left:'2%', position: 'absolute' }}>(THB) </div>
 
                                                                 </div>
-                                                                <div className={classes.floortext}>
+
+                                                                <div className={classes.floortext}  style={{ right: 16 }}>
+                                                                    Electricity
+                                                                    <div className={classes.minitext} style={{left:'21%', position: 'absolute' }}>(THB) </div>
+
+                                                                </div>
+
+                                                                <div className={classes.floortext}  style={{ right: 36 }}>
+                                                                    Water
+                                                                    <div className={classes.minitext} style={{left:'9%', position: 'absolute' }}>(THB) </div>
+
+                                                                </div>
+
+                                                                <div className={classes.floortext}  style={{ right: 55 }}>
+                                                                    Others
+                                                                    <div className={classes.minitext} style={{left:'11%', position: 'absolute' }}>(THB) </div>
+
+                                                                </div>
+
+                                                                <div className={classes.floortext}  style={{ right: 65 }}>
+                                                                    Totals
+                                                                    <div className={classes.minitext} style={{left:'11%', position: 'absolute' }}>(THB) </div>
+
+                                                                </div>
+
+                                                                <div className={classes.floortext}  style={{ right: 80 }}>
+                                                                    Status
+                                                                    <div className={classes.minitext} ></div>
+
+                                                                </div>
+
+
+                                                              
+                                                              
+                                                               {/*} <div className={classes.floortext}>
                                                                     Water
                                                                     <div className={classes.minitext} style={{right:'10%', position: 'absolute' }}>(THB) </div>
 
@@ -393,19 +428,19 @@ export default function Exdetailpage({ isOpened }) {
                                                                     Others
                                                                     <div className={classes.minitext} style={{right:'10%', position: 'absolute' }}>(THB) </div>
                                                                 </div>
-                                                                <div className={classes.floortext}>
+                                                                <div className={classes.floortext} >
                                                                     Total
                                                                     <div className={classes.minitext} style={{right:'1%', position: 'absolute' }}>(THB) </div>
                                                                 </div>
-                                                                <div className={classes.floortext}>
+                                                                <div className={classes.floortext} style={{ paddingRight: '15px' }}>
                                                                     Status
                                                                 </div>
-                                                                <div className={classes.floortext}>
-                                                                    Status
+                                                                <div className={classes.floortext} >
+                                                                    Detail
                                                                     <div className={classes.minitext} style={{ paddingLeft: '3px' }}> </div>
-                                                                </div>
-                                                                </div>
-              </div>
+  </div>*/}
+                                                            </div>
+                                                        </div>
               <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px", height: 0.5 }} />
 
               {/* <ExStudentdetail /> */}
@@ -422,14 +457,14 @@ export default function Exdetailpage({ isOpened }) {
 
                       {/* bedName */}
                     </div>
-                    <div className={classes.newdetext} style={{ left: 352.5 }}>
+                    <div className={classes.newdetext} style={{ left: 335.5 }}>
                       {moment(item.room[0].startTime).format("DD/MM/YYYY")}-{moment(item.room[0].endTime).format("DD/MM/YYYY")}
 
                       {/* item.startTime */}
                       {/* item.endTime */}
 
                     </div>
-                    <div className={classes.newdetext} style={{ right: 608 }}>
+                    <div className={classes.newdetext} style={{ right:603 }}>
                       {/* 4,700.00 */}
                       <NumberFormat
                         thousandSeparator={true}
@@ -441,7 +476,8 @@ export default function Exdetailpage({ isOpened }) {
 
                       {/* item.totalPrice */}
                     </div>
-                    <div className={classes.newdetext} style={{ right: 473 }}>
+                    
+                    <div className={classes.newdetext} style={{ right: 488 }}>
                       {/* 575.00 */}
                       <NumberFormat
                         thousandSeparator={true}
@@ -453,7 +489,7 @@ export default function Exdetailpage({ isOpened }) {
 
                       {/* item.electricityPrice */}
                     </div>
-                    <div className={classes.newdetext} style={{ right: 364 }}>
+                    <div className={classes.newdetext} style={{ right: 384 }}>
                       {/* item.waterPrice */}
                       {/* 90.00 */}
 
@@ -466,7 +502,7 @@ export default function Exdetailpage({ isOpened }) {
 
                     </div>
 
-                    <div className={classes.newdetext} style={{ right: 249 }}>
+                    <div className={classes.newdetext} style={{ right: 280 }}>
                       {/* 0.00 */}
                       <NumberFormat
                         thousandSeparator={true}
@@ -478,7 +514,7 @@ export default function Exdetailpage({ isOpened }) {
 
                     </div>
 
-                    <div className={classes.newdetext} style={{ right: 146 }}>
+                    <div className={classes.newdetext} style={{ right: 165 }}>
                       {/* 5,366.00 */}
                       <NumberFormat
 
@@ -491,7 +527,7 @@ export default function Exdetailpage({ isOpened }) {
                       {/* {item.room[0].beds[0].totalPrice.toFixed(2)} */}
 
                     </div>
-                    <div className={classes.newdetext} style={{ right: 33 }}>
+                    <div className={classes.newdetext} style={{ right: 55 }}>
                       {item.room[0].beds[0].statusInfo}
                     </div>
 
