@@ -24,7 +24,7 @@ const Navbar2 = (props) => {
     const [currentTag, setCurrentTag] = useState(0)
     const { id } = useParams()
     const pathname = window.location.pathname
-    const currentId = pathname.slice(-2)
+    const currentId = pathname.slice(-1)
 
     function handlerclick() {
         setShowNav(!showNav)

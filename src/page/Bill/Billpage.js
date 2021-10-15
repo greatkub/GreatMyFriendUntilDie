@@ -413,10 +413,10 @@ export default function Billpage({ isOpened }) {
     const [bill, setBill] = useState([]);
     const [search, setSearch] = useState("")
     const [dropdown, setDropdown] = useState([])
-    const [building, setBuildingFromDrop] = useState()
+    const [building, setBuildingFromDrop] = useState("AddMi")
     const [floorUrl, setFloorUrl] = useState(`/dropdown/floors/${building}`)
     const [thisStatus, setThisStatus] = useState("Paid")
-    const [getDate, setupDate] = useState('05-12-2021')
+    const [getDate, setupDate] = useState('15-10-2021')
 
     const dateFormatter = date => {
         // return moment(date).unix();

@@ -1063,8 +1063,8 @@ export default function Verifypage({ isOpened }) {
       ).then((response) => {
         console.log('done')
         console.log(response);
-        console.log(keepstate)
-        window.location.href = `/verify/${id}`;
+        console.log(expenseLists)
+        // window.location.href = `/verify/${id}`;
         alert("Success")
 
       })
@@ -1318,6 +1318,7 @@ export default function Verifypage({ isOpened }) {
                                 onClick={
                                   room["waterCurrentReading"] = room["waterPreviousReading"],
                                   room["electricityCurrentReading"] = room["electricityPreviousReading"]
+
                                 }
                               >
                                 -
