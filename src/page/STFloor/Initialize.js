@@ -11,6 +11,8 @@ import Table from '@material-ui/core/Table';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import TextField from '@material-ui/core/TextField';
 import DeleteSweepOutlinedIcon from '@material-ui/icons/DeleteSweepOutlined';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import { ScrollView } from 'react-native';
 import { useParams } from 'react-router';
 
@@ -254,8 +256,9 @@ export default function Initialize(props) {
 
         }).then(response => {
             alert("post success")
+            console.log(finalroom)
             // window.location.href = `/feetype_sp/${id}`;
-            window.location.href =  `/setting2/${id}`;
+            // window.location.href =  `/setting2/${id}`;
         })
             .catch(error => {
                 alert("post fail")
@@ -322,15 +325,12 @@ export default function Initialize(props) {
 
 
     if (!isLoading) {
-
-
         return (
             <div style={{ width: '100%', position: 'relative' }}>
                 <ScrollView>
-                    <div style={{height: 30}}/>
+                    <div style={{height: 80}}/>
                     <div style={{position: 'relative', margin: 'auto', height: 700}}>
                         {/* <button onClick={() => console.log(finalroom)}>
-
                         </button> */}
                         <div>
                             <div style={{ width: '100%', height: '650px' }}>
@@ -343,10 +343,12 @@ export default function Initialize(props) {
                                                 <div className={classes.title2}>Setup Date</div>
                                                 <br />
                                                 <input className={classes.inputbox}
+ 
                                                     type="date"
+                                                    data-date-format="dd/MM/yy"
+                                                    value="2021-21-06"
                                                     onChange={e => { setAddDate(e.target.value); handlesubmit() }}
                                                 />
-
 
                                             </div>
                                         </TableRow>
@@ -389,10 +391,9 @@ export default function Initialize(props) {
                                                                     <div className={classes.title5} style={{ left: 41, top: 18 }}>
                                                                         {r.roomNumber}
                                                                     </div>
-                                                                    
+
                                                                     {/* <input className={classes.inputSize} style={{ top: 12, marginLeft: 206 }}
                                                                         onChange={e => room.room_number = e.target.value}
-
                                                                     >
                                                                     </input> */}
 
@@ -427,7 +428,6 @@ export default function Initialize(props) {
                                         {/* <div className="container">
                                                 {newArray.map((set) => {
                                                     return (
-
                                                         <div className={classes.inFame} variant="outlined">
                                                             <div className={classes.inFameHeader}>
                                                                 {set.FloorName}
@@ -441,8 +441,6 @@ export default function Initialize(props) {
                                                                         <TableCell align="center">Water Reading</TableCell>
                                                                     </TableRow>
                                                                         </div>
-
-
                                                                 {set.room.map((r) => {
                                                                     return (
                                                                         <TableBody>
@@ -455,7 +453,6 @@ export default function Initialize(props) {
                                                                                         onChange={e => handleaddDateChange(r, e.target.value)}
                                                                                     />
                                                                                 </TableCell>
-
                                                                                 <TableCell align="center">
                                                                                     <input
                                                                                         size="small"
@@ -467,12 +464,9 @@ export default function Initialize(props) {
                                                                         </TableBody>
                                                                     )
                                                                 })}
-
                                                             </Table>
                                                             </div>
-
                                                         </div>
-
                                                     )
                                                 })}
                                             </div> */}
@@ -486,23 +480,18 @@ export default function Initialize(props) {
                                 </div>
 
                                 <div style={{ height: 200 }}>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </ScrollView>
-                <div style={{ position: 'absolute', width: '100%', bottom: -20 }}>
+                <div style={{ position: 'absolute', width: '100%', bottom: 10 }}>
                     {/* <Link to='/feetype_sp' style={{ textDecoration: "none" }}> */}
                     <Button style={{
                         backgroundColor: "#485D84",
                         width: 406, height: 42.87, color: "#FFFFFF",
                         fontSize: 21, zIndex: 1,
-                        position: 'absolute', left: 540, top: 40
+                        position: 'absolute', left: 610, top: 25
                     }}
                         // onClick={() => handlesubmit()}
                         onClick={addWaterElec}
@@ -519,12 +508,11 @@ export default function Initialize(props) {
                     </div>
                 </div>
             </div>
-
         );
     } else {
         return (
-            <div >
-                Loading . . .
+            <div>
+                <CircularProgress color="secondary" />
             </div>
         )
     }

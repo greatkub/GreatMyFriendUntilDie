@@ -11,7 +11,7 @@ import { useState } from 'react';
 import InfoIcon from '@material-ui/icons/Info';
 import { Link } from 'react-router-dom';
 import DialogDetail from './DialogDetail';
-
+import { useParams } from 'react-router';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -148,17 +148,32 @@ export default function DisplayDialog(props) {
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
             })
+
     }, []);
     const [allFee, setAllFee] = useState([]);
     const [isSelect, setIsSelect] = useState(false)
     const [selectElement, setSelectElement] = useState(0)
     const [buttonPopup, setButtonPopup] = useState(false)
     const [getcurrentSelect, setCurrentSelect] = useState(props.allSelcted)
+    const [getcurrentSelect2, setCurrentSelect2] = useState(props.allSelcted2)
+
+    const [arrayRoom, setArrayRoom] = useState("")
+
     const [getRoomTypeName, setRoomTypeName] = useState("")
     const [getNumberofBeds, setNumberofBeds] = useState(0)
     const [getFeeSetTypeId, setFeeSetTypeId] = useState(0)
 
 
+    function allRoomName() {
+
+        const a = ""
+
+        for (var i = 0; i < props.allSelcted2.length; i++) {
+            a = props.allSelcted2[i]
+            console.log(a)
+        }
+        setArrayRoom(a)
+    }
     const handleClick = (id) => {
         setSelectElement(id)
         console.log(selectElement)
@@ -179,6 +194,8 @@ export default function DisplayDialog(props) {
     const api = axios.create({
         baseURL: `/room/room-type`
     })
+
+    const {id} = useParams()
 
     const assignFee = async () => {
 
@@ -210,7 +227,7 @@ export default function DisplayDialog(props) {
 
         }).then(response => {
             alert("post success")
-            // window.location.href = `/feetype_sp/${id}`;
+            window.location.href = `/roomtype_sp/${id}`;
         })
             .catch(error => {
                 alert("post fail")
@@ -251,7 +268,19 @@ export default function DisplayDialog(props) {
                     </div>
                     <div style={{ height: '10.5px' }} />
                     <div className={classes.subTitle}>
-                        {/* Room: 102 • 104 • 107 • 104 • 107 • 104 • 107 • 104 • 107 */}
+                        Room:
+                        {props.allSelcted2.map((v, j) => {
+                            return (
+                                
+                                j != props.allSelcted2.length - 1 ?
+                                    ` ${v} •` :
+                                    ` ${v}`
+
+
+                            )
+
+                        })}
+                        {/* {props.allSelcted2.toString()} */}
                     </div>
                     <div style={{ height: '32.5px' }} />
 
@@ -267,6 +296,8 @@ export default function DisplayDialog(props) {
                                 }}>
 
                                 </input>
+
+
                             </div>
                             {/* <div style={{ height: '12.5px' }} /> */}
 
@@ -293,8 +324,9 @@ export default function DisplayDialog(props) {
                     </div>
 
                     <div className={classes.namebed} style={{ position: 'absolute', top: 200 }}>
-                        Select Fee Type
+                        Select Fee Set
                         <div style={{ height: '14.5px' }} />
+
 
                         <ScrollView>
                             <div style={{ display: 'flex', flexWrap: 'wrap', marginLeft: '-23px', height: '240px' }}>
@@ -319,6 +351,7 @@ export default function DisplayDialog(props) {
                                             <div style={{ display: 'flex' }}>
                                                 <div className={classes.fcsubTitle}>
                                                     {item.feeSetName}
+
                                                 </div>
                                                 <div style={{ width: 21 }} />
                                                 <div>
@@ -332,8 +365,20 @@ export default function DisplayDialog(props) {
                                                 </div>
                                             </div>
                                             <div className={classes.fcfeedetail}>
-                                                Room Price • Electricity • Water
-                                                • Car Parking, …
+                                                {item.feeTypes.map((val, i) => {
+                                                    return (
+
+                                                        i != item.feeTypes.length - 1 ?
+                                                            `${val.feeTypeName} • ` :
+                                                            `${val.feeTypeName}`
+
+
+
+                                                    )
+
+                                                })}
+                                                {/* Room Price • Electricity • Water
+                                                • Car Parking, … */}
                                             </div>
                                         </div>
                                     </div>

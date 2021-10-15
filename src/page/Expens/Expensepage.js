@@ -715,7 +715,8 @@ import { Divider, Input } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
 import moment from 'moment';
-
+import DropBuilding from '../../Components/Dropdown/DropBuilding.js';
+import { useParams } from 'react-router';
 
 
 
@@ -900,7 +901,8 @@ export default function Verifypage({ isOpened }) {
   const [allTransaction, setAllTransaction] = useState([])
   const [rentTrans, setRentTrans] = useState([])
   const [allRoom, setAllRoom] = useState([])
-  const id = 31
+  const [myDate, setDate] = useState()
+  const { id } = useParams()
 
   useEffect(async () => {
     console.log("in Use Eff first row")
@@ -930,6 +932,8 @@ export default function Verifypage({ isOpened }) {
     console.log(rentTrans + "This is rent trans")
     console.log(allTransaction)
   }
+
+
 
   const sureVeuify = async () => {
 
@@ -972,7 +976,6 @@ export default function Verifypage({ isOpened }) {
 
   const postExpense = async () => {
 
-
     let res = await axios({
       url: `/rentingtransaction/electricity-water-expenses`,
       method: 'post',
@@ -981,6 +984,7 @@ export default function Verifypage({ isOpened }) {
     }).then(response => {
       alert("post success")
       // window.location.href = `/feetype_sp/${id}`;
+
     })
       .catch(error => {
         alert("post fail")
@@ -1019,6 +1023,7 @@ export default function Verifypage({ isOpened }) {
   const Expensesave = event => {
     event.preventDefault();
     const expenseLists = [];
+    console.log("im in expensesave")
 
     for (let floor in allData[0].floors) {
       for (let room in allData[0].floors[floor].rooms) {
@@ -1027,8 +1032,10 @@ export default function Verifypage({ isOpened }) {
         var a = allData[0].floors[floor].rooms[room];
         // a.CurrentDate = new Date().toISOString().substring(0, 10);
         //a.CurrentDate = new Date().toISOString()
+        allData[0].floors[floor].rooms[room].currentDate = getUpdate
         expenseLists.push(allData[0].floors[floor].rooms[room]);
       }
+
       // console.log(i)
       // console.log("hi")
     }
@@ -1037,31 +1044,66 @@ export default function Verifypage({ isOpened }) {
     console.log(expenseLists);
 
     const b = [
-     expenseLists
+      expenseLists
     ]
 
     setKeepstate(expenseLists);
     //console.log(keepstate)
     //console.log(JSON.stringify(keepstate))
-    axios.post("/initializeexpenses/edit-initialize-expenses",
-      //allroom
-      // keepstate
 
-      expenseLists
+    if (allData[0].floors[0].rooms[0].isInitial == true) {
+      console.log("on edit")
+      axios.post("/initializeexpenses/edit-initialize-expenses",
+        //allroom
+        // keepstate
 
-      // expenseLists
-    ).then((response) => {
-      console.log('done')
-      console.log(response);
-      console.log(keepstate)
-      window.location.href = `/verify/${id}`;
+        expenseLists
 
-    })
-      .catch(error => {
-        console.log(error.response)
+        // expenseLists
+      ).then((response) => {
+        console.log('done')
+        console.log(response);
+        console.log(keepstate)
+        window.location.href = `/verify/${id}`;
+        alert("Success")
+
       })
+        .catch(error => {
+          console.log(error.response)
+          alert("fail Edit")
+        })
+
+    } else {
+      console.log("on create")
+
+      axios.post("/rentingtransaction/electricity-water-expenses",
+        //allroom
+        // keepstate
+
+        expenseLists
+
+        // expenseLists
+      ).then((response) => {
+        console.log('done')
+        console.log(response);
+        console.log(keepstate)
+        window.location.href = `/verify/${id}`;
+        alert("Success Create")
+
+      })
+        .catch(error => {
+          console.log(error.response)
+          alert("fail Create ")
+        })
+
+    }
+
 
   };
+  const [getUpdate, setupDate] = useState()
+  const [elec, setElec] = useState("")
+  const [water, setWater] = useState("")
+
 
   // https://habitat1.azurewebsites.net/api/v1/rentingtransaction/electricity-water-expenses/4
 
@@ -1072,13 +1114,61 @@ export default function Verifypage({ isOpened }) {
           <div>
             <div className={classes.frame} style={{ position: 'relative' }}>
               <Datetoday />
-              <Button onClick={() => editExpense()} style={{ position: 'absolute', width: '100%', height: 200, top: 100, backgroundColor: 'red' }}>
+              {/* <Button onClick={() => editExpense()} style={{ position: 'absolute', width: '100%', height: 200, top: 100, backgroundColor: 'red' }}>
+              </Button> */}
 
-              </Button>
 
               <div className={classes.title2} >
                 Expenses
               </div>
+
+
+              {/* <div style={{fontSize: '16px', color: '#4A4A4A', position: 'absolute'}}>
+                Expenses
+              </div> */}
+              <div style={{ position: 'absolute', top: 150, height: 59, display: 'flex', width: '100%' }}>
+                <div>
+                  <div style={{ fontSize: '16px', color: '#4A4A4A' }}>
+                    Current Date
+                  </div>
+
+                  {/* <br /> */}
+                  {/* <div style={{ height: 14.56 }}>
+                </div> */}
+                  <input style={{ fontSize: '16px', color: '#4A4A4A', width: 161.8, height: 31.5, position: 'absolute', top: 35 }}
+
+                    type="date"
+
+                    onChange={e => { setupDate(e.target.value) }}
+                  />
+                </div>
+
+
+                <div style={{ position: 'absolute', right: 175 }}>
+                  <div style={{ fontSize: '16px', color: '#4A4A4A' }}>
+                    Building
+                  </div>
+                  <div style={{ height: 11 }} />
+
+                  <DropBuilding />
+                </div>
+
+
+                <div style={{ position: 'absolute', right: 0 }}>
+                  <div style={{ fontSize: '16px', color: '#4A4A4A' }}>
+                    Floor
+                  </div>
+                  <div style={{ height: 11 }} />
+
+                  <DropBuilding />
+                </div>
+
+
+
+              </div>
+
+
+
 
               <div className={classes.segwrap} style={{ position: 'absolute', top: 101 }}>
                 <div className={currentSelect == 0 ? classes.segmentbtnBlue : classes.segmentbtnWhite}
@@ -1137,7 +1227,6 @@ export default function Verifypage({ isOpened }) {
                           {/* <text className={classes.floortext}>
                             Usage
                           </text> */}
-
                         </div>
                       </div>
 
@@ -1151,7 +1240,13 @@ export default function Verifypage({ isOpened }) {
                             </div>
                             <div className={classes.newdetext} style={{ left: 266 }}>
                               {/* 27/03/21-27/03/21 */}
-                              {moment(room.startTime).format("DD/MM/YYYY")}-{moment(room.endTime).format("DD/MM/YYYY")}
+
+                              {room.isBedAvailable[0] == false ?
+                                moment(room.startTime).format("DD/MM/YYYY") + "-" + moment(room.endTime).format("DD/MM/YYYY")
+                                :
+                                "-"
+                              }
+
 
 
                             </div>
@@ -1159,33 +1254,84 @@ export default function Verifypage({ isOpened }) {
                               {/* 27/04/2021 */}
                               {/* {room.previousDate} */}
                               {/* {moment(room.previousDate.replace(/[^a-zA-Z0-9]/g, "")).format("L")} */}
-                              {moment(room.previousDate).format("DD/MM/YYYY")}
+                              {room.isBedAvailable[0] == false ?
+                                moment(room.previousDate).format("DD/MM/YYYY")
+                                :
+                                "-"
+                              }
 
                             </div>
                             <div className={classes.newdetext} style={{ right: 320 }}>
-                              {currentSelect == 0 ? room.electricityPreviousReading : room.waterPreviousReading}
+                              {/* {currentSelect == 0 ? room.electricityPreviousReading : room.waterPreviousReading} */}
+
+                              {room.isBedAvailable[0] == false ?
+                                currentSelect == 0 ? room.electricityPreviousReading : room.waterPreviousReading
+                                :
+                                "-"
+                              }
+
+
+
                             </div>
-                            {currentSelect == 0 &&
-                              <input className={classes.inputbox} style={{ right: 58, border: '0.75px solid #AAAAAA', borderRadius: 4 }}
-                                onChange={e => room["electricityCurrentReading"] = e.target.value}
 
+                            {room.isBedAvailable[0] == false ?
+                              <div>
+
+                                {currentSelect == 0 &&
+                                  <input className={classes.inputbox} style={{ right: 58, border: '0.75px solid #AAAAAA', borderRadius: 4 }}
+                                    value={room["electricityCurrentReading"]}
+                                    onChange={e => {
+                                      room["electricityCurrentReading"] = e.target.value
+                                      setElec(e.target.value)
+
+                                    }}
+
+                                  >
+
+                                    {/* onChange={e => r.room_number = e.target.value} */}
+                                    {/* {currentSelect == 0 ? room.electricityCurrentReading : room.waterCurrentReading} */}
+
+                                  </input>}
+
+                                {currentSelect == 1 &&
+                                  <input className={classes.inputbox} style={{ right: 58, border: '0.75px solid #AAAAAA', borderRadius: 4 }}
+                                    // onChange={e => room["waterCurrentReading"] = e.target.value}
+                                    // value={room["waterCurrentReading"]}
+                                    value={room["waterCurrentReading"]}
+                                    onChange={e => {
+                                      room["waterCurrentReading"] = e.target.value
+                                      setWater(e.target.value)
+                                    }}
+
+                                  >
+
+                                    {/* onChange={e => r.room_number = e.target.value} */}
+                                    {/* {currentSelect == 0 ? room.electricityCurrentReading : room.waterCurrentReading} */}
+
+                                  </input>}
+
+                              </div>
+                              :
+                              <div className={classes.newdetext} style={{ right: 100 }}
+                                onClick={
+                                  room["waterCurrentReading"] = room["waterPreviousReading"],
+                                  room["electricityCurrentReading"] = room["electricityPreviousReading"]
+                                }
                               >
-                                {/* onChange={e => r.room_number = e.target.value} */}
-                                {/* {currentSelect == 0 ? room.electricityCurrentReading : room.waterCurrentReading} */}
-
-                              </input>
+                                -
+                              </div>
                             }
 
-                            {currentSelect == 1 &&
+
+
+
+                            {/* {currentSelect == 1 &&
                               <input className={classes.inputbox} style={{ right: 58, border: '0.75px solid #AAAAAA', borderRadius: 4 }}
                                 onChange={e => room["waterCurrentReading"] = e.target.value}
-
                               >
-                                {/* onChange={e => r.room_number = e.target.value} */}
-                                {/* {currentSelect == 0 ? room.electricityCurrentReading : room.waterCurrentReading} */}
-
+                               
                               </input>
-                            }
+                            } */}
 
 
 
@@ -1223,9 +1369,10 @@ export default function Verifypage({ isOpened }) {
           style={{
             backgroundColor: "#485D84", width: 406,
             height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1,
-            position: 'absolute', left: 540, top: 40
+            position: 'absolute', left: 540, top: 40,
+            textTransform: 'none'
           }}>
-          SUBMIT
+          Continue
         </Button>
         <div style={{
           backgroundColor: '#385CA8', opacity: 0.5

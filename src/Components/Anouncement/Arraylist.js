@@ -7,22 +7,15 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Paper } from '@material-ui/core';
 import { Save } from '@material-ui/icons';
-
-
-
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 
 function Arraylist(props) {
-
-  
     const [news,setNews] = useState([]);
-
     const api = axios.create({
-        baseURL: '/announcement/type-announcements'
+        baseURL: props.url
         // 'https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/testimnew'
         // baseURL: '/announcement/type-announcements'
-    
-    
     })
 
 
@@ -30,11 +23,9 @@ function Arraylist(props) {
         let data = await api.get('/').then(({ data }) => data);
         // this.setState({ news: data })
         setNews(data)
-
     }
 
-    useEffect(() => {
-    
+    useEffect(() => { 
         getType();
         
       }, []);
@@ -44,25 +35,19 @@ function Arraylist(props) {
         props.save(event.target.value)
       }
 
-
     return (
-        <div >
-            <select onChange={handleChange} style={{ backgroundColor: 'white' }} >
+        <div>
+            <select onChange={handleChange} style={{ backgroundColor: 'white' , width:"442%" }} >
                 {/* {this.newstype.myarray.map(data=>(
                         <option title={data}>{data}</option>
                     ))} */}
-
                 {/* <Paper> */}
-                
                 {news.map(news =>
                     <option key={news.id} value={news.id}>{news.text}</option>
                 )}
                 {/* </Paper> */}
-
-
             </select>
             {console.log(4)}
-
         </div>
     );
 

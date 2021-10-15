@@ -18,6 +18,9 @@ import axios from 'axios';
 import Cardcomment from './Cardcomment';
 import { useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
+import DeleteIcon from '@material-ui/icons/Delete';
+import moment from 'moment';
+import { useParams } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 0px 0px 0 #ffffff"
 
   },
-  
 
   image: {
     width: 300,
@@ -66,18 +68,19 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-const api = axios.create ({
-  baseURL: `/comment/comment`
-})
+/*const api = axios.create ({
+  baseURL: '/comment/comment'
+})*/
 
 
 export default function Comment(props) {
   const classes = useStyles();
   const postId = props.postId
-
+  const id = useParams()
+  
   const [allData, setAllData] = useState([]);
   useEffect(() => {
-  
+    console.log(postId)
     axios(`/comment/comments/${postId}`) //changewithpostID
       .then(response => {
         console.log("hi"+response.data)
@@ -88,21 +91,55 @@ export default function Comment(props) {
       })
     }, []);
 
+
     const [message, setMessage] = useState("")
     const [date, setDate] = useState("2021-07-21")
-    const [postid, setPostid] = useState(3)
-    const [personid, setPersonid] = useState(5)
+    ///const [postid, setPostid] = useState(3)
+    ///const [personid, setPersonid] = useState(5)
 
     const addNews = async () => {
-      let res = await api.post('/', {
+      await axios({ 
+        url: "/comment/comment",
+        method: "POST",
+        data:{
+          "Message": message,
+          "CommentDate": "2021-07-05",
+          "PostAnnouncementId":  parseInt(postId),
+          "StaffId": 2
+        }
       //   "Message": message,
       //   "PostAnnouncementId": 10,
-      //  "UserId": personid       "Message": message,
-       "PostAnnouncementId": postId,
-       "StaffId": 1
-       })
-     }
-  
+      //  "UserId": personid
+        
+      }).then(() => {
+        setAllData([
+            {
+                ...allData,
+                "Message": message,
+                "CommentDate": "2021-07-05",
+                "PostAnnouncementId":  parseInt(postId),
+                "StaffId": 2
+            },
+        ]);
+        window.location.href = `/detailpage/${id}`;
+        //props.isLog(false)
+    });
+    
+};
+
+     const deletetable=(id) =>{
+      axios.post(`/comment/comment/${id}`)
+      .then(() => {
+        //window.location.href = `/detailpage/${id}`;
+        setAllData(
+          allData.filter((row) => {
+            return row.feeSetId != id;
+      })
+        );
+      });
+    };
+
+    
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} style={{position:"relative"}}>
@@ -138,14 +175,20 @@ export default function Comment(props) {
                     key={index}
                     id={value.id}
                     message={value.message}
-                    commentDate={value.commentDate}
+                    commentDate={moment(value.commentDate).format("L")}
                     role={value.role}
                     firstName={value.firstName}
                     lastName={value.lastName}
-                    profileUrl={value.profileUrl}            
+                    profileUrl={value.profileUrl}     
+                    remove={      
+                      <DeleteIcon
+                          style={{ marginTop:"100%", color:'#4A4A4A'}}
+                          onClick={()=>{
+                            if(window.confirm('Delete the item?'))
+                          {deletetable(value.id)};}}
+                          />}
                   />
                   
-
                 :null
                 })}
               </ScrollView>
@@ -153,7 +196,10 @@ export default function Comment(props) {
               <Divider style={{backgroundColor:"#AAAAAA", marginTop: "428px"}}/>
               </Grid>
                   <div style={{margin:"0px 0px 0px 0px" ,display: "block", height:"35.6px", position:"absolute", bottom:"20px",   borderTop: "5px solid red"}}> 
-                      <img style={{width:"35.6px", height:"35.6px", backgroundColor:"#3FBAB1", borderRadius:"17.8px", position:"absolute", marginLeft:"20px"}}></img>  
+                      <img src="https://firebasestorage.googleapis.com/v0/b/habitat-34ee0.appspot.com/o/50601063_1178218075671311_2091927988328202240_n.jpeg?alt=media&token=8ba089cb-f6df-4c01-9b84-ff903ee720b3"
+                      style={{width:"35.6px", height:"35.6px", backgroundColor:"#3FBAB1", borderRadius:"17.8px", position:"absolute", marginLeft:"20px"}}>
+                        
+                      </img>  
                       <input placeholder="Enter a comment" type="text" className={classes.Input} style={{width:"296px", height:"35.6px",  borderRadius:"17.8px", marginLeft:"68px",fontSize:"13px",position:'absolute'}}
                        onChange={(event) => {
                         setMessage(event.target.value)
@@ -163,8 +209,6 @@ export default function Comment(props) {
                       color:"#485D84", textTransform:"none", fontSize:"16px", marginLeft:"364px"}}>
                         Send</Button>
                   </div>
-
-
             </Grid>        
           </Grid> 
         </Grid>
@@ -172,12 +216,7 @@ export default function Comment(props) {
     </Paper>
   </div>
 
-
-
-
-
-
-
   );
 }
+
 

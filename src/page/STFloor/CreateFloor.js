@@ -13,6 +13,7 @@ import { ScrollView } from 'react-native';
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
 import DeleteIcon from "@material-ui/icons/Delete";
+import CircularProgress from '@mui/material/CircularProgress';
 
 //import Savebtn from "../../Components/Button/Save";
 
@@ -212,7 +213,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 export default function CreateFloor(props) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
@@ -220,7 +220,7 @@ export default function CreateFloor(props) {
 
     const [inputfloorToAdd, setInputfloorToAdd] = useState(null)
     const [committedfloorToAdd, setCommittedFloorToAdd] = useState([]);
-
+    const [numOfFloor, setNumOfFloor] = useState(0)
 
     const [keptSample, setKeptSample] = useState([])
     const [isLoading, setLoading] = useState(true)
@@ -228,8 +228,6 @@ export default function CreateFloor(props) {
     const roomObject = {
         "room_number": "101"
     }
-
-
 
     const [buildingName, setBuildName] = useState([])
 
@@ -239,6 +237,17 @@ export default function CreateFloor(props) {
             .then(response => {
                 console.log(response.data, "in response")
                 setBuildName(response.data[0].buildingName)
+            })
+            .catch(error => {
+                console.log('Error getting fake data: ' + error);
+            })
+
+        
+        await axios(`/building/floors/${id}`)
+            .then(response => {
+                setNumOfFloor(response.data)
+                console.log(response.data.length)
+                // console.log(response.data.length)
                 setLoading(false)
             })
             .catch(error => {
@@ -248,64 +257,64 @@ export default function CreateFloor(props) {
     }, []);
 
 
+
     function habdlerClick() {
+        
         console.log("This all floor" + inputfloorToAdd)
         setCommittedFloorToAdd(inputfloorToAdd);
 
+        console.log(numOfFloor.length)
 
-        for (var i = 0; i < inputfloorToAdd; i++) {
+        if(numOfFloor.length > 0) {
+            const recentFloor = numOfFloor[numOfFloor.length-1].floorNumber
 
-
-            const sampleObject = {
-                "FloorName": `${i + 1}`,
-                "FloorNumber": i + 1,
-                "Rooms": [],
-
+            console.log("true")
+            console.log("hhhh")
+            console.log(numOfFloor)
+            console.log("jjjj")
+            for (var i = 0; i < inputfloorToAdd; i++) {
+                const sampleObject = {
+                    "FloorName": `${i + recentFloor + 1}`,
+                    "FloorNumber": i + recentFloor + 1,
+                    "Rooms": [],
+    
+                }
+                keptSample.push(sampleObject)
             }
+            props.keptArray(keptSample)
+            console.log(keptSample)
+    
+        }else {
+            console.log("false")
+            const recentFloor = 0
 
-
-            keptSample.push(sampleObject)
-
+            console.log("hhhh")
+            console.log(numOfFloor)
+            console.log("jjjj")
+            for (var i = 0; i < inputfloorToAdd; i++) {
+                const sampleObject = {
+                    "FloorName": `${i + recentFloor + 1}`,
+                    "FloorNumber": i + recentFloor + 1,
+                    "Rooms": [],
+    
+                }
+                keptSample.push(sampleObject)
+            }
+            props.keptArray(keptSample)
+            console.log(keptSample)
+    
         }
-        // sampleObject.FloorName = 3
-
-        props.keptArray(keptSample)
-        console.log(keptSample)
-        // console.log(sampleObject)
-
-
     }
 
 
-    // function habdlerClick() {
-    //     console.log("This all floor" + inputfloorToAdd)
-    //     setCommittedFloorToAdd(inputfloorToAdd);
+    
 
-
-    //     for (var i = 0; i < inputfloorToAdd; i++) {
-
-
-    //         const sampleObject = {
-    //             "FloorName": `${i + 1}`,
-    //             "FloorNumber": i + 1,
-    //             "Rooms": [],
-
-    //         }
-
-
-    //         keptSample.push(sampleObject)
-
-    //     }
-    //     // sampleObject.FloorName = 3
-
-    //     props.keptArray(keptSample)
-    //     console.log(keptSample)
-
-    //     // console.log(sampleObject)
-
-
-    // }
-
+    const deleteHandler = (index) => {
+        // Assuming that the index means the index of an item which is to be deleted.
+        const newList = keptSample.filter((item) => keptSample.indexOf(item) !== index);
+        console.log(newList)
+        setKeptSample(newList);
+    }
 
     function deleteItem(i) {
         // const { items } = this.state;
@@ -314,10 +323,10 @@ export default function CreateFloor(props) {
         setKeptSample(keptSample)
     }
 
+   
     return isLoading == false && (
         <div style={{ width: '100%' }}>
             <ScrollView>
-
                 <div style={{ position: 'relative', margin: 'auto' }}>
                     <div className="container" style={{ position: 'relative', margin: 'auto' }}>
                         <div style={{ width: '100%', height: '650px' }}>
@@ -328,7 +337,7 @@ export default function CreateFloor(props) {
                                 <div className={classes.mainFameHeader}>
 
                                     <div className={classes.title} >
-                                        Floor
+                                        Floors
                                     </div>
                                     {/* <button onClick={() => console.log(arrayFloor)}>
 
@@ -402,7 +411,7 @@ export default function CreateFloor(props) {
 
                                                     <div className={classes.buttonDelete} style={{ right: 48, top: 14, position: 'absolute' }}>
                                                         <DeleteIcon style={{ color: '#4A4A4A', position: 'absolute', width: 16, height: 16, top: 6, right: 6 }} 
-                                                        onClick={() => deleteItem(index)}/>
+                                                        onClick={() => deleteHandler(index)}/>
                                                     </div>
              
                                                     {/* <input className={classes.inputSize} style={{ top: 12, marginLeft: 206 }}
@@ -548,14 +557,14 @@ export default function CreateFloor(props) {
 
 
             </ScrollView>
-            <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
+            <div style={{ position: 'absolute', width: '100%', height: 200, top: 600 }}>
                 <Link to={`/settingroom/${id}`} onClick={() => props.keptArray(keptSample)}>
 
                     <Button
                         style={{
                             backgroundColor: "#485D84", width: 406,
                             height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1,
-                            position: 'absolute', left: 540, top: 40
+                            position: 'absolute', left: 615, top: 25
                         }}>
                         Next
                     </Button>
@@ -574,5 +583,5 @@ export default function CreateFloor(props) {
         </div>
 
     );
-}
 
+}

@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cardsection from './Cardsection';
 import { ScrollView } from 'react-native';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import { Redirect } from 'react-router-dom';
 
 
@@ -65,7 +67,27 @@ const useStyles = makeStyles((theme) => ({
     allfame: {
         width: "1163px",
         height: "679.5px"
-    }
+    },
+
+    buttontop3: {
+        //backgroundColor: '#ffff',
+        borderRadius: "5px",
+        textTransform: "none",
+        fontSize: "13px",
+        //color: '#485D84',
+        fontWeight: 'normal',
+        width: "107.6px",
+        height: "31.5px",
+        // position: "absolute",
+
+        '&:hover': {
+            //backgroundColor: '#485D84',
+            //color: '#fff',
+            width: "107.6px",
+            height: "31.5px"
+        },
+    },
+
 
 }));
 
@@ -74,12 +96,14 @@ export default function STBuildingpage({ isOpened, props }) {
     const classes = useStyles();
     const [building, setBuilding] = useState([])
     const [nowId, setNowId] = useState([])
+    const [isbuilding, setIsbuilding] = useState(false)
 
     useEffect(() => {
         axios('/building/buildings')
             .then(response => {
                 console.log(response.data)
                 setBuilding(response.data);
+                setIsbuilding(true);
                 
             })
             .catch(error => {
@@ -94,7 +118,8 @@ export default function STBuildingpage({ isOpened, props }) {
         // )
 
     }, [nowId])
-
+    
+   
     return (
         <div style={{ width: '100%' }}>
 
@@ -103,7 +128,7 @@ export default function STBuildingpage({ isOpened, props }) {
                     <div className={classes.fametop}>
                         <div style={{ display: "flex", paddingTop: "52px" }}>
                             <div className={classes.title}>
-                                Residence
+                            Building
                               
                             </div>
                             <div style={{ width: "41px" }} />
@@ -116,8 +141,8 @@ export default function STBuildingpage({ isOpened, props }) {
 
                     </div>
 
-                    <div className={classes.frame} style={{ display: "flex", flexWrap: 'wrap', paddingLeft: 79, paddingTop: 48.54 }}>
-                        <ScrollView style={{ width: "100%", height: "100%" }}>
+                    <div className={classes.frame} style={{ display: "flex", flexWrap: 'wrap', paddingLeft: 59, paddingTop: 48.54 }}>
+                        <ScrollView style={{ width: "110%", height: "100%" }}>
                             <div style={{ display: "flex", flexWrap: 'wrap' }}>
                                 {building.map((value, index) => (
                                     <Cardsection
@@ -131,26 +156,18 @@ export default function STBuildingpage({ isOpened, props }) {
                                         Manage={
                                             <Link to={`/setting2/${value.id}`}
                                                 style={{ textDecoration: "none" }}>
-
                                                 <Button className={classes.buttontop} >
-
                                                     Manage
-
                                                 </Button>
-
                                              </Link> 
                                         }
                                         Edit={
 
                                             <Link to={`editbuilding_sp/${value.id}`}
-
                                                 style={{ textDecoration: "none" }}>
-
-                                                <Button className={classes.buttontop}>
-
-                                                    Edit
-
-                                                </Button>
+                                                <Button variant="outlined" className={classes.buttontop3} >
+                                              Edit
+                                            </Button>
 
                                             </Link>
 
@@ -166,4 +183,5 @@ export default function STBuildingpage({ isOpened, props }) {
         </div>
 
     )
+
 }

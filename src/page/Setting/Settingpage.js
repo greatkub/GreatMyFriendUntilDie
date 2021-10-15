@@ -253,6 +253,7 @@ export default function Settingpage({ isOpened, props }) {
             Ewalletsave()
 
         })
+        setOpen(false)
 
     };
 
@@ -272,6 +273,7 @@ export default function Settingpage({ isOpened, props }) {
 
             console.log('Error getting fake data: ' + error);
         })
+        setOpen(false)
     };
 
     useEffect(() => {
@@ -353,7 +355,7 @@ export default function Settingpage({ isOpened, props }) {
                             </Link>
 
                             <div style={{ height: " 50px" }} />
-                            <Link to='/settingroom' style={{ textDecoration: "none" }}>
+                            <Link to={`/settingroom/${id}`} style={{ textDecoration: "none" }}>
 
                                 <div>
                                     <div className="circletext inline item marleft">
@@ -517,25 +519,40 @@ export default function Settingpage({ isOpened, props }) {
                                 <div style={{ position: 'absolute', bottom: 140 }}>
                                     {currentSelect == 0 ? "Mobile No./Citizen ID/Tax ID" : "Reference Number"}
                                 </div>
+                                {currentSelect == 0 &&
+                                    <input className={classes.input_md} style={{ position: 'absolute', bottom: 100 }}
+                                        value={promptPay}
+                                        onChange={(event) => {
 
-                                <input className={classes.input_md} style={{ position: 'absolute', bottom: 100 }}
-                                    value={currentSelect == 0 ? promptPay : eWallet}
-                                    onChange={(event) => {
-                                        {
-                                            currentSelect == 0 ? setPromptPay(event.target.value) : setEWallet(event.target.value)
+                                            setPromptPay(event.target.value)
+
                                         }
-                                    }
-                                    }
-                                >
-                                </input>
+                                        }
+                                    >
+                                    </input>
 
+                                }
+
+                                {currentSelect == 1 &&
+                                    <input className={classes.input_md} style={{ position: 'absolute', bottom: 100 }}
+                                        value={eWallet}
+                                        onChange={(event) => {
+
+                                            setEWallet(event.target.value)
+
+                                        }
+                                        }
+                                    >
+                                    </input>
+
+                                }
                                 <div style={{ display: 'flex', position: 'absolute', right: 41, bottom: 33 }}>
                                     <Button style={{ backgroundColor: '#485D84', color: '#FFFFFF', textTransform: 'none', width: 107.5, height: 31.5 }}
-                                    onClick={BankAccountsave}
+                                        onClick={BankAccountsave}
                                     >
                                         Confirm
                                     </Button>
-                                    <div style={{width: 19}}/>
+                                    <div style={{ width: 19 }} />
                                     <Button style={{ backgroundColor: '#FFFFFF', color: '#4A4A4A', textTransform: 'none', width: 107.5, height: 31.5, border: '0.75px solid #AAAAAA' }}
                                         onClick={handleClose}>
                                         Cancel
@@ -555,7 +572,6 @@ export default function Settingpage({ isOpened, props }) {
                             >
                                 <Tab eventKey="home" title="Prompt pay">
                                     <DialogContentText>
-
                                         <h6>Mobile No./Citizen ID/Tax ID</h6>
                                         <input maxlength="40" size="40"
                                             id
@@ -567,7 +583,6 @@ export default function Settingpage({ isOpened, props }) {
                                                 setPromptPay(event.target.value);
                                             }
                                             } />
-
                                     </DialogContentText>
                                     <DialogActions className={classes.dialogPaper3}>
                                         <Button
@@ -589,7 +604,6 @@ export default function Settingpage({ isOpened, props }) {
                                         </div>
                                     </DialogActions>
                                 </Tab>
-
                                 <Tab eventKey="profile" title="E-wallet">
                                     <DialogContentText>
                                         <h6>Reference Number</h6>
@@ -631,3 +645,4 @@ export default function Settingpage({ isOpened, props }) {
         </div>
     )
 }
+

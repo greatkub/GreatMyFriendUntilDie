@@ -156,7 +156,7 @@
 // }
 
 
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import {lighten, makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import { ScrollView } from 'react-native';
 import Datetoday from '../../Components/AllComponent/Datetoday';
@@ -178,6 +178,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import InputBase from '@material-ui/core/InputBase';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import {BrowserRouter as Router, Route, Link, NavLink, Switch} from "react-router-dom";
 
@@ -433,18 +434,25 @@ const useToolbarStyles = makeStyles((theme) => ({
 export default function Petitionpage({ isOpened }) {
   const classes = useStyles();
   const [note, setNote] = useState([])
-  const [selected, setSelected] = React.useState([]);
+  const [selected, setSelected] = useState([]);
   const [search,  setSearch ] = useState([]);
   //const [status, setStatus] = useState(true)
+  const [ ispetitionload, setIspetitionload] = useState(false);
+  const [isloading, setIsloading] = useState(false);
 
-  React.useEffect(() => {
-    const fetchData = () =>{
-     axios.get('/petition/petitions')
-     .then(r =>
-       setNote(r.data))
-    }
-    fetchData()
-  }, [])
+ 
+  useEffect(() => {
+    axios('/petition/petitions')
+      .then(response => {
+      console.log("hi" + response.data)
+      setNote(response.data);
+      setIsloading(true)
+      })
+      .catch(error => {
+        console.log('Error getting fake data: ' + error);
+      })
+  }, []);
+
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -496,9 +504,11 @@ const Petitionstatus =() => {
   console.log(selected)
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+  
+  
     return (
         <div style={{ width: '100%' }}>
-            <ScrollView>
+           <ScrollView>
             <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
                 <div>
                     <div className={classes.frame}>
@@ -586,7 +596,7 @@ const Petitionstatus =() => {
                                     
                                 <Link to={`/notedetails/${info.id}`} 
                                     style={{ textDecoration: 'none' }}>
-                                    Room {info.roomNumber}
+                                    Room: {info.roomNumber}
                                 </Link>
                             </TableCell> 
                              <TableCell>
@@ -595,7 +605,9 @@ const Petitionstatus =() => {
                                       info.description} </TableCell> 
                             <TableCell align="right">{info.statusInfo}</TableCell> 
                         </TableRow>     
-                         )})}         
+                         )
+                         
+                         })}         
                 </TableBody>                                        
                     )})} 
                 </Table>    
@@ -603,8 +615,9 @@ const Petitionstatus =() => {
                 </Paper>
                     </div>
                 </div>
+               
             </div>
         </ScrollView>
     </div>
-    )
+    );
 }

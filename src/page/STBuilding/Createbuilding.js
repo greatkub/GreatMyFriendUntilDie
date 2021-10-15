@@ -196,7 +196,7 @@ export default function Createbuilding(props) {
 
                             <input
                                 className={classes.setrow2}
-                                placeholder="Sub-disdrict"
+                                placeholder="Disdrict"
                                 type="text"
                                 //name="Province"
                                 onChange={(event) => {
@@ -211,7 +211,7 @@ export default function Createbuilding(props) {
                             <input
 
                                 className={classes.setrow2}
-                                placeholder="Disdrict"
+                                placeholder="Sub-disdrict"
                                 type="text"
                                 //name="Province"
                                 onChange={(event) => {

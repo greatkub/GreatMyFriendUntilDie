@@ -14,6 +14,10 @@ import { useParams } from 'react-router-dom'
 import { TrendingUpTwoTone } from '@material-ui/icons';
 import DropGender from '../../Components/Dropdown/DropGender.js';
 import moment from 'moment';
+import {storage } from '../../base'
+import ImageIcon from '@material-ui/icons/Image';
+import CircularProgress from '@mui/material/CircularProgress';
+//import { useForm } from "react-hook-form";
 
 // import {storage} from "./config";
 // import SegmentedControl from 'rn-segmented-control';
@@ -21,8 +25,6 @@ import moment from 'moment';
 // import SegmentedControl from '@react-native-segmented-control/segmented-control';
 
 //this 3 import has to unibstall
-
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,9 +62,33 @@ const useStyles = makeStyles((theme) => ({
         height: 310,
         display: 'absolute',
         float: 'right',
-        marginTop: '28px',
+        marginTop: '2%',
         marginRight: '127px'
     },
+
+    fameinfoimg: {    
+        //marginTop: '-2%',
+        //marginRight: '127px'
+        width: 200,
+        height: 250,
+        //display: 'absolute',
+        float: 'left',
+        marginTop: '2%',
+        marginLeft: '80px'
+    },
+
+    /*fameinfoimg: {    
+        //marginTop: '-2%',
+        //marginRight: '127px'
+        width: 200,
+        height: 250,
+        //display: 'absolute',
+        float: 'left',
+        marginTop: '2%',
+        marginLeft: '80px'
+    },*/
+
+
     famerow: {
         height: "59.86px",
         width: "100%",
@@ -220,8 +246,9 @@ const useStyles = makeStyles((theme) => ({
         left: 400,
         top: 520
     }
-
 }));
+
+
 
 export default function Personalinfopage({ isOpened }) {
     const classes = useStyles()
@@ -277,6 +304,43 @@ export default function Personalinfopage({ isOpened }) {
     })
 
 
+    // https://habitat1.azurewebsites.net/api/v1/user/user-building/38
+
+
+    const [image, setImage] = useState(null);
+    const [url, setUrl] = useState("");
+    const [process, setProgress] =useState("");
+    
+   
+
+    const handleChange = e => {
+      if (e.target.files[0]) {
+        setImage(e.target.files[0]);
+        //handleUpload()
+        const uploadTask = storage.ref(`/${e.target.files[0].name}`).put(e.target.files[0]);
+        uploadTask.on(
+          "state_changed",
+          snapshot => {
+            const progress = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setProgress(progress);
+          },
+          error => {
+            console.log(error);
+          },
+          () => { 
+              storage.ref()
+                 .child(e.target.files[0].name)
+                 .getDownloadURL()
+                 .then(url => {
+                    setUrl(url);
+              });
+          }
+        );
+      }
+    };
+  
 
 
     const deleteTenant = async () => {
@@ -313,12 +377,12 @@ export default function Personalinfopage({ isOpened }) {
                 "Email": "u6113112@au.edu",
                 "PhoneNumber": "0819999896",
                 "User": {
-                    "FirstName": addFirstName,
-                    "LastName": "KiL",
+                    "FirstName": "Jame",
+                    "LastName": addFirstName,
                     "GenderId": 1,
                     "BirthDate": "1999-02-20",
                     "IdentificationNo": "1234567890987",
-                    "ProfileUrl": "https://firebasestorage.googleapis.com/v0/b/habitat-34ee0.appspot.com/o/16473212_1918745521679927_8257466333135884922_n.jpeg?alt=media&token=a4da4376-5f9b-4657-a5fd-1cc0b4f7993d"
+                    "ProfileUrl": "https://firebasestorage.googleapis.com/v0/b/habitat-34ee0.appspot.com/o/16473212_1918745521679927_8257466333135884922_n.jpeg?alt=media&token=a4da4376-5f9b-4657-a5fd-1cc0b4f7993d%22"
                 },
                 "Bed": {
                     "RoomId": parseInt(id)
@@ -354,7 +418,7 @@ export default function Personalinfopage({ isOpened }) {
                 "gender_id": parseInt(addGender),
                 "birthdate": addDateBirth,
                 "identificationNo": addIdCard,
-                "profile_url": "https://firebasestorage.googleapis.com/v0/b/habitat-34ee0.appspot.com/o/16473212_1918745521679927_8257466333135884922_n.jpeg?alt=media&token=a4da4376-5f9b-4657-a5fd-1cc0b4f7993d"
+                "profile_url": url
             },
             "Bed": {
                 "bed_name": bedName,
@@ -370,31 +434,19 @@ export default function Personalinfopage({ isOpened }) {
         })
     }
 
-
-
-    // /user/number-of-bed/32
-
-
-
-
-    //  useEffect( async () => {
-    //     // setIsLoading(false)
-    //     await axios(`/user/number-of-bed/${id}`)
-    //         .then(response => {
-    //             setNumberOfBed(response.data[0].numberOfBed)
-    //             // setIsLoading(true)
-
-    //         })
-    //         .catch(error => {
-    //             console.log('Error getting fake data: ' + error);
-    //         })
-
-    // }, []);
-
-
-
+    const [buildName, setBuildName] = useState("")
     useEffect(async () => {
         // setIsLoading(false)
+        await axios(`/user/user-building/${id}`)
+        .then(response => {
+            setBuildName(response.data)
+            console.log(response.data)
+            // setIsLoading(true)
+
+        })
+        .catch(error => {
+            console.log('Error getting fake data: ' + error);
+        })
         await axios(`/user/number-of-bed/${id}`)
             .then(response => {
                 setNumberOfBed(response.data[0].numberOfBed)
@@ -531,42 +583,7 @@ export default function Personalinfopage({ isOpened }) {
         }
     }
 
-    // const [image, setImage] = useState(null);
-
-    // const onImageChange = (e) => {
-    //     const reader = new FileReader();
-    //     let file = e.target.files[0]; // get the supplied file
-    //     // if there is a file, set image to that file
-    //     if (file) {
-    //         reader.onload = () => {
-    //             if (reader.readyState === 2) {
-    //                 console.log(file);
-    //                 setImage(file);
-    //             }
-    //         };
-    //         reader.readAsDataURL(e.target.files[0]);
-    //         // if there is no file, set image back to null
-    //     } else {
-    //         setImage(null);
-    //     }
-    // };
-
-    // const uploadToFirebase = () => {
-    //     if (image) {
-    //       const storageRef = storage.ref();
-    //       const imageRef = storageRef.child(image.name);
-    //       imageRef.put(image)
-    //      .then(() => {
-    //         alert("Image uploaded successfully to Firebase.");
-    //     });
-    //     } else {
-    //       alert("Please upload an image first.");
-    //     }
-    // }
-
-
     if (isLoading) {
-
         return (
             <ScrollView>
                 <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
@@ -575,20 +592,18 @@ export default function Personalinfopage({ isOpened }) {
                         <div className={classes.frame}>
                             <Datetoday />
                             <div className={classes.titleText}>
-                                {allData.length > 0 ? `King Solomon • Room: ${allData[0].room[0].roomNumber}` : ""}
+                                {/* {allData.length > 0 ? `${buildName[0].buildingName} • Room: ${allData[0].room[0].roomNumber}` : ""} */}
+                             
+                                {buildName.length > 0 && `${buildName[0].buildingName} • Room: ${buildName[0].roomName}`}
+                                {/* {allData.length} */}
 
                             </div>
 
                             {/* <button onClick={() => console.log(addGender)}>
-
                             </button> */}
-
-
                         </div>
-
                         <Paper className={classes.paper}>
                             <div style={{ height: '111.6px', width: '100%' }}>
-
                                 <div className={classes.titleText} style={{ paddingTop: 20, paddingLeft: 38 }}>
                                     Bed
                                 </div>
@@ -599,32 +614,27 @@ export default function Personalinfopage({ isOpened }) {
                                             return (
                                                 <Button className={currentBed == index ? classes.segmentbtnBlue : classes.segmentbtnWhite} onClick={() => newhandleClick(index)}>
                                                     {allData.length >= index + 1 ? allData[index].room[0].bedName : "Vacant"}
-
-
                                                 </Button>
-                                            )
-                                        })}
-
+                                                )
+                                            })}
                                     </div>
-
                                 </div>
-
-
                             </div>
 
                             <Divider />
 
+                            {/*style={{ marginLeft: "9%"  }*/}
+                            <div ontenteditable={Edit == true ? "true" : "false"} >
+                                {/*<img className={false ? classes.img : classes.emptyimg} alt="complex" src={false ? allData[0].profileURL : ""} />*/}
 
-                            <div>
-                                <img className={false ? classes.img : classes.emptyimg} alt="complex" src={false ? allData[0].profileURL : ""} />
-                                {/* <input type="file" accept="image/x-png,image/jpeg"
-                                // onChange={(e) => { onImageChange(e); }} 
-                                />
-
-                                <button>Upload to Firebase</button> */}
-
-
+                                {/* <img style={{ marginLeft: "8%", marginTop: "5%" }} src={url} alt="" width="180"  /> */}
+                                <img className={classes.fameinfoimg} src={allData.length > 0 && currentBed  < allData.length ? allData[currentBed].profileURL: url} alt="" width="120"  />
                             </div>
+                            <input style={{ display: "none" }} type="file" 
+                                        id="raised-button-file" onChange={handleChange}/>
+                                            <Button style={{ marginTop: "25%", marginLeft: "-12%"  }} htmlFor="raised-button-file"
+                                            component="label"> {/*<ImageIcon />*/} Insert</Button>          
+
                             <div className={classes.fameinfo}>
                                 <div className={classes.famerow}>
                                     <div className={classes.block_md}>
@@ -713,6 +723,7 @@ export default function Personalinfopage({ isOpened }) {
                                                 placeholder="Date"
                                                 type="date"
                                                 name="Date"
+                                                //defaultValue="2021-05-24
                                                 noValidate
                                                 onChange={(event) => {
                                                     setAddDateBirth(event.target.value)
@@ -720,7 +731,6 @@ export default function Personalinfopage({ isOpened }) {
                                             />
                                             {/* <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setAddDateBirth(e.currentTarget.textContent)}>
                                                 {parseInt(allData.length) > currentBed ? allData[currentBed].birthDate : ""}
-
                                             </div> */}
                                         </div>
                                         <div className={classes.grab4} />
@@ -736,7 +746,6 @@ export default function Personalinfopage({ isOpened }) {
                                             </DropGender>
                                             {/* <div className={classes.input_md} contenteditable={Edit == true ? "true" : "false"} onInput={e => setAddGender(e.currentTarget.textContent)}>
                                                 {parseInt(allData.length) > currentBed ? allData[currentBed].gender : ""}
-
                                             </div> */}
                                         </div>
 
@@ -883,28 +892,7 @@ export default function Personalinfopage({ isOpened }) {
                                 }
 
 
-                                {/* <Button className={canSave ? classes.btmBelow : classes.btmBelowRed} onClick={() => handleSave()}>
-
-                                    {canSave ? "SAVE" : "Edit"}
-
-
-                                </Button> */}
-
-
-
-
-
-
-
-                                {/* <Button className={true ? classes.btmBelow : classes.btmBelowRed} onClick={() => handleSave()}>
-                                    {Edit == true ? "SAVE" : "Edit"}
-                                </Button>
-                                <Button className={Edit ? classes.btmBelowRedUnClick : classes.btmBelowRed}
-                                    disabled={Edit}
-                                onClick={() => handleSave()}
-                                >
-                                    {true ? "Check out" : "Edit"}
-                                </Button> */}
+                               
 
 
                             </div>
@@ -930,26 +918,3 @@ export default function Personalinfopage({ isOpened }) {
         )
     }
 }
-
-
-// // Import the functions you need from the SDKs you need
-// import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
-
-// // Your web app's Firebase configuration
-// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDS5NQ8Oy2bjiNZCELD_7Y4HGrJ290muJM",
-//   authDomain: "senior1pjweb.firebaseapp.com",
-//   projectId: "senior1pjweb",
-//   storageBucket: "senior1pjweb.appspot.com",
-//   messagingSenderId: "729115434541",
-//   appId: "1:729115434541:web:5448e54eb9552a387d62a4",
-//   measurementId: "G-99SYFWFQPP"
-// };
-
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);

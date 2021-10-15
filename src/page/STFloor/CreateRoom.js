@@ -202,7 +202,6 @@ export default function CreateRoom(props) {
 
                             {/* <Link to='/st_initialize'> */}
                             {/* <button onClick={() => console.log(arrayFloor)}>
-
                             </button> */}
                             {/* </Link> */}
 
@@ -291,13 +290,11 @@ export default function CreateRoom(props) {
                                                     <Table>
                                                         <TableHead >
                                                             <h5 className={classes.heder}>Floor{set.FloorNumber}</h5>
-
                                                             <TableRow>
                                                                 <TableCell>Rooms</TableCell>
                                                                 <TableCell align="center">Edit Name Rooms</TableCell>
                                                                 <TableCell>Delete</TableCell>
                                                             </TableRow>
-
                                                         </TableHead> */}
                                             {/* {set.room.map((r) => {
                                                             return (
@@ -346,12 +343,12 @@ export default function CreateRoom(props) {
 
 
             {/* <Link to={`/st_initialize/${id}`}> */}
-            <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
+            <div style={{ position: 'absolute', width: '100%', height: 200, top: 720 }}>
                 <Button onClick={addFloorandRoom}
                     style={{
                         backgroundColor: "#485D84", width: 406,
                         height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1,
-                        position: 'absolute', left: 540, top: 40
+                        position: 'absolute', left: 580, top: 40
                     }}>
                     SAVE
                 </Button>
@@ -365,13 +362,7 @@ export default function CreateRoom(props) {
             {/* </Link> */}
 
         </div>
-
-
-
     );
-
-
 }
-
 
 

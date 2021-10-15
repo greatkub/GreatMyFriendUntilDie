@@ -210,26 +210,25 @@
 
 
 import React from 'react'
-//import Billfloorcard from './Billpagecompo/Billfloorcard'
 import Datetoday from '../../Components/AllComponent/Datetoday.js'
 import { ScrollView } from 'react-native';
 import { useState, useEffect } from 'react';
-
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import { Divider } from '@material-ui/core';
 import axios from 'axios';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { BrowserRouter as Router, Route, Link, NavLink, Switch } from "react-router-dom";
-import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import Table from '@material-ui/core/Table';
 import moment from 'moment';
+import NumberFormat from 'react-number-format';
 import InputBase from '@material-ui/core/InputBase';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import DropBuilding from '../../Components/Dropdown/DropBuilding';
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -267,9 +266,9 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 40
     },
     papercard: {
-        width: '1180px',
+        width: '1163px',
         boxShadow: "0px 0px 0px #E8E8E8",
-        minHeight: '233px',
+        minHeight: '200px',
         //   margin: 'auto',
         marginLeft: 0,
         marginBottom: "16px",
@@ -304,21 +303,23 @@ const useStyles = makeStyles((theme) => ({
     },
     floortext: {
         display: 'inline',
-        marginRight: '87px',
+        marginRight: '82px',
         color: '#4A4A4A',
         fontSize: '13px',
         fontWeight: 'bold',
         position: 'relative',
 
     },
-
-    floortext2: {
-        display: 'inline',
-        marginRight: '10px',
-        color: '#4A4A4A',
+    tablefont: {
         fontSize: '13px',
         fontWeight: 'bold',
-        position: 'relative',
+        color: '#4A4A4A',
+
+    }
+    ,
+    intablefont: {
+        fontSize: '13px',
+        color: '#4A4A4A',
 
     },
 
@@ -328,7 +329,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         fontSize: '16px',
         posiotion: 'absolute',
-        marginLeft: '45px',
+        marginLeft: '30px',
         paddingTop: '14px'
     },
     minitext: {
@@ -379,7 +380,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     TabMove: {
-        marginLeft: "1%",
+        marginLeft: "5%",
     },
 
     Searchstyle: {
@@ -387,7 +388,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '8px',
         width: 200,
         marginBottom: 40,
-        marginLeft: 15,
+        marginLeft: -7,
         marginTop: 10,
         '& > * + *': {
             marginTop: theme.spacing(2),
@@ -421,10 +422,21 @@ const useStyles = makeStyles((theme) => ({
 
     SearchBtn: {
         backgroundColor: "#fff",
+        borderRadius: '8px',
         marginBottom: 40,
-        marginLeft: -20,
+        marginLeft: -150,
+        marginTop: 10,
         '& > * + *': {
             marginTop: theme.spacing(2),
+        },
+    },
+
+    SearchBtn: {
+        backgroundColor: "#fff",
+        marginBottom: 40,
+        marginLeft: 37,
+        '& > * + *': {
+            marginTop: theme.spacing(0),
         },
     },
 
@@ -472,13 +484,50 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         fontSize: '16px',
         posiotion: 'absolute',
-        marginLeft: '45px',
+        marginLeft: '20px',
+        paddingTop: '18px',
+        width: '100%'
+    },
+
+    headBuilding: {
+
+        marginLeft: '-25px',
         paddingTop: '14px'
     },
+
+    Billheadd: {
+
+        marginLeft: '-25px',
+        paddingTop: '14px'
+    },
+
+
 
     Closebill: {
         marginButtom: '-50%'
     }
+    ,
+    scrollspace: {
+        height: "730px",
+        width: '1163px',
+        margin: 'auto',
+        paddingLeft: 110,
+        transition: 'all 0.5s ease'
+
+    },
+    scrollspace36: {
+        height: "730px",
+        width: '1163px',
+        margin: 'auto',
+        paddingLeft: 36,
+        transition: 'all 0.5s ease'
+
+    },
+    textDrop: {
+        fontSize: 16,
+        color: "#4A4A4A"
+
+    },
 }));
 
 const BootstrapInput = withStyles((theme) => ({
@@ -516,12 +565,15 @@ const BootstrapInput = withStyles((theme) => ({
     },
 }))(InputBase);
 
-export default function Billpage({ isOpened }) {
+export default function Exhistorypage({ isOpened }) {
     const classes = useStyles();
-    const [history, setHistory] = useState([])
-    const [search, setSearch] = useState([])
-    const [building, setBuilding] = useState([])
+    const [bill, setBill] = useState([]);
+    const [search, setSearch] = useState("")
     const [dropdown, setDropdown] = useState([])
+    const [building, setBuildingFromDrop] = useState()
+    const [floorUrl, setFloorUrl] = useState(`/dropdown/floors/${building}`)
+    const [getDate, setupDate] = useState('05-12-2021')
+   
     const dateFormatter = date => {
         // return moment(date).unix();
         return moment(date).format('DD-MM-YY');
@@ -529,13 +581,13 @@ export default function Billpage({ isOpened }) {
 
     React.useEffect(() => {
         const fetchData = () => {
-            axios.get('/history/expense-history/LaLa/date/2021-06-20')
+            axios.get('/history/expense-history/Great1111/date/05-12-2021')
                 .then(r =>
-                    setHistory(r.data))
+                    setBill(r.data))
         }
         fetchData()
     }, [])
-    console.log(history)
+    console.log(bill)
 
     React.useEffect(() => {
         const fetchData = () => {
@@ -546,20 +598,65 @@ export default function Billpage({ isOpened }) {
         fetchData()
     }, [])
 
+
+    const Closebill = () => {
+        axios.post("/bill/closed-bill", {
+        }).then(() => {
+            setBill([
+                {
+                    "BillIds": [1, 2, 3]
+                },
+            ]);
+            window.location.href = '/createfeetype';
+        });
+    };
+    const getBillId = async () => {
+        const a = []
+        for (var i = 0; i < bill[0].floors.length; i++) {
+            for (var j = 0; j < bill[0].floors[i].rooms.length; j++) {
+                a.push(bill[0].floors[i].rooms[j].expenses[0].rentingTransactionId)
+
+            }
+        }
+        // console.log(a)
+
+        let res = await axios({
+            url: `/bill/closed-bill`,
+            method: 'post',
+            data: {
+                "BillIds": a,
+            }
+
+        }).then(response => {
+            alert("post success")
+            // window.location.href = `/feetype_sp/${id}`;
+            console.log(a)
+        })
+            .catch(error => {
+                alert("post fail")
+                console.log('Error getting fake data: ' + error);
+            })
+
+    }
+
+
+
+
+
     return (
+        <div style={{ width: '100%' }}>
+            <ScrollView>
+                <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
+                    <div>
+                        <div className={classes.frame}>
+                            <Datetoday />
+                            <h5 className={classes.Billheadd} id="newannouncetitle">
+                                Expense History
+                            </h5>
 
-        <ScrollView>
-            <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
-                <div>
-                    <div className={classes.frame}>
-                        <Datetoday />
-                        <h5 id="newannouncetitle"> Expense History </h5>
+                            {/*<div className="row align-items-start">
 
-                        <div>
-
-                            <div className="row align-items-start">
-
-                                <div className="col">
+                                <div  style={{ display: "flex", position: "absolute", top: 110, width: '100%' }}>
                                     <Paper component="form" className={classes.Searchstyle}>
                                         <BootstrapInput
                                             type="text"
@@ -567,27 +664,36 @@ export default function Billpage({ isOpened }) {
                                             variant="outlined"
                                             //label="Date"     
                                             placeholder="search"
+                                            onChange={(e) => {
+                                                setSearch(e.target.value);
+                                            }}
                                         />
                                     </Paper>
                                 </div>
-                                <div className="col">
-                                    <Paper component="form" className={classes.Searchbuilding}>
-                                        <BootstrapInput
-                                            type="date"
-                                            size="small"
-                                            variant="outlined"
-                                            label="Date"
-                                            placeholder="Date"
-                                        />
-                                    </Paper>
+                                <div>
+                                    <div className={classes.textDrop}>
+                                        Date
+                                    </div>
+                                    <div style={{ height: 4 }} />
+
+                                    <input 
+                                        placeholder="" 
+                                        type="date" 
+                                        style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
+                                        onChange={e => { setupDate(e.target.value) }}
+                                    >
+
+                                    </input>
+
                                 </div>
 
-                                <div className="col">
+                               {/* <div className="col">
                                     <Paper component="form" className={classes.Searchbuilding2}>
                                         <NativeSelect
                                             className={classes.dropdown}
                                             id="demo-customized-select-native"
                                             value={building}
+                                            //onChange={handleChange}
                                             onChange={(e) => {
                                                 setBuilding(e.target.value);
                                             }}
@@ -600,202 +706,261 @@ export default function Billpage({ isOpened }) {
                                             ))}
                                         </NativeSelect>
                                     </Paper>
+                                            </div>*/}
+
+                                {/*<div>
+                                    <div className={classes.textDrop}>
+                                        Building
+                                    </div>
+                                    <div style={{ height: 4 }} />
+
+                                    <DropBuilding
+                                        save={building => {
+                                            setBuildingFromDrop(building)
+                                            setFloorUrl(`/dropdown/floors/${building}`)
+                                        }}
+                                    />
                                 </div>
 
                                 <div className="col align-self-end">
                                     <Button
-                                        className={classes.SearchBtn}
+                                        className={classes.Searchbuilding2}
                                         variant="contained" color="primary" disableElevation
                                         style={{ backgroundColor: '#485D84' }}>
                                         Search</Button>
+                                </div>
+                            </div>*/}
+                            <div style={{ display: "flex", position: "absolute", top: 180, width: '100%' }}>
+                                <div style={{ position: 'relative', width: 161 }}>
+                                    <div className={classes.textDrop}>
+                                        Search
+                                    </div>            
+                                
+                                <div style={{ height: 4 }} />
+                                    <input 
+                                        placeholder="" type="text" 
+                                        style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
+                                        onChange={(e)=>{
+                                            setSearch(e.target.value);
+                                            }}>
+                                    </input>
+                                </div>
+
+                                <div style={{ width: 12 }} />
+                                <div>
+                                    <div className={classes.textDrop}>
+                                        Building
+                                    </div>
+                                    <div style={{ height: 4 }} />
+                                        <DropBuilding
+                                            save={building => {
+                                                setBuildingFromDrop(building)
+                                                setFloorUrl(`/dropdown/floors/${building}`)
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ width: 12 }} />
+                                    <div>
+                                        <div className={classes.textDrop}>
+                                            Date
+                                        </div>
+
+                                    <div style={{ height: 4 }} />
+
+                                    <input 
+                                        placeholder="" 
+                                        type="date" 
+                                        style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
+                                            onChange={e => 
+                                                { setupDate(e.target.value) 
+                                                }}
+                                            >
+                                    </input>
                                 </div>
                             </div>
                         </div>
 
                         <div>
-                            <Table aria-label="caption table">
-                                <div className="container">
-                                    {history.map((rows) => {
+                            <div>
+                                {/* {bill.map((rows) => {
+                                    return ( */}
+                                <div className="container ">
+                                    <h5 className={classes.headBuilding} id="newannouncetitle"> {bill.length > 0 && bill[0].buildingName} </h5>
+                                    {bill.length > 0 && bill[0].floors.map((item, index) => {
                                         return (
-                                            <div>
-                                                <h4 className={classes.TabMove}>{rows.buildingName}</h4>
-                                                <Card className={classes.Cards} variant="outlined">
-                                                    <Table>
-                                                        <TableHead >
-                                                            <h5 className={classes.heder}>Floor{rows.floorName}</h5>
-                                                            <TableRow>
-                                                                <TableCell>Room</TableCell>
-                                                                <TableCell>Bill Period</TableCell>
-                                                                <TableCell>Occupant</TableCell>
-                                                                <TableCell>Total</TableCell>
-                                                                <TableCell>Status</TableCell>
-                                                                <TableCell>Details</TableCell>
-                                                            </TableRow>
-                                                        </TableHead>
-                                                        {rows.room.map((num) => {
+                                            <Paper className={classes.papercard} style={{ border: "1px solid #AAAAAA" }}>
+                                                <h4 className={classes.headfloors}>Floor {item.floorName}</h4>
+                                                <Table>
+
+                                                    <TableBody className={classes.headfloor}>
+                                                        <TableRow >
+                                                            <TableCell className={classes.tablefont} align="center">Room</TableCell>
+                                                            <TableCell className={classes.tablefont} align="center" style={{ position: 'relative' }}>
+
+                                                                <div style={{ position: 'absolute', left: -34.5, top: 16, width: 380}}>
+                                                                    Billed Period
+                                                                </div>
+                                                            </TableCell>
+
+                                                            <TableCell className={classes.tablefont} align="center">Occupant</TableCell>
+                                                            <TableCell className={classes.tablefont} align="center">Total</TableCell>
+                                                            <TableCell className={classes.tablefont} align="center">Status</TableCell>
+                                                            <TableCell className={classes.tablefont} align="center">Details</TableCell>
+                                                        </TableRow>
+
+                                                        {item.rooms.filter(val => {
+                                                            if (search == '') {
+                                                                return val;
+                                                            } else if (
+                                                                val.roomNumber.toLowerCase().includes(search.toLowerCase())
+                                                            ) {
+                                                                return val
+                                                            }
+                                                        }).map((sub, index) => {
                                                             return (
-                                                                <TableBody>
-                                                                    {num.expenses.map((x) => {
-                                                                        return (
-                                                                            <TableRow>
-                                                                                <TableCell align="left">{num.roomNumber}</TableCell>
-                                                                                <TableCell align="left">
-                                                                                    {moment(x.billPeriod).format("L")}
-                                                                                </TableCell>
-                                                                                <TableCell align="left">{num.occupant}</TableCell>
-                                                                                <TableCell align="left">{x.totalPrice}</TableCell>
-                                                                                <TableCell align="left">{num.statusInfo}</TableCell>
-                                                                                <TableCell align="left">
-                                                                                    <Link to={`/historydetails/${num.roomId}`}>
-                                                                                        <InfoOutlinedIcon />
-                                                                                    </Link>
-                                                                                </TableCell>
-                                                                            </TableRow>
-                                                                        )
-                                                                    })}
-                                                                </TableBody>
+                                                                <TableRow >
+                                                                    <TableCell className={classes.intablefont} align="center">{sub.roomNumber}</TableCell>
+                                                                    <TableCell className={classes.intablefont} style={{ position: 'relative' }} align="center">
+                                                                        <div >
+                                                                            {moment(sub.expenses[0].startTime).format("DD/MM/YYYY")}-{moment(sub.expenses[0].endTime).format("DD/MM/YYYY")}
+
+                                                                        </div>
+
+
+                                                                    </TableCell>
+                                                                    <TableCell className={classes.intablefont} align="center">{sub.occupant}</TableCell>
+                                                                    <TableCell className={classes.intablefont} style={{ position: 'relative' }} align="center">
+
+                                                                        <div style={{ position: 'absolute', top: 20, right: 50 }}>
+
+                                                                            <NumberFormat
+                                                                                value={sub.expenses[0].totalPrice.toFixed(2)}
+
+                                                                                thousandSeparator={true}
+                                                                                displayType="text"
+
+                                                                            />
+                                                                        </div>
+
+                                                                        {/* {sub.expenses[0].totalPrice} */}
+
+                                                                    </TableCell>
+                                                                    <TableCell className={classes.intablefont} align="center">{sub.statusInfo}</TableCell>
+                                                                    <TableCell className={classes.intablefont} align="center">
+                                                                        <Link to={`/billdetails/${sub.roomId}`}>
+                                                                            <InfoOutlinedIcon style={{ color: "#485D84" }} />
+                                                                        </Link></TableCell>
+                                                                </TableRow>
                                                             )
                                                         })}
-                                                    </Table>
-                                                </Card>
-                                            </div>
+
+
+                                                   
+                                                    </TableBody>
+
+                                                </Table>
+                                                <div style={{ marginTop: "50px" }} />
+                                                {/* {f.rooms.filter(val => {
+                                                            if (search == '') {
+                                                                return val;
+                                                            } else if (
+                                                                val.roomNumber.toLowerCase().includes(search.toLowerCase())
+                                                            ) {
+                                                                return val
+                                                            }
+                                                        }).map((n) => {
+                                                            console.log(n)
+                                                            return (
+                                                                <div style={{ width: '1163px', height: '55px', position: 'relative' }}>
+                                                                   
+                                                                    <div style={{ width: '1163px', postition: 'relative', borderBottom: '1px solid #AAAAAA' }} >
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', left: 45, top: 18 }}>
+                                                                            {n.roomNumber}
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', left: 155, top: 18 }}>
+                                                                          
+                                                                            {moment(n.expenses[0].startTime).format("DD/MM/YYYY")}-{moment(n.expenses[0].endtime).format("DD/MM/YYYY")}
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 791, top: 18 }}>
+                                                                            <NumberFormat
+                                                                                // value={x.rent.toFixed(2)}
+                                                                                displayType="text"
+                                                                                thousandSeparator={true}
+                                                                                decimalScale={2} />
+                                                                            {n.expenses[0].rent}
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 650, top: 18 }}>
+                                                                            <NumberFormat
+                                                                                // value={x.electricity.toFixed(2)}
+                                                                                displayType="text"
+                                                                                thousandSeparator={true}
+                                                                                decimalScale={2} />
+                                                                            {n.expenses[0].electricity}
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 532, top: 18 }}>
+                                                                            <NumberFormat
+                                                                                // value={x.waterPrice.toFixed(2)}
+                                                                                displayType="text"
+                                                                                thousandSeparator={true}
+                                                                                decimalScale={2} />
+                                                                            {n.expenses[0].waterPrice}
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 408, top: 18 }}>
+                                                                            <NumberFormat
+                                                                                // value={x.other.toFixed(2)}
+                                                                                displayType="text"
+                                                                                thousandSeparator={true}
+                                                                                decimalScale={2} />
+                                                                            {n.expenses[0].other}
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 295, top: 18 }}>
+                                                                            <NumberFormat
+                                                                                // value={x.totalPrice.toFixed(2)}
+                                                                                displayType="text"
+                                                                                thousandSeparator={true}
+                                                                                decimalScale={2} />
+                                                                            {n.statusInfo}
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 174, top: 18 }}>
+                                                                            {n.statusInfo}
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 60, top: 16 }}>
+                                                                            <Link to={`/billdetails/${n.roomId}`}>
+                                                                                <InfoOutlinedIcon style={{ color: "#485D84" }} />
+                                                                            </Link>
+                                                                        </div>
+                                                                    </div>
+                                                                   
+                                                                </div>
+                                                            )
+                                                        })} */}
+
+                                            </Paper>
                                         )
                                     })}
                                 </div>
-
-                            </Table>
+                                {/* )
+                                })} */}
+                            </div>
                         </div>
-
                     </div>
                 </div>
-            </div>
-        </ScrollView>
+
+            </ScrollView>
+            {/* <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
+                <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 540, top: 40 }}
+                    // onClick={() => window.location.href = `/setting2/${id}`}
+                    onClick={() => getBillId()}
+                >
+                    Close
+                </Button>
+                <div style={{
+                    backgroundColor: '#385CA8', opacity: 0.5
+                    , width: "100%", height: 200, position: 'relative'
+                }}>
+                </div>
+            </div> */}
+        </div>
     )
 }
-
-/*<div className="row align-items-start">
-<div className="col">
-     <Paper component="form" className={classes.Searchstyle}>
-     <BootstrapInput
-         type="text"
-         size="small"
-         variant="outlined"
-         //label="Date"
-         placeholder="search"
-         onChange={(e)=>{
-           setSearch(e.target.value);
-         }}
-       />
-   </Paper>
- </div>
- <div className="col">
-     <Paper component="form" className={classes.Searchstyle}>
-     <BootstrapInput
-         type="date"
-         size="small"
-         variant="outlined"
-         label="Date"
-         placeholder="Date"
-
-       />
-   </Paper>
- </div>
- <div className="col">
-   <Paper component="form" className={classes.Searchstyle}>
-     <NativeSelect
-      className={classes.dropdown}
-       id="demo-customized-select-native"
-       value={building}
-
-         onChange={(e)=>{
-           setBuilding(e.target.value);
-         }}
-       input={<BootstrapInput />}
-     >
-       {dropdown.map((val)=>(
-         <option aria-label="None" value="" >
-           {val.text}
-         </option>
-        ))}
-     </NativeSelect>
-   </Paper>
- </div>
- <div className="col align-self-end">
-     <Button
-       className={classes.SearchBtn}
-       variant="contained" color="primary" disableElevation
-       style={{ backgroundColor: '#485D84'}}>
-     Search</Button>
- </div>
- </div>
-</div>
-<div>
-
-<div>
-   {bill.map((rows)=>{
-   return(
-<div className="container ">
-
-     {rows.buildingName}
-
-           <Paper className={classes.papercard}>
-               <h4 className={classes.headfloors}>Floor</h4>
-               <div className={classes.headfloor}>
-                   <div style={{ position: 'absolute', paddingTop: '6px' }}>
-                       <div className={classes.floortext}>
-                           Room
-                       </div>
-                       <div className={classes.floortext}></div>
-                       <div className={classes.floortext}>
-                           Billed At
-                       </div>
-                       <div className={classes.floortext}></div>
-                       <div className={classes.floortext}>
-                           Occupants
-                       </div>
-                       <div className={classes.floortext}>
-                       </div>
-                       <div className={classes.floortext}>
-                           Total
-                       </div>
-                       <div className={classes.floortext}></div>
-                       <div className={classes.floortext}>
-                            Status
-                       </div>
-                       <div className={classes.floortext2}></div>
-                       <div className={classes.floortext}>
-                           Detail
-                       <div className={classes.minitext} style={{paddingLeft:'150px'}}></div>
-                        </div>
-                   </div>
-               </div>
-
-               <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px" }} />
-               {rows.room.map((num) => {
-                   return(
-                   <TableBody>
-                   {num.expenses.map((x) => {
-                     return(
-                     <TableRow>
-                     <TableCell align="right" style={{paddingLeft:'48px'}}>{num.roomNumber}</TableCell>
-                     <TableCell align="left"style={{paddingLeft:'166px'}}>
-                       {moment(x.billPeriod).format("L")}
-                     </TableCell>
-                     <TableCell align="right"style={{paddingLeft:'165px'}}>{num.occupant}</TableCell>
-                     <TableCell align="right"style={{paddingLeft:'171px'}}>{x.totalPrice}</TableCell>
-                     <TableCell align="right"style={{paddingLeft:'156px'}}>{num.statusInfo}</TableCell>
-                     <TableCell align="left" style={{paddingLeft:'86px'}}>
-                     <Link to={`/historydetails/${x.roomId}`}>
-                       <InfoOutlinedIcon/>
-                       </Link>
-                     </TableCell>
-                     <TableCell align="left" ></TableCell>
-                     <TableCell align="left" ></TableCell>
-                   </TableRow>
-                   )})}
-               </TableBody>
-               )})}
-           </Paper>
-       </div>
-       )})}
-   </div>   */

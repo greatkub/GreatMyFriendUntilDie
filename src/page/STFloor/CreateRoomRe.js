@@ -142,7 +142,7 @@ export default function CreateRoomRe(props) {
     const bull = <span className={classes.bullet}>•</span>;
     const [allroom, setAllroom] = useState([]);
     const [inputRoomToAdd, setInputRoomToAdd] = useState(null)
-    const [arrayFloor, setArrayFloor] = useState(2)
+    const [arrayFloor, setArrayFloor] = useState(props.allFloor)
 
     const [getRoomName, setRoomName] = useState()
     const { id } = useParams()
@@ -156,7 +156,7 @@ export default function CreateRoomRe(props) {
             .then(response => {
                 console.log(response.data, "in response")
                 setBuildName(response.data[0].buildingName)
-
+                // setArrayFloor(props.allFloor)
             })
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
@@ -165,18 +165,18 @@ export default function CreateRoomRe(props) {
 
     }, []);
 
-    useEffect(() => {
-        setArrayFloor(props.allFloor)
-        axios('/building/rooms/1')
-            .then(response => {
-                // console.log("hi" + response.data)
-                setAllroom(response.data);
-            })
-            .catch(error => {
-                console.log('Error getting fake data: ' + error);
-            })
-        console.log("In useeffect")
-    }, [arrayFloor]);
+    // useEffect(() => {
+    //     setArrayFloor(props.allFloor)
+    //     axios('/building/rooms/1')
+    //         .then(response => {
+    //             // console.log("hi" + response.data)
+    //             setAllroom(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.log('Error getting fake data: ' + error);
+    //         })
+    //     console.log("In useeffect")
+    // }, []);
 
 
 
@@ -214,7 +214,7 @@ export default function CreateRoomRe(props) {
             for (var j = 0; j < parseInt(inputRoomToAdd); j++) {
                 
                 const formattedNumber = ("0" + (j + 1)).slice(-2)
-                const roomNumber = String(i + 1) + formattedNumber
+                const roomNumber = String(arrayFloor[i].FloorName) + formattedNumber
 
                 const roomObject = {
                     "room_number": roomNumber
@@ -232,6 +232,27 @@ export default function CreateRoomRe(props) {
 
     }
 
+    // const deleteHandler = (index) => {
+    //     const newList = keptSample.filter((item) => keptSample.indexOf(item) !== index);
+    //     console.log(newList)
+    //     setKeptSample(newList);
+    // }
+
+    const deleteHandler = (indexfloor, indexroom) => {
+        // Assuming that the index means the index of an item which is to be deleted.
+        const newList = arrayFloor[indexfloor].Rooms.filter((item) => arrayFloor[indexfloor].Rooms.indexOf(item) !== indexroom);
+        console.log(newList)
+
+        arrayFloor[indexfloor].Rooms = newList
+        // setArrayFloor(newList);
+        console.log(arrayFloor)
+        setArrayFloor(arrayFloor);
+
+        // setArrayFloor(a)
+        // console.log(arrayFloor)
+
+        
+    }
 
     return (
         <div style={{ width: '100%', height: "100%" }}>
@@ -247,7 +268,6 @@ export default function CreateRoomRe(props) {
                                 Rooms
                             </div>
                             {/* <button onClick={() => console.log(arrayFloor)}>
-
                             </button> */}
 
                             <div style={{
@@ -273,12 +293,7 @@ export default function CreateRoomRe(props) {
                                 >Generate Room</Button>
                             </div>
 
-
                         </div>
-
-
-
-
 
 
                         <div className={classes.wrapfame} >
@@ -289,7 +304,7 @@ export default function CreateRoomRe(props) {
                                 </div>
                             </div>
                             {/* map floor here*/}
-                            {arrayFloor != undefined && arrayFloor.length > 0 ? arrayFloor.map((floor, index) => {
+                            {arrayFloor != undefined && arrayFloor.length > 0 ? arrayFloor.map((floor, indexfloor) => {
                                 return (
                                     <div className={classes.inFame} style={{ marginBottom: 17.7 }}>
                                         {/* //linedivider */}
@@ -313,7 +328,7 @@ export default function CreateRoomRe(props) {
                                         </div>
 
 
-                                        {floor.Rooms.map((room, index) => {
+                                        {floor.Rooms.map((room, indexroom) => {
                                             { console.log('im here') }
                                             return (
                                                 <div className={classes.rominfame} style={{borderBottom: '0.75px solid #AAAAAA'}}>
@@ -329,7 +344,8 @@ export default function CreateRoomRe(props) {
 
                                                         </input>
                                                         <div className={classes.buttonDelete} style={{ right: 44, top: 14 }}>
-                                                            <DeleteIcon style={{ color: '#4A4A4A', position: 'absolute', width: 16, height: 16, top: 6, right: 6 }} />
+                                                            <DeleteIcon style={{ color: '#4A4A4A', position: 'absolute', width: 16, height: 16, top: 6, right: 6 }} 
+                                                            onClick={()=> deleteHandler(indexfloor, indexroom)}/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -355,12 +371,12 @@ export default function CreateRoomRe(props) {
 
             </ScrollView>
 
-            <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
+            <div style={{ position: 'absolute', width: '100%', height: 200, top: 600 }}>
                 <Button onClick={addFloorandRoom}
                     style={{
                         backgroundColor: "#485D84", width: 406,
                         height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1,
-                        position: 'absolute', left: 540, top: 40
+                        position: 'absolute', left: 580, top: 20
                     }}>
                     SAVE
                 </Button>

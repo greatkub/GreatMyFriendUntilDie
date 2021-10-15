@@ -1,65 +1,3 @@
-// import React from 'react'
-// import Billfloorcard from './Billpagecompo/Billfloorcard'
-// import { makeStyles } from '@material-ui/core/styles';
-// import Datetoday from '../../Components/AllComponent/Datetoday.js'
-// import { ScrollView } from 'react-native';
-// import { useState } from 'react';
-// import Navbar2 from '../../Components/AllComponent/Navbar2';
-
-// const useStyles = makeStyles((theme) => ({
-//     frame: {
-//         width: '1163px',
-//         height: '232px',
-//         backgroundColor: 'red',
-//     },
-//     scrollspace: {
-//         height: "730px",
-//         width: '1163px',
-//         margin: 'auto',
-//         paddingLeft: 110
-
-
-//     },
-//     scrollspace: {
-//         height: "730px",
-//         width: '1163px',
-//         margin: 'auto',
-//         paddingLeft: 110,
-//         transition: 'all 0.5s ease'
-
-//     },
-//     scrollspace36: {
-//         height: "730px",
-//         width: '1163px',
-//         margin: 'auto',
-//         paddingLeft: 36,
-//         transition: 'all 0.5s ease'
-
-//     }
-// }));
-
-// export default function Billpage({isOpened}) {
-//     const classes = useStyles();
-
-
-
-//     return (
-//         <ScrollView>
-//             <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
-//                 <div>
-//                     <div className={classes.frame}>
-//                         <Datetoday />
-//                     </div>
-//                     <div>
-//                         <Billfloorcard />
-//                     </div>
-//                 </div>
-//             </div>
-//         </ScrollView>
-
-//     )
-// }
-
 
 import React from 'react'
 import Datetoday from '../../Components/AllComponent/Datetoday.js'
@@ -79,12 +17,17 @@ import moment from 'moment';
 import NumberFormat from 'react-number-format';
 import InputBase from '@material-ui/core/InputBase';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import DropBuilding from '../../Components/Dropdown/DropBuilding';
+import DropFloor from '../../Components/Dropdown/DropFloor';
+import DropStatus from '../../Components/Dropdown/DropStatus.js';
+
+
 
 const useStyles = makeStyles((theme) => ({
     frame: {
         width: '1163px',
-        height: '232px',
-        //backgroundColor: 'red',
+        height: '148px',
+        position: "relative",
     },
     scrollspace: {
         height: "730px",
@@ -118,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     papercard: {
         width: '1163px',
         boxShadow: "0px 0px 0px #E8E8E8",
-        minHeight: '233px',
+        minHeight: '200px',
         //   margin: 'auto',
         marginLeft: 0,
         marginBottom: "16px",
@@ -333,9 +276,10 @@ const useStyles = makeStyles((theme) => ({
     },
 
     Billheadd: {
-
+        position: 'absolute',
         marginLeft: '-25px',
-        paddingTop: '14px'
+        // paddingTop: '10px'
+        top: 40
     },
 
 
@@ -359,7 +303,12 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 36,
         transition: 'all 0.5s ease'
 
-    }
+    },
+    textDrop: {
+        fontSize: 16,
+        color: "#4A4A4A"
+
+    },
 }));
 
 const BootstrapInput = withStyles((theme) => ({
@@ -402,20 +351,28 @@ export default function Billpage({ isOpened }) {
     const [bill, setBill] = useState([]);
     const [search, setSearch] = useState("")
     const [dropdown, setDropdown] = useState([])
-    const [building, setBuilding] = useState([])
+    const [building, setBuildingFromDrop] = useState()
+    const [floorUrl, setFloorUrl] = useState(`/dropdown/floors/${building}`)
+    const [thisStatus, setThisStatus] = useState("Paid")
+    const [getDate, setupDate] = useState('05-12-2021')
+
     const dateFormatter = date => {
         // return moment(date).unix();
         return moment(date).format('DD-MM-YY');
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
+        console.log("am hereee")
+        console.log(getDate)
         const fetchData = () => {
-            axios.get('/bill/bills/10/date/09-06-2021')
-                .then(r =>
-                    setBill(r.data))
+        axios.get('/bill/bills/1/date/10-14-2021')
+        .then(r => {
+        setBill(r.data)
+        console.log(r.data)
+        })
         }
         fetchData()
-    }, [])
+        })
     console.log(bill)
 
     React.useEffect(() => {
@@ -427,6 +384,14 @@ export default function Billpage({ isOpened }) {
         fetchData()
     }, [])
 
+    React.useEffect(() => {
+        const fetchData = () => {
+            axios.get(`/dropdown/floors/${building}`)
+                .then(r =>
+                    setDropdown(r.data))
+        }
+        fetchData()
+    }, [])
 
     const Closebill = () => {
         axios.post("/bill/closed-bill", {
@@ -439,222 +404,346 @@ export default function Billpage({ isOpened }) {
             window.location.href = '/createfeetype';
         });
     };
+    const getBillId = async () => {
+        const a = []
+        for (var i = 0; i < bill[0].floors.length; i++) {
+            for (var j = 0; j < bill[0].floors[i].rooms.length; j++) {
+                a.push(bill[0].floors[i].rooms[j].expenses[0].rentingTransactionId)
 
+            }
+        }
+        // console.log(a)
+
+        let res = await axios({
+            url: `/bill/closed-bill`,
+            method: 'post',
+            data: {
+                "BillIds": a,
+            }
+
+        }).then(response => {
+            alert("post success")
+            // window.location.href = `/feetype_sp/${id}`;
+            console.log(a)
+        })
+            .catch(error => {
+                alert("post fail")
+                console.log('Error getting fake data: ' + error);
+            })
+
+    }
 
     return (
+        <div style={{ width: '100%' }}>
+            <ScrollView>
+                <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
+                    <div>
+                        <div className={classes.frame}>
+                            <Datetoday />
+                        
+                            <h5 className={classes.Billheadd} id="newannouncetitle">  Bill </h5>
 
-        <ScrollView>
-            <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
-                <div>
-                    <div className={classes.frame}>
-                        <Datetoday />
-                        <h5 className={classes.Billheadd} id="newannouncetitle">  Bill </h5>
-
-                        <div className="row align-items-start">
-
-                            <div className="col">
-                                <Paper component="form" className={classes.Searchstyle}>
-                                    <BootstrapInput
+                            <div style={{ display: "flex", position: "absolute", top: 110, width: '100%' }}>
+                                <div style={{ position: 'relative', width: 161 }}>
+                                <div className={classes.textDrop}>
+                                        Search
+                                    </div>            
+                                {/* <BootstrapInput
+                                        style={{ backgroundColor: 'white', height: 20.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute', top: '200' }}
                                         type="text"
-                                        size="small"
-                                        variant="outlined"
+                                        //size="small"
+                                        variant="outlined" 
                                         //label="Date"     
                                         placeholder="search"
-                                        onChange={(e) => {
-                                            setSearch(e.target.value);
+                                            onChange={(e)=>{
+                                                setSearch(e.target.value);
+                                                    }}                  
+                                                />*/}
+           
+                                    <div style={{ height: 4 }} />
+
+                                <input 
+                                    style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
+                                    placeholder="" type="text" 
+                                    onChange={(e)=>{
+                                        setSearch(e.target.value);
+                                        }}>
+                                    </input>
+                                </div>
+
+                                <div style={{ width: 12 }} />
+
+                                <div>
+                                    <div className={classes.textDrop}>
+                                        Building
+                                    </div>
+                                    <div style={{ height: 4 }} />
+
+                                    <DropBuilding
+                                        save={building => {
+                                            setBuildingFromDrop(building)
+                                            setFloorUrl(`/dropdown/floors/${building}`)
+
                                         }}
-                                    />
-                                </Paper>
-                            </div>
-                            <div className="col">
-                                <Paper component="form" className={classes.Searchbuilding}>
-                                    <BootstrapInput
-                                        type="date"
-                                        size="small"
-                                        variant="outlined"
-                                        label="Date"
-                                        placeholder="Date"
+
 
                                     />
-                                </Paper>
-                            </div>
 
-                            <div className="col">
-                                <Paper component="form" className={classes.Searchbuilding2}>
-                                    <NativeSelect
-                                        className={classes.dropdown}
-                                        id="demo-customized-select-native"
-                                        value={building}
-                                        //onChange={handleChange}
-                                        onChange={(e) => {
-                                            setBuilding(e.target.value);
-                                        }}
-                                        input={<BootstrapInput />}
+                                </div>
+
+                                {/* <div style={{ width: 12 }} />
+                                <div>
+                                    <div className={classes.textDrop}>
+                                        Floor
+                                    </div>
+                                    <div style={{ height: 4 }} />
+                                    <DropFloor
+                                      url={floorUrl}
+                                    />
+                                </div> */}
+
+                                <div style={{ width: 12 }} />
+
+
+                                <div>
+                                    <div className={classes.textDrop}>
+                                        Date
+                                    </div>
+
+                                    <div style={{ height: 4 }} />
+
+                                    {/* <DropBuilding
+                                    // save={currentBuilding => setCurrentBuilding(currentBuilding)}
+                                    /> */}
+                                    <input placeholder="" 
+                                     defaultValue="2021-10-15"
+                                    type="date" style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
+                                        onChange={e => { setupDate(e.target.value) }}
                                     >
-                                        {dropdown.map((val) => (
-                                            <option aria-label="None" value="" >
-                                                {val.text}
-                                            </option>
-                                        ))}
-                                    </NativeSelect>
-                                </Paper>
+
+                                    </input>
+
+                                </div>
+
+                                <div style={{ width: 12 }} />
+
+
+                                <div style={{ paddingLeft: 128 }}>
+                                    <div className={classes.textDrop}>
+                                        Status
+                                    </div>
+                                    <div style={{ height: 4 }} />
+
+                                    {/* <DropStatus
+                                    // save={currentBuilding => setCurrentBuilding(currentBuilding)}
+                                    /> */}
+
+                                    <DropFloor
+                                        url={`/dropdown/floors/${building}`}
+
+                                    />
+
+                                </div>
+
+                                <div style={{ width: 12 }} />
+
+
+
+
+
                             </div>
 
-                            <div className="col align-self-end">
-                                <Button
-                                    className={classes.Searchbuilding2}
-                                    variant="contained" color="primary" disableElevation
-                                    style={{ backgroundColor: '#485D84' }}>
-                                    Search</Button>
-                            </div>
                         </div>
-                    </div>
 
-                    <div>
-                        {/*<Billfloorcard />*/}
                         <div>
-                            {bill.map((rows) => {
-                                return (
-                                    <div className="container ">
-                                        <h5 className={classes.headBuilding} id="newannouncetitle"> {rows.buildingName} </h5>
-                                        {rows.floors.map((f) => {
-                                            return (
-                                                <Paper className={classes.papercard} style={{border: "1px solid #AAAAAA"}}>
-                                                    <h4 className={classes.headfloors}>Floor{f.floorName}</h4>
-                                                    <div className={classes.headfloor}>
-                                                        <div style={{ position: 'absolute', paddingTop: '6px', width: '100%' }}>
-                                                            <div className={classes.floortext} style={{marginRight: 72}}>
-                                                                Room
-                                                                <div className={classes.minitext} style={{ paddingLeft: '1px' }}>  </div>
-                                                            </div>
-                                                            <div className={classes.floortext} style={{marginRight: 92}}>
-                                                                Bill period
-                                                                <div className={classes.minitext} style={{ paddingLeft: '1px' }}>  </div>
-                                                            </div>
-                                                            <div className={classes.floortext} style={{ paddingLeft: '32px' }}>
-                                                                Rent
-                                                                <div className={classes.minitext} style={{ paddingLeft: '292px' }}>(THB) </div>
-                                                            </div>
-                                                            <div className={classes.floortext}>
-                                                                Electricity
-                                                            </div>
-                                                            <div className={classes.floortext}>
-                                                                Water
-                                                            </div>
-                                                            <div className={classes.floortext}>
-                                                                Others
-                                                            </div>
-                                                            <div className={classes.floortext}>
-                                                                Total
-                                                            </div>
-                                                            <div className={classes.floortext}>
-                                                                Status
-                                                            </div>
-                                                            <div className={classes.floortext}>
-                                                                Detail
-                                                                <div className={classes.minitext} style={{ paddingLeft: '3px' }}> </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div style={{ marginTop: "50px" }} />
-                                                    {f.rooms.filter(val => {
-                                                        if (search == '') {
-                                                            return val;
-                                                        } else if (
-                                                            val.roomNumber.toLowerCase().includes(search.toLowerCase())
-                                                        ) {
-                                                            return val
-                                                        }
-                                                    }).map((n) => {
-                                                        console.log(n)
-                                                        return (
-                                                            <div style={{ width: '1163px' , height: '55px', position: 'relative'}}>
-                                                                {/* {n.expenses.map((x) => {
-                                                                    console.log(x)
-                                                                    return ( */}
-                                                                <div style={{ width: '1163px', postition: 'relative', borderBottom: '1px solid #AAAAAA' }} >
-                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', left: 45, top: 18 }}>
-                                                                        {/* {n.roomNumber} */}
-                                                                        101
-                                                                    </div>
-                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', left: 155 , top: 18}}>
-                                                                        {/* tickFormatter={dateFormatter} */}
-                                                                        27/03/21-27/04/2021
-                                                                        {/* {moment(x.billPeriod).format("L")} */}
+                            {/*<Billfloorcard />*/}
+                            <div>
+                                {bill.length > 0 && bill.map((rows) => {
+                                    return (
+                                        <div className="container ">
+                                            <h5 className={classes.headBuilding} id="newannouncetitle"> {rows.buildingName} </h5>
+                                            {rows.floors.map((f) => {
+                                                return (
+                                                    <Paper className={classes.papercard} style={{ border: "1px solid #AAAAAA" }}>
+                                                        <h4 className={classes.headfloors}>Floor{f.floorName}</h4>
+                                                        <div className={classes.headfloor}>
+                                                            <div style={{ position: 'absolute', paddingTop: '6px', width: '100%' }}>
+                                                                <div className={classes.floortext} style={{ marginRight: 72 }}>
+                                                                    Room
+                                                                    <div className={classes.minitext} style={{ paddingLeft: '295px' }}></div>
+                                                                </div>
+                                                                <div className={classes.floortext} style={{ marginRight: 92 }}>
+                                                                    Bill period
+                                                                    <div className={classes.minitext} style={{ paddingRight: '85%' }}></div>
+                                                                </div>
 
-                                                                    </div>
-                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 791 , top: 18}}>
-                                                                        <NumberFormat
-                                                                            // value={x.rent.toFixed(2)}
-                                                                            displayType="text"
-                                                                            thousandSeparator={true}
-                                                                            decimalScale={2} />
-                                                                        4,700.00
-                                                                    </div>
-
-                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 650, top: 18 }}>
-                                                                        <NumberFormat
-                                                                            // value={x.electricity.toFixed(2)}
-                                                                            displayType="text"
-                                                                            thousandSeparator={true}
-                                                                            decimalScale={2} />
-                                                                        575.00
-                                                                    </div>
-                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 532 , top: 18}}>
-                                                                        <NumberFormat
-                                                                            // value={x.waterPrice.toFixed(2)}
-                                                                            displayType="text"
-                                                                            thousandSeparator={true}
-                                                                            decimalScale={2} />
-                                                                        90.00
-                                                                    </div>
-
-                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 408, top: 18 }}>
-                                                                        <NumberFormat
-                                                                            // value={x.other.toFixed(2)}
-                                                                            displayType="text"
-                                                                            thousandSeparator={true}
-                                                                            decimalScale={2} />
-                                                                        0.00
-                                                                    </div>
-                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 295 , top: 18}}>
-                                                                        <NumberFormat
-                                                                            // value={x.totalPrice.toFixed(2)}
-                                                                            displayType="text"
-                                                                            thousandSeparator={true}
-                                                                            decimalScale={2} />
-                                                                        5,366.00
-                                                                    </div>
-
-                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 174, top: 18 }}>
-                                                                        {n.statusInfo}
-                                                                    </div>
-
-                                                                    <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 60, top: 16 }}>
-                                                                        <Link to={`/billdetails/${n.roomId}`}>
-                                                                            <InfoOutlinedIcon style={{color: "#485D84"}}/>
-                                                                        </Link>
-                                                                    </div>
-
+                                                                <div className={classes.floortext} style={{ paddingLeft: '32px' }}>
+                                                                    Rent
+                                                                    <div className={classes.minitext} style={{ paddingLeft: '296px' }}>(THB) </div>
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Electricity
+                                                                    <div className={classes.minitext} style={{left:'24%', position: 'absolute' }}>(THB) </div>
 
                                                                 </div>
-                                                                {/* )
+                                                                <div className={classes.floortext}>
+                                                                    Water
+                                                                    <div className={classes.minitext} style={{right:'10%', position: 'absolute' }}>(THB) </div>
+
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Others
+                                                                    <div className={classes.minitext} style={{right:'10%', position: 'absolute' }}>(THB) </div>
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Total
+                                                                    <div className={classes.minitext} style={{right:'1%', position: 'absolute' }}>(THB) </div>
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Status
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Detail
+                                                                    <div className={classes.minitext} style={{ paddingLeft: '3px' }}> </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style={{ marginTop: "50px" }} />
+                                                        {f.rooms.filter(val => {
+                                                            if (search == '') {
+                                                                return val;
+                                                            } else if (
+                                                                val.roomNumber.toLowerCase().includes(search.toLowerCase())
+                                                            ) {
+                                                                return val
+                                                            }
+                                                        }).map((n) => {
+                                                            console.log(n)
+                                                            return (
+                                                                <div style={{ width: '1163px', height: '55px', position: 'relative' }}>
+                                                                    {/* {n.expenses.map((x) => {
+                                                                    console.log(x)
+                                                                    return ( */}
+                                                                    <div style={{ width: '1163px', postition: 'relative', borderBottom: '1px solid #AAAAAA' }} >
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', left: 45, top: 18 }}>
+                                                                            {n.roomNumber}
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', left: 155, top: 18 }}>
+                                                                            {/* tickFormatter={dateFormatter} */}
+                                                                            {/* 27/03/21-27/04/2021 */}
+                                                                            {/* {moment(x.billPeriod).format("L")} */}
+                                                                            {moment(n.expenses[0].startTime).format("DD/MM/YYYY")}-{moment(n.expenses[0].endtime).format("DD/MM/YYYY")}
+
+
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 791, top: 18 }}>
+                                                                            <NumberFormat
+                                                                                value={n.expenses[0].rent.toFixed(2)}
+                                                                                displayType="text"
+                                                                                thousandSeparator={true}
+                                                                                decimalScale={2} />
+                                                                            {/* {n.expenses[0].rent.toFixed(2)} */}
+
+
+
+                                                                        </div>
+
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 650, top: 18 }}>
+                                                                            <NumberFormat
+                                                                                value={n.expenses[0].electricity.toFixed(2)}
+                                                                                displayType="text"
+                                                                                thousandSeparator={true}
+                                                                                decimalScale={2} />
+                                                                            {/* {n.expenses[0].electricity} */}
+
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 532, top: 18 }}>
+                                                                            <NumberFormat
+                                                                                value={n.expenses[0].waterPrice.toFixed(2)}
+                                                                                displayType="text"
+                                                                                thousandSeparator={true}
+                                                                                decimalScale={2} />
+
+                                                                            {/* {n.expenses[0].waterPrice} */}
+
+                                                                        </div>
+
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 408, top: 18 }}>
+                                                                            <NumberFormat
+                                                                                value={n.expenses[0].other.toFixed(2)}
+                                                                                displayType="text"
+                                                                                thousandSeparator={true}
+                                                                                decimalScale={2} />
+                                                                            {/* {n.expenses[0].other} */}
+
+                                                                        </div>
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 295, top: 18 }}>
+                                                                            <NumberFormat
+                                                                                value={n.expenses[0].totalPrice.toFixed(2)}
+                                                                                displayType="text"
+                                                                                thousandSeparator={true}
+                                                                                decimalScale={2} />
+                                                                            {/* {n.expenses[0].totalPrice} */}
+
+                                                                        </div>
+
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 174, top: 18 }}>
+                                                                            {n.statusInfo}
+                                                                        </div>
+
+                                                                        <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 60, top: 16 }}>
+                                                                            <Link to={`/billdetails/${n.roomId}`}>
+                                                                                <InfoOutlinedIcon style={{ color: "#485D84" }} />
+                                                                            </Link>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    {/* )
                                                                 })} */}
 
-                                                            </div>
-                                                        )
-                                                    })}
+                                                                </div>
+                                                            )
+                                                        })}
 
-                                                </Paper>
-                                            )
-                                        })}
-                                    </div>
-                                )
-                            })}
+                                                    </Paper>
+                                                )
+                                            })}
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
+
+
                 </div>
-            </div>
-        </ScrollView>
+
+            </ScrollView>
+
+            {bill.length > 0 && bill[0].floors[0].rooms[0].expenses[0].isClosed[0] &&
+
+                <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
+
+                    <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 540, top: 40 }}
+                        // onClick={() => window.location.href = `/setting2/${id}`}
+                        onClick={() => getBillId()}
+
+                    >
+                        Close
+                    </Button>
+
+                    <div style={{
+                        backgroundColor: '#385CA8', opacity: 0.5
+                        , width: "100%", height: 200, position: 'relative'
+                    }}>
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
     )
 }

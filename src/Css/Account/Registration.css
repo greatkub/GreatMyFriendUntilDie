@@ -91,13 +91,28 @@ input.error {
   margin-bottom: 15px;
 }
 
-.firstName,
-.lastName {
-  width: 49%;
+.gen{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
 }
 
-.email,
-.password {
+.gen{
+  width: 100%;
+  padding: 6px 15px;
+ 
+  height: 75%;
+ 
+}
+
+.firstName,
+
+.lastName {
+  width: 100%;
+}
+
+.emails,
+.passwords {
   width: 100%;
 }
 

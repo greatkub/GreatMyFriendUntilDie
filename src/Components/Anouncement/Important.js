@@ -10,6 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper'
 import Divider from '@material-ui/core/Divider';
 import { NavLink } from "react-router-dom";
+import { styled } from  '@material-ui/core/styles';
+import { IconButton } from '@material-ui/core';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import { Grid } from "@material-ui/core/";
 import "./../../Css/Announcement/Anouce.css"
@@ -58,8 +61,22 @@ const useStyles = makeStyles((theme) => ({
   },
 
   move: {
-    paddingLeft: "2%"
+    marginLeft: "7%",
+    marginTop: "-10%"
+    
   }
+}));
+
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
 }));
 
 function ImportantNews(props) {
@@ -74,33 +91,32 @@ function ImportantNews(props) {
     // <Grid >  
     <div className="padleft">
       <Card className={classes.root} >
-        <CardActionArea className={classes.CardActionArea}>
+        {/*<CardActionArea className={classes.CardActionArea}>*/}
           <img src={props.img} className={classes.media} />
           {/* <h3 className={classes.move}>{props.name} </h3> */}
           <CardContent>
+
             {/* <Typography gutterBottom variant="h6" component="h2"> */}
             <div id="importantdate">
               {moment(str.replace(/[^a-zA-Z0-9]/g, "")).format("L")}
+             
             </div>
             <div id="importanttopic">{props.Name}</div>
-
+               
             {/* </Typography> */}
-            <Typography
-              gutterBottom variant="h5"
-              component="h2">
-              {props.phone}
+            <Typography className={classes.move} gutterBottom variant="h5"component="h2">
+                {props.delete}
             </Typography>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p">
+        
+            <Typography  variant="body2" color="textSecondary" component="p">
               {props.cell}
             </Typography>
+          
           </CardContent>
-        </CardActionArea>
+        {/*</CardActionArea>*/}
         <CardActions>
-          <Button size="small" color="primary">{props.share}</Button>
-          <Button size="small" color="primary">{props.btn2}</Button>
+          {/*<Button size="small" color="primary">Share</Button>
+          <Button size="small" color="primary">{props.btn2}</Button>*/}
         </CardActions>
       </Card>
     </div>

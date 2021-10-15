@@ -14,8 +14,6 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 
 function DropBuilding(props) {
-
-
     const [buildings, setBuilding] = useState([]);
 
     const api = axios.create({
@@ -48,11 +46,12 @@ function DropBuilding(props) {
         <div style={{ display: 'flex' }}>
             <select onChange={handleChange} style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A' }} >
 
-                <option >Not Specify</option>
-
+                
+            {/*<option >Not Specify</option>*/}
                 {buildings.map(buildings =>
                     <option  value={buildings.text}>{buildings.text}</option>
                 )}
+                
 
             </select>
             {/* <ArrowDropDownIcon style={{ color: "#000000", position: 'absolute', left: 130, top: 67 }} /> */}

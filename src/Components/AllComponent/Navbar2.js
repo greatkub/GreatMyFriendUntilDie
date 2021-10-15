@@ -15,14 +15,16 @@ import SmsRoundedIcon from '@mui/icons-material/SmsRounded';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 
 import SettingsIcon from '@mui/icons-material/Settings';
-
+import EqualizerSharpIcon from '@mui/icons-material/EqualizerSharp';
+import AppsRoundedIcon from '@mui/icons-material/AppsRounded';
 
 const Navbar2 = (props) => {
     const [showNav, setShowNav] = useState(false)
     // const [currentClicked, setCurrentClicked] = useState(false)
     const [currentTag, setCurrentTag] = useState(0)
     const { id } = useParams()
-
+    const pathname = window.location.pathname
+    const currentId = pathname.slice(-2)
 
     function handlerclick() {
         setShowNav(!showNav)
@@ -32,13 +34,16 @@ const Navbar2 = (props) => {
     function isClicked(tag) {
         // setCurrentClicked(!currentClicked)
         setCurrentTag(tag)
+
     }
 
     return (
         <div className={showNav ? 'sidebar active' : 'sidebar'}>
             <div class="logo_content">
                 <div class="logo">
-                    <i class='bx bxl-c-plus-plus'></i>
+                    <i class='bx bxl-c-plus-plus'>
+                        
+                    </i>
                     <div class="logo_name">HABITAT</div>
 
                 </div>
@@ -58,8 +63,10 @@ const Navbar2 = (props) => {
 
                 {/* </li> */}
                 <li className={currentTag == 5 ? 'selected' : 'unselected'} onClick={() => isClicked(5)}>
-                    <Link to='/dashpage'>
-                        {/* <i className='bx bx-pie-chart-alt-2'></i> */}
+                    <Link to={`/dashpage/${currentId}`}>
+                        <i >
+                            <EqualizerSharpIcon  style={{color:'#4A4A4A'}} />
+                        </i>
                         <span className="links_name">Dashboard</span>
                     </Link>
 
@@ -68,17 +75,19 @@ const Navbar2 = (props) => {
                 </li>
 
                 <li className={currentTag == 1 ? 'selected' : 'unselected'} onClick={() => isClicked(1)} >
-                    <Link to='/expense'>
-                        <i class='bx bx-grid-alt'></i>
+                    <Link to={`/expense/${currentId}`}>
+                        <i>
+                            <AppsRoundedIcon style={{color:'#4A4A4A'}}/>
+                        </i>
                         <span class="links_name">Expenses</span>
                     </Link>
                     {/* <span class="tooltip">Dashboard</span> */}
 
                 </li>
                 <li className={currentTag == 2 ? 'selected' : 'unselected'} onClick={() => isClicked(2)} >
-                    <Link to='/bill'>
+                    <Link to={`/bill/${currentId}`}>
                         <i >
-                            <InsertDriveFileOutlinedIcon/>
+                            <InsertDriveFileOutlinedIcon style={{color:'#4A4A4A'}}/>
                         </i>
                         <span class="links_name">Bill</span>
                     </Link>
@@ -87,9 +96,9 @@ const Navbar2 = (props) => {
 
                 </li>
                 <li className={currentTag == 3 ? 'selected' : 'unselected'} onClick={() => isClicked(3)} >
-                    <Link to='/rooms'>
+                    <Link to={`/rooms/${currentId}`}>
                         <i>
-                            <BedRoundedIcon />
+                            <BedRoundedIcon style={{color:'#4A4A4A'}}/>
                         </i>
                         <span class="links_name">Room Management</span>
 
@@ -100,10 +109,10 @@ const Navbar2 = (props) => {
                 </li>
 
                 <li className={currentTag == 4 ? 'selected' : 'unselected'} onClick={() => isClicked(4)} >
-                    <Link to='/expensehistory'>
+                    <Link to={`/expensehistory/${currentId}`}>
                         {/* <i class='bx bx-folder'></i> */}
                         <i>
-                            <HistoryIcon />
+                            <HistoryIcon style={{color:'#4A4A4A'}}/>
                         </i>
 
                         <span class="links_name">Expense History</span>
@@ -114,10 +123,10 @@ const Navbar2 = (props) => {
                 </li>
 
                 <li className={currentTag == 6 ? 'selected' : 'unselected'} onClick={() => isClicked(6)} >
-                    <Link to='/announce'>
-                        
+                    <Link to={`/announce/${currentId}`}>
+
                         <i>
-                            <SmsRoundedIcon />
+                            <SmsRoundedIcon style={{color:'#4A4A4A'}}/>
                         </i>
 
                         <span class="links_name">Announcements</span>
@@ -127,9 +136,9 @@ const Navbar2 = (props) => {
                 </li>
 
                 <li className={currentTag == 8 ? 'selected' : 'unselected'} onClick={() => isClicked(8)} >
-                    <Link to='/petitionpage'>
+                    <Link to={`/petitionpage/${currentId}`}>
                         <i>
-                            <AssignmentOutlinedIcon/>
+                            <AssignmentOutlinedIcon style={{color:'#4A4A4A'}}/>
                         </i>
                         <span class="links_name">Petitions</span>
                     </Link>
@@ -140,28 +149,26 @@ const Navbar2 = (props) => {
                         <i class='bx bx-cog'></i>
                         <span class="links_name">Setting</span>
                     </a>
-
                 </li> */}
 
 
                 <li className={currentTag == 7 ? 'selected' : 'unselected'} onClick={() => isClicked(7)}>
-                    <Link to={`/setting2/${id}`}>
+                    <Link to={`/setting2/${currentId}`}>
 
                         <i>
-                            <SettingsIcon />
+                            <SettingsIcon style={{color:'#4A4A4A'}}/>
                         </i>
                         <span className="links_name">Setting</span>
                     </Link>
                     {/* <span class="tooltip">Dashboard</span> */}
 
                 </li>
-                <li className={currentTag == 9 ? 'selected' : 'unselected'} onClick={() => isClicked(9)} >
+                {/* <li className={currentTag == 9 ? 'selected' : 'unselected'} onClick={() => isClicked(9)} >
                     <Link to='/testnewpage'>
                         <i class='bx bx-heart'></i>
                         <span class="links_name">testnewpage</span>
                     </Link>
-                    {/* <span class="tooltip">Dashboard</span> */}
-                </li>
+                </li> */}
             </ul>
 
             {/* <div className="profile_content">

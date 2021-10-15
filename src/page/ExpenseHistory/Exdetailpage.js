@@ -8,6 +8,7 @@ import ExRoomdetail from '../Expens/DetailExpenseCompo/RoomExpenseCompo/ExRoomde
 import ExOtherdetail from '../Expens/DetailExpenseCompo/OtherExpenseCompo/ExOtherdetail.js';
 import Paper from '@material-ui/core/Paper';
 import { Divider } from '@material-ui/core';
+import { useParams } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -227,6 +228,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Exdetailpage({ isOpened }) {
     const classes = useStyles();
+    const {id} = useParams()
+
+    
 
 
 

@@ -21,6 +21,8 @@ import axios from "axios";
 import CloseIcon from '@material-ui/icons/Close';
 import Chip from '@material-ui/core/Chip';
 import { useParams } from "react-router";
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 // import "../../Css/Fee/Fee.css"
 // import "./Fee.css"
@@ -212,16 +214,19 @@ export default function CreateFeetype(props) {
 
     const [feetype, setFeetype] = useState([]);
     const [userId, setUserId] = useState("");
+
+    const [idedit, setIdedit] =useState(0)
     const [addFeetypename, setAddfeetypename] = useState("");
     const [addFeeprice, setAddfeeprice] = useState("");
     const [modalEdit, setModalEdit] = useState(false);
     const [modaldelete, setModalDelete] = useState(false);
-
+    const [isfeeloading, setIsfeeloading] = useState(false);
     useEffect(() => {
         axios('/feetype/fee-types')
             .then(response => {
                 console.log(response.data)
                 setFeetype(response.data);
+                setIsfeeloading(true);
             })
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
@@ -243,6 +248,7 @@ export default function CreateFeetype(props) {
             ]);
             // window.location.href = '/createfeetype';
             window.location.href = `/feetype_sp/${id}`;
+            props.isLog(false)
         });
         setOpen(false)
     };
@@ -258,6 +264,7 @@ export default function CreateFeetype(props) {
 
     const selectFeetype = (rows, data) => {
         setAddfeetypename(rows);
+        setIdedit(rows.id)
         setAddfeeprice(rows);
         (data === 'Edit')
             ?
@@ -273,9 +280,9 @@ export default function CreateFeetype(props) {
         setModalDelete(!modaldelete);
     }
 
-    const UpdateFeetype = (id) => {
-        axios.post("/feetype/edit-fee-type/" + id, feetype, {
-            "id": id,
+    /*const UpdateFeetype = (id) => {
+        axios.post("/feetype/edit-fee-type/23", feetype, {
+            "id":23,
             "FeeTypeName": addFeetypename,
             "FeeTypePrice": parseInt(addFeeprice)
         }).then(() => {
@@ -289,7 +296,21 @@ export default function CreateFeetype(props) {
             ]);
         });
         setOpen(false)
+    };*/
+
+    const UpdateFeetype = () => {
+        axios.post("/feetype/edit-fee-type/"+ idedit,{ 
+            "id": parseInt(idedit),
+            "FeeTypeName": addFeetypename,
+            "FeeTypePrice": parseInt(addFeeprice)
+        },
+
+        ).then((response) => {
+            window.location.href = `/feetype_sp/${id}`;
+            console.log(response);
+        })
     };
+
 
     //TODO Check edit
     // const EditTextfeild = (
@@ -342,8 +363,8 @@ export default function CreateFeetype(props) {
         
 
     }
-
-    return (
+   
+            return (
         <div className={classes.frame}>
             <Card className={classes.Card} variant="outlined">
                 <h4 className={classes.TitleMargin}> Fee Types
@@ -379,8 +400,12 @@ export default function CreateFeetype(props) {
                                                 deletetable(row.id)
                                             }}
                                             </DeleteIcon> */}
-                                                <DeleteIcon onClick={() => { deletetable(row.id) }}
-                                                    className={classes.IconSizeTable}>
+                                               
+
+                                                <DeleteIcon      
+                                                 onClick={()=>{
+                                                    if(window.confirm('Delete the item?'))
+                                                  {deletetable(row.id)};}}>
                                                     <Button ></Button>
                                                 </DeleteIcon>
                                             </div>
@@ -510,4 +535,5 @@ export default function CreateFeetype(props) {
             </Card>
         </div>
     );
+
 }

@@ -85,12 +85,12 @@ export default function Floorsection(props) {
                     <div className={classes.floortext}>
                         Floor {props.floorName}
                     </div>
-                    <div className={classes.numinroom}>
+                    {/*<div className={classes.numinroom}>
                         <PersonIcon className={classes.personicon} />
 
                         <div className={classes.aligninicon}>{props.numPeople} / {props.numBed}</div>
 
-                    </div>
+    </div>*/}
                 </div>
                 <Divider style={{ backgroundColor: "#AAAAAA", marginTop: 81 }} />
                 <div style={{ display: 'flex', flexWrap: 'wrap', marginLeft: '50.5px', marginTop: '32.36px', marginBottom: '21.8px' }}>

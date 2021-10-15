@@ -9,9 +9,8 @@ import { Button } from '@material-ui/core';
 import axios from 'axios';
 import moment from 'moment';
 import { useParams } from 'react-router';
-
-
-
+///import { lightBlue100 } from 'material-ui/styles/colors';
+///import { lightBlue300 } from 'material-ui/styles/colors';
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -36,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     footerbtn: {
 
     },
-
 
     //floor
 
@@ -193,7 +191,7 @@ export default function Verifypage({ isOpened }) {
     const [allData, setAllData] = useState([])
     const [allTransaction, setAllTransaction] = useState([])
     const [rentTrans, setRentTrans] = useState([])
-    const {id} = useParams()
+    const { id } = useParams()
 
     useEffect(async () => {
         console.log("in Use Eff first row")
@@ -232,6 +230,7 @@ export default function Verifypage({ isOpened }) {
     }
 
     const sureVeuify = async () => {
+
         console.log("all trans")
         console.log(allTransaction)
         console.log(rentTrans)
@@ -290,7 +289,18 @@ export default function Verifypage({ isOpened }) {
                             </div>
 
                             <div className={classes.title2bl}>
-                                {allData.length > 0 ? allData[0].buildingName : ""}
+                                <div style={{ display: 'flex' }}>
+                                    <div style={{marginRight: 20, textDecorationLine: 'underline', }}
+                                    onClick={()=> window.location.href = `/expense/${id}` }
+                                    >
+                                        back
+                                    </div>
+
+                                    <div>
+                                        {allData.length > 0 ? allData[0].buildingName : ""}
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
@@ -300,31 +310,38 @@ export default function Verifypage({ isOpened }) {
                                     return (
                                         <Paper className={classes.papercard}>
                                             <div className={classes.headfloor} >
+
                                                 Floor {floor.floorName}
+
                                                 <div style={{ position: 'absolute', paddingTop: '6px' }}>
 
                                                     <text className={classes.floortext}>
                                                         Room
                                                     </text>
+
                                                     <text className={classes.floortext} style={{ marginRight: '163px' }}>
                                                         Bill Period
                                                     </text>
+
                                                     <text className={classes.floortext}>
                                                         Previos Date
                                                     </text>
+
                                                     <text className={classes.floortext}>
                                                         Previous Reading
                                                     </text>
+
                                                     <text className={classes.floortext}>
                                                         Current Reading
                                                     </text>
-                                                    <text className={classes.floortext}>
+
+                                                    <text >
                                                         Usage
                                                     </text>
 
                                                 </div>
                                             </div>
-                                            
+
                                             <Divider style={{ backgroundColor: "#AAAAAA", marginTop: "50px", height: 0.5 }} />
                                             {floor.rooms.map((room, i) => {
                                                 return (
@@ -335,15 +352,16 @@ export default function Verifypage({ isOpened }) {
                                                         </div>
                                                         <div className={classes.newdetext} style={{ left: 196 }}>
                                                             {/* 27/03/21-27/03/21 */}
-                                                            { moment(room.startTime).format("DD/MM/YYYY")}-{moment(room.endTime).format("DD/MM/YYYY")}
+                                                            {moment(room.startTime).format("DD/MM/YYYY")}-{moment(room.endTime).format("DD/MM/YYYY")}
 
-                                                            
+
                                                         </div>
                                                         <div className={classes.newdetext} style={{ left: 422 }}>
                                                             {/* 27/04/2021 */}
                                                             {/* {room.previousDate} */}
                                                             {/* {moment(room.previousDate.replace(/[^a-zA-Z0-9]/g, "")).format("L")} */}
-                                                            { moment(room.previousDate).format("DD/MM/YYYY")}
+
+                                                            {moment(room.previousDate).format("DD/MM/YYYY")}
 
                                                         </div>
                                                         <div className={classes.newdetext} style={{ right: 441 }}>
@@ -369,11 +387,11 @@ export default function Verifypage({ isOpened }) {
                             </div>
                         </div>
                     </div>
-                    <div style={{height: 100}}/>
+                    <div style={{ height: 100 }} />
                 </div >
             </ScrollView >
 
-            <div style={{ position: 'absolute', width: '100%', height: 200, top: 655 }}>
+            <div style={{ position: 'absolute', width: '100%', height: 200, top: 555 }}>
                 <Button
                     onClick={sureVeuify}
                     style={{

@@ -86,8 +86,11 @@ export default function Roompage({ isOpened }) {
     const [isLoading, setIsLoading] = useState(false)
     const [isLoadingLV1, setIsLoadingLV1] = useState(false)
 
-    const [currentBuilding, setCurrentBuilding] = useState("Demo")
+    const [currentBuilding, setCurrentBuilding] = useState("")
     const [floorUrl, setFloorUrl] = useState(`/dropdown/floors/${currentBuilding}`)
+
+
+
     // const floorUrl = `/building/floors/${currentBuilding}`
 
     useEffect(() => {
@@ -104,6 +107,10 @@ export default function Roompage({ isOpened }) {
                 console.log('Error getting fake data: ' + error);
             })
     });
+
+    
+   
+
 
     function numWholive() {
         var a = 0
@@ -178,9 +185,9 @@ export default function Roompage({ isOpened }) {
 
                                 <DropFloor
                                     url={floorUrl}
-
+                                    // save={currentFloor => setCurrentFloor(currentFloor)}
                                 />
-
+            
                             </div>
 
                             <div style={{ width: 12 }} />
@@ -191,7 +198,6 @@ export default function Roompage({ isOpened }) {
                                     Status
                                 </div>
                                 <div style={{ height: 4 }} />
-
                                 <DropIsAvailable />
                             </div> */}
 
@@ -199,15 +205,15 @@ export default function Roompage({ isOpened }) {
 
 
 
-                            <div style={{ position: 'absolute', right: 0, top: 28 }}>
+                            {/* <div style={{ position: 'absolute', right: 0, top: 28 }}>
                                 <Button className={classes.buttontop} >
                                     Search
                                 </Button>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className={classes.titleText} style={{ position: 'absolute', bottom: 0 }}>
-                            Building
+                        {currentBuilding}
                         </div>
                     </div>
 
@@ -222,11 +228,8 @@ export default function Roompage({ isOpened }) {
                                     allFloor={allFloor[index].rooms}
                                     numBed={numBed[index]}
                                     numPeople={numPeople[index]}
-
                                 />
-
                             ))
-
                         }
 
                     </div>

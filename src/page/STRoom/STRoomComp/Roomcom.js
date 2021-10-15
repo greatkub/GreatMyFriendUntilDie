@@ -110,10 +110,14 @@ export default function Roomcom(props) {
     function handlerclick () {
         setShowNav(!showNav)
         props.save(props.roomId)
+        props.save2(props.roomNumber)
+
         props.getTorF(showNav)
         // allSelect.push(props.id)
 
         console.log(props.roomId + 'from Roomcard component')
+        console.log(props.roomNumber + ' roomNumber from Roomcard component')
+        console.log(props.roomTypeName)
         // console.log(allSelect)
 
     }
@@ -130,7 +134,9 @@ export default function Roomcom(props) {
                 </div>
 
                 <div className={classes.typeroom}>
-                    {props.roomTypeName}
+                    {/* {props.roomTypeName} */}
+                    {props.roomTypeName == null ? "Not Specify Type": props.roomTypeName}
+
                 </div>
                 <ExitToAppIcon style={{ height: '40px', width: '40px', color: 'rgb(237, 237, 237)', position: "absolute", right: 10, top: 10 }} />
 

@@ -24,6 +24,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { BrowserRouter as Rounter, Route, Link, NavLink, Switch } from 'react-router-dom';
 import Checkbox from '@material-ui/core/Checkbox';
 import { useParams } from "react-router";
+import CircularProgress from '@mui/material/CircularProgress';
 
 //import "../../Css/Fee/Fee.css"
 import axios from "axios";
@@ -226,12 +227,15 @@ export default function CreateFeeset(props) {
   const [selected, setSelected] = React.useState([]);
   const [addFeesetname, setAddfeesetname]= useState("");
   const [roomprice, setRoomprice]= useState("");
+  const [isfeeloading, setIsfeeloading] = useState(false);
+
 
   useEffect(() => {
     axios('/feetype/fee-types')
     .then(response => {
          console.log(response.data)
     setFeetype(response.data);
+    setIsfeeloading(true);
     
 })
     .catch(error => {
@@ -285,6 +289,8 @@ const handleClick = (event, name) => {
 console.log(selected)
 
 const isSelected = (name) => selected.indexOf(name) !== -1;
+  
+if (isfeeloading){
   return (
       <div className="container ">
       <div>
@@ -464,4 +470,11 @@ const isSelected = (name) => selected.indexOf(name) !== -1;
     </div>        
 </div>    
   );
+} else {
+  return (
+      <div>
+          <CircularProgress color="secondary" />
+      </div>
+    )
+  }
 }

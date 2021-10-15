@@ -186,9 +186,9 @@ import { BarChart, LineChart, Line, Bar, Cell, XAxis, YAxis, CartesianGrid, Tool
 import { scaleOrdinal } from "d3-scale";
 import { schemeCategory10 } from "d3-scale-chromatic";
 import axios from "axios";
+import DropBuilding from '../../Components/Dropdown/DropBuilding';
+
 import moment from 'moment';
-
-
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -261,7 +261,12 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '9px',
         marginRight: 20,
         marginLeft: 40
-    }
+    },
+    textDrop: {
+        fontSize: 16,
+        color: "#4A4A4A"
+
+    },
 
 
 }));
@@ -322,10 +327,13 @@ const Linedata = [
 
 export default function Dashpage({ isOpened }) {
     const classes = useStyles();
+    const [currentBuilding, setCurrentBuilding] = useState("Demo")
+    const [allFloor, setAllFloor] = useState(`/dropdown/floors/${currentBuilding}`)
     const [linedash, setLinedash] = useState([])
     const [bardash, setBardash] = useState([])
     const [vacants, setVacants] = useState([])
     const [overall, setOverall] = useState([])
+    const [info, setInfo] = useState([])
 
     const dateFormatter = date => {
         // return moment(date).unix();
@@ -333,7 +341,7 @@ export default function Dashpage({ isOpened }) {
       };
 
     useEffect(()=>{
-        axios.get('/history/barchart/2').then(response =>{
+        axios.get(`/history/barchart/${currentBuilding}`).then(response =>{
         console.log(response.data);
         setBardash(response.data);
         })
@@ -343,7 +351,7 @@ export default function Dashpage({ isOpened }) {
   }, []);
 
     useEffect(()=>{
-        axios.get('/history/dashboard-graph/2').then(response =>{
+        axios.get('/history/dashboard-graph/38').then(response =>{
         console.log(response.data);
         setLinedash(response.data);
     })
@@ -352,11 +360,26 @@ export default function Dashpage({ isOpened }) {
   })
 }, []);
 
+useEffect(()=>{
+    axios.get("/history/barchart-info/38")
+    .then(response =>{
+    console.log(response.data);
+    setInfo(response.data);
+})
+.catch(error => {
+console.log('Error data: ' + error);
+})
+}, []);
+
+
+
     useEffect(()=>{
-        axios.get('/history/room/2')
+        //axios.get(`/history/room/${currentBuilding}`)
+        axios.get(`/history/room/38`)
         .then(response =>{
         console.log(response.data);
         setVacants(response.data);
+        setAllFloor(response.data);
     })
     .catch(error => {
     console.log('Error data: ' + error);
@@ -376,6 +399,19 @@ export default function Dashpage({ isOpened }) {
                         </div>
                         <div className={classes.mainfame}>
                             <Paper className={classes.Yfame}>
+
+                            <div>
+                                    <div className={classes.textDrop}>
+                                        Building
+                                    </div>
+                                    <div style={{ height: 4 }} />
+
+                                    <DropBuilding
+                                    save={currentBuilding => 
+                                        setCurrentBuilding(currentBuilding)}
+                                />
+
+                                </div>
                                 <div className={classes.normaltext} style={{ height: 283.5, width: "150%" }}>                    
                                 <BarChart
                                       width={380}
@@ -405,42 +441,54 @@ export default function Dashpage({ isOpened }) {
                                         </Bar>  
                                             </BarChart>
                                 </div>
+
+                               
                                 <div style={{ height: 283.5, width: "100%"}}>
-                                      
+                               
                                     <div style={{ position: 'absolute', marginTop: 130, width: '100%'}}>
                                         <div className={classes.textDash} style={{position:'absolute', top: -100, left: 120}}>
                                             Overall of Revenue
                                             </div>
+                                            
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
+                                        
+                                      
                                             <div className={classes.circleborder} style={{ backgroundColor: "#3BC045" }} />
-                                            <div className={classes.normaltext} >Rent</div>
-                                            <div className={classes.normaltext} >20,000.00</div>
+                                      
+                                            <div className={classes.normaltext} > Rent </div>
+                                           
+                                             
+                                            <div className={classes.normaltext}>{info.rent}</div>
+                                     
                                             <div className={classes.normaltext} >THB</div>
-
+                                          
+                                       
                                         </div>
+
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#5256C1" }} />
                                             <div className={classes.normaltext}>Electricity</div>
-                                            <div className={classes.normaltext} >20,000.00</div>
+                                            <div className={classes.normaltext} >{info.electricity}</div>
                                             <div className={classes.normaltext} >THB</div>
                                         </div>
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#FFD800" }} />
 
                                             <div className={classes.normaltext}>Water</div>
-                                            <div className={classes.normaltext} >20,000.00</div>
+                                            <div className={classes.normaltext} >{info.water}</div>
                                             <div className={classes.normaltext} >THB</div>
                                         </div>
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#C03B3B" }} />
 
                                             <div className={classes.normaltext}>Others</div>
-                                            <div className={classes.normaltext} >20,000.00</div>
+                                            <div className={classes.normaltext} >{info.other}</div>
                                             <div className={classes.normaltext} >THB</div>
                                         </div>
                                     </div>
+                                  
                                 </div>
-
+                              
                             </Paper>
 
                            

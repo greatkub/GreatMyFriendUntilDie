@@ -119,57 +119,33 @@ export default function Floorcom(props) {
     const str = props.Date
     const [allRoom, setAllRoom] = useState(props.allFloor);
     const [allSelect, setAllSelect] = useState([]);
+    const [allSelect2, setAllSelect2] = useState([]);
 
     const [keptAS, setAS] = useState([])
     const [isSelect, setIsSelect] = useState(false)
     const [getT, setGetT] = useState(false)
 
 
-
-    function handlerClick() {
-        //     const result = keptAS.filter(word => word == allSelect);
-        //     var index = keptAS.indexOf(allSelect);
-
-        //     if (result == allSelect) {
-        //         console.log(true);
-        //         if (index > -1) { //Make sure item is present in the array, without if condition, -n indexes will be considered from the end of the array.
-        //             keptAS.splice(index, 1);
-        //         }
-        //         // keptAS.pop(result)
-
-        //     } else {
-        //         console.log(false);
-        //         keptAS.push(allSelect)
-        //     }
-        //     console.log(keptAS)
-
-        //     // if (keptAS.length > 1) {
-        //     //     setIsSelect(true)
-        //     // } else {
-        //     //     setIsSelect(false)
-        //     // }
-
-    }
-
     function handelerBoth() {
         // handlerClick()
-        
+        props.getcurrentSelect2(allSelect2)
         props.getcurrentSelect(allSelect)
         props.setTrigger(true)
     }
 
     function handlerCheck() {
+        console.log("this")
+
         console.log(allSelect)
+        console.log("that")
+
+        console.log(allSelect2)
         // keptAS.push(allSelect)
         // console.log(keptAS)
         return getT
 
     }
-    //  useEffect(() => {
 
-
-
-    // }, []);
 
 
     function handlerPushToArray(allSelectpara) {
@@ -188,6 +164,23 @@ export default function Floorcom(props) {
         }
     }
 
+    function handlerPushToArray2(allSelectpara2) {
+        const result = allSelect2.filter(word => word == allSelectpara2);
+        var index = allSelect2.indexOf(allSelectpara2);
+
+        console.log(result)
+        if (result == allSelectpara2) {
+            if (index > -1) { //Make sure item is present in the array, without if condition, -n indexes will be considered from the end of the array.
+                allSelect2.splice(index, 1);
+            }
+            console.log("data already exist")
+        } else {
+            console.log("push data success")
+            allSelect2.push(allSelectpara2)
+
+        }
+    }
+
 
 
 
@@ -201,7 +194,9 @@ export default function Floorcom(props) {
                         Floor {props.floorName}
                     </div>
                     <div style={{ display: 'flex', position: 'absolute', top: 28, right: 0 }}>
-                        <Button className={classes.btblue} onClick={() => handlerClick()}>
+                        <Button className={classes.btblue}
+                        // onClick={() => handlerClick()}
+                        >
                             Select All
                         </Button>
                         <div style={{ width: '11.8px' }} />
@@ -222,11 +217,14 @@ export default function Floorcom(props) {
                         <Roomcom
                             getTorF={getT => setGetT(getT)}
                             // save={allSelect => setAllSelect(allSelect)}
+                            save2={allSelectpara2 => handlerPushToArray2(allSelectpara2)}
+
                             save={allSelectpara => handlerPushToArray(allSelectpara)}
 
                             roomNumber={sub.roomNumber}
                             roomId={sub.roomId}
                             roomTypeName={sub.roomTypeName}
+                            
                         // roomTypeName={sub.roomTypeName}
                         />
 
@@ -270,7 +268,6 @@ export default function Floorcom(props) {
 
 
 //     return getT
-
 
 
 // } else {

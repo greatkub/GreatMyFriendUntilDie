@@ -9,6 +9,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 
 import Table from '@material-ui/core/Table';
+import Avatar from '@mui/material/Avatar';
 
 import axios from 'axios';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
@@ -18,6 +19,8 @@ import Datetoday from '../../Components/AllComponent/Datetoday';
 
 import NumberFormat from 'react-number-format';
 import moment from 'moment';
+import CircularProgress from '@mui/material/CircularProgress';
+import { ScrollView } from 'react-native';
 
 import { BrowserRouter as Rounter, Route, Link, NavLink, Switch, useParams, useLocation } from 'react-router-dom';
 
@@ -38,10 +41,23 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '4%',
     },
 
+    heder2: {
+        width: '100%',
+        marginRight: "15%",
+      
+    },
+
+
+    Titleheder: {
+        width: '100%',
+        padding: theme.spacing(2),
+        marginTop: '4%',
+    },
+
     Card: {
         width: '90%',
         marginLeft: '15%',
-        padding: theme.spacing(1),
+        padding: theme.spacing(0),
         margin: 'auto',
     },
 
@@ -49,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
         marginLeft: '15%',
         marginRight: '17%',
-        marginTop: '-16%',
+        //marginTop: '5%',
         padding: theme.spacing(1),
         margin: 'auto',
     },
@@ -60,8 +76,8 @@ const useStyles = makeStyles((theme) => ({
     },
 
     Cards: {
-        width: '100%',
-        padding: theme.spacing(2),
+        width: '90%',
+        padding: theme.spacing(0),
         margin: 'auto',
     },
 
@@ -85,15 +101,56 @@ const useStyles = makeStyles((theme) => ({
     },
 
     media: {
-        height: 322,
-        width: 561,
-        marginLeft: "20%",
+        height: "60%",
+        width: "52%",
+        marginLeft: "44%",
         marginTop: 10,
-
-
         borderRadius: 8
+    },
 
-    }
+   Datemove: {   
+        marginLeft: "95%",   
+    },
+
+    Statusmove: {
+        marginLeft: "82%",
+    },
+
+    Profiles: {
+       //marginRight: "50%"
+       marginLeft: "-830%",
+       //marginButtom: "65%"
+    },
+
+    Avatarpro: {
+        marginLeft: "0%",
+        //marginButtom: "65%"
+     },
+
+     DeleteBtn: {
+        marginLeft: "65%",
+        //marginButtom: "65%"
+     },
+
+     SloveBtn: {
+        marginLeft: "185%",
+        //marginButtom: "65%"
+     },
+
+     scrollspace: {
+        height: "730px",
+        width: '1163px',
+        margin: 'auto',
+        paddingLeft: 10,
+        transition: 'all 0.5s ease'
+    },
+    scrollspace36: {
+        height: "730px",
+        width: '1163px',
+        margin: 'auto',
+        paddingLeft: 6,
+        transition: 'all 0.5s ease'
+    },
 
 }));
 
@@ -171,11 +228,11 @@ console.log(allroom)
   );
 }*/
 
-export default function Petitiondetails(props) {
+export default function Petitiondetails({ isOpened }) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
     const [allroom, setAllroom] = useState([]);
-
+    const [isdetailload, setIsdetailload] = useState(false)
     const { id } = useParams();
     useEffect(() => {
         //const petitiondetails=(id) =>{
@@ -184,6 +241,7 @@ export default function Petitiondetails(props) {
             .then(response => {
                 console.log("hi" + response.data)
                 setAllroom(response.data);
+                setIsdetailload(true)
             })
             .catch(error => {
                 console.log('Error getting fake data: ' + error);
@@ -214,14 +272,18 @@ export default function Petitiondetails(props) {
     };
 
     console.log(allroom)
+
+    if (isdetailload){
     return (
+        <div style={{ width: '100%' }}>
+        <ScrollView>
+        <div className={isOpened ? classes.scrollspace36 : classes.scrollspace}>
+               
         <div className="container ">
             <div className={classes.DateMove}>
-                <Datetoday
-
-                />
+                <Datetoday/>
                 <h5 className={classes.Hederpettition} id="newannouncetitle">
-                    Petition Details
+                    Petition Detail
                 </h5>
             </div>
 
@@ -234,18 +296,21 @@ export default function Petitiondetails(props) {
                                     aria-label="caption table">
                                     <TableHead >
                                         <TableRow>
-                                            <TableCell className={classes.heder}>
+                                            <TableCell className={classes. Titleheder}>
                                                 <h4> {x.title} </h4>
                                             </TableCell>
+                                            <TableCell >
+                                            
+                                            </TableCell>
                                             <TableCell>
-                                                <IconButton aria-label="delete">
-                                                    <EmojiObjectsIcon
+                                                <IconButton className={classes.SloveBtn} aria-label="delete">
+                                                    <EmojiObjectsIcon 
                                                         onClick={() => { Solve(id) }}
                                                     />
                                                 </IconButton>
                                             </TableCell>
                                             <TableCell>
-                                                <IconButton aria-label="delete">
+                                                <IconButton  className={classes.DeleteBtn} aria-label="delete">
                                                     <DeleteIcon
                                                         onClick={() => { PetitionNote(id) }}
                                                     />
@@ -253,15 +318,22 @@ export default function Petitiondetails(props) {
                                             </TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell className={classes.heder}>
-                                                <h6>{x.userFirstName}</h6>
-                                                <h6>Room{x.roomNumber}</h6>
+                                        <TableCell >
+                                            <Avatar className={classes.Avatarpro}/>
                                             </TableCell>
+                                            
                                             <TableCell className={classes.heder}>
-                                                {moment(x.petitionDate).format("L")}
+                                            <h6 className={classes.Profiles}>{x.userFirstName}</h6>
+                                              <h6 className={classes.Profiles}>Room:{x.roomNumber}</h6>
                                             </TableCell>
+                                            <TableCell className={classes.heder2}> 
+                                            <h6 className={classes. Datemove}>{moment(x.petitionDate).format("DD/MM/yyyy")}</h6>
+                                              <h6 className={classes.Statusmove}>  Status:{x.statusInfo}</h6>
+                                            </TableCell>
+                                            
                                             <TableCell >
-                                                {x.statusInfo}
+                                            {/*<h6>{moment(x.petitionDate).format("DD/MM/yyyy")}</h6>
+                                            Status:{x.statusInfo*/}
                                             </TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -286,5 +358,16 @@ export default function Petitiondetails(props) {
                 )
             })}
         </div>
+        </div>
+        </ScrollView>
+        </div>
+       
     );
+    } else {
+        return (
+            <div>
+                <CircularProgress color="secondary" />
+            </div>
+          )
+    }
 }

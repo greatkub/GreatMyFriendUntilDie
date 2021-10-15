@@ -113,7 +113,8 @@ export default function Feetype(props) {
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <Typography gutterBottom variant="h5">
+                <Typography  style={{ marginLeft: "-12%" }}
+                gutterBottom variant="h5">
                   {props.Set} 
                   <Button size="small">{props.info}</Button>   
                 {/*<Button 

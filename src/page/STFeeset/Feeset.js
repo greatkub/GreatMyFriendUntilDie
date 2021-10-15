@@ -23,6 +23,7 @@ import { NavLink, Link } from "react-router-dom";
 import InfoIcon from '@material-ui/icons/Info';
 import axios from "axios";
 import { useParams } from "react-router";
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -116,20 +117,25 @@ export default function Feeset(props) {
     setOpen(false);
   };
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const [allfeeset, setAllfeeset] = useState([]);
   useEffect(() => {
     axios.get('/feeset/fee-sets').then(response => {
       console.log(response.data);
       setAllfeeset(response.data);
+      setIsLoading(true)
     })
       .catch(error => {
         console.log('Error data: ' + error);
+        setIsLoading(true)
       })
   }, []);
 
   const deletetable = (id) => {
     axios.post(`/feeset/fee-set/${id}`)
       .then(() => {
+        alert(['Delete'])
         setAllfeeset(
           allfeeset.filter((row) => {
             return row.feeSetId != id;
@@ -140,6 +146,8 @@ export default function Feeset(props) {
 
   const { id } = useParams()
 
+  if (isLoading) {
+   
   return (
     <div className="container ">
       <div>
@@ -149,7 +157,7 @@ export default function Feeset(props) {
             <TableHead >
               <TableRow>
                 <TableCell className={classes.heder}>
-                  <h4>Fee Set</h4>
+                  <h4>Fee Sets</h4>
                   <NavLink to={`/feesets/${id}`} style={{ textDecoration: 'none' }}>
                     {/* <Link to={`/feesets_sp/${id}`} style={{ textDecoration: 'none' }}> */}
 
@@ -171,12 +179,13 @@ export default function Feeset(props) {
                   return (
                     <Grid item xs={4}>
                       <div className="col-sm">
-                        <Feecard
+                        <Feecard 
+                          className={classes.MoveName}
                           Set={row.feeSetName}
-                          key={key.feeSetId}
+                          //key={key.feeSetId}
                           //Roomprice="Standard"
-                          Electric="Electricity"
-                          Water="water"
+                            Electric="Electricity"
+                            Water="water"
                           name={row.feeTypeName}
                           info={
                             <InfoIcon style={{ display: "flex", flexWrap: 'wrap' }}
@@ -189,10 +198,10 @@ export default function Feeset(props) {
 
                           delete={
                             <DeleteOutlinedIcon
-                              style={{ marginTop: "25%" }}
+                              style={{ marginTop: "12%" }}
                               onClick={() => { deletetable(row.feeSetId) }}
                               size="small" />}
-                        />
+                        />     
                       </div>
                       <Dialog
                         open={open}
@@ -224,32 +233,30 @@ export default function Feeset(props) {
                           ))}
                         </DialogContent>
                       </Dialog>
-
                     </Grid>
                   )
                 })}
               </Grid>
             </TableBody>
           </Table>
-
         </Card>
-
       </div>
       <CardActions>
-
-        {/* <Link to={`/roomtype_sp/${id}`}> */}
-        <Link to={`/setting2/${id}`}>
-
-          {/* window.location.href =  `/setting2/${id}`; */}
-
-          <Button
-            className={classes.buttonsubmit}
-            variant="contained" color="primary" disableElevation
-            style={{ backgroundColor: '#485D84' }} >
-            Save
-          </Button>
-        </Link>
+          {/* <Link to={`/roomtype_sp/${id}`}> */}
+          <Link to={`/setting2/${id}`}>
+            {/* window.location.href =  `/setting2/${id}`; */}
+          <Button className={classes.buttonsubmit}
+                  variant="contained" color="primary" disableElevation
+                  style={{ backgroundColor: '#485D84' }}> Save</Button>
+          </Link>
       </CardActions>
     </div>
   );
+  } else {
+    return (
+      <div>
+          <CircularProgress className={classes.IsLoading} color="secondary" />
+      </div>
+      )
+    }
 }
