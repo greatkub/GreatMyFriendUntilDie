@@ -105,7 +105,7 @@ export default function Comment(props) {
           "Message": message,
           "CommentDate": "2021-07-05",
           "PostAnnouncementId":  parseInt(postId),
-          "StaffId": 2
+          "StaffId": 1
         }
       //   "Message": message,
       //   "PostAnnouncementId": 10,
@@ -126,6 +126,7 @@ export default function Comment(props) {
     });
     
 };
+
 
      const deletetable=(id) =>{
       axios.post(`/comment/comment/${id}`)
@@ -153,6 +154,7 @@ export default function Comment(props) {
                 <p style={{fontSize:"19.4px", fontWeight:"bold", color:"#4A4A4A",display: "inline", float:'right',marginRight:'13.7px',marginTop:'22px' }}>
 
                     {props.likes} Likes
+
                 </p>
 
             </div>

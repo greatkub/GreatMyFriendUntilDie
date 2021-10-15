@@ -775,6 +775,16 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
 
   },
+
+  floortext2: {
+    display: 'inline',
+    marginLeft: '-7px',
+    color: '#4A4A4A',
+    fontSize: '13px',
+    fontWeight: 'bold',
+    position: 'relative',
+
+  },
   headfloor: {
     // display: 'block',
     color: '#4A4A4A',
@@ -1221,7 +1231,7 @@ export default function Verifypage({ isOpened }) {
                             Previous Reading
                           </text>
 
-                          <text className={classes.floortext}>
+                          <text className={classes.floortext2}>
                             Current Reading
                           </text>
                           {/* <text className={classes.floortext}>
@@ -1369,10 +1379,10 @@ export default function Verifypage({ isOpened }) {
           style={{
             backgroundColor: "#485D84", width: 406,
             height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1,
-            position: 'absolute', left: 540, top: 40,
+            position: 'absolute', left: 640, top: 20,
             textTransform: 'none'
           }}>
-          Continue
+          Save
         </Button>
         <div style={{
           backgroundColor: '#385CA8', opacity: 0.5

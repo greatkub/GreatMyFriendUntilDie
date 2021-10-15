@@ -175,7 +175,7 @@
 //     )
 // }
 
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { ScrollView } from 'react-native';
 import Datetoday from '../../Components/AllComponent/Datetoday';
@@ -187,6 +187,7 @@ import { scaleOrdinal } from "d3-scale";
 import { schemeCategory10 } from "d3-scale-chromatic";
 import axios from "axios";
 import DropBuilding from '../../Components/Dropdown/DropBuilding';
+import { BrowserRouter as Rounter, Route, Link, NavLink, Switch, useParams, useLocation } from 'react-router-dom';
 
 import moment from 'moment';
 
@@ -241,6 +242,30 @@ const useStyles = makeStyles((theme) => ({
         color: "#4A4A4A",
         fontWeight: 'bold'
     },
+
+    textLindchart:{
+        fontSize: 22, 
+        color:"#4A4A4A",
+        fontWeight: 'bold',
+        position: "absolute",
+        
+    },
+
+
+    textBar:{
+        color:"#4A4A4A",
+        fontWeight: 'bold',
+
+    },
+
+    Currency:{
+        fontSize: 13, 
+        color:"#4A4A4A",
+        //fontWeight: 'bold',
+        position: "absolute",
+        
+    },
+
     textRoom: {
         fontSize: 26,
         color: "#4A4A4A",
@@ -335,13 +360,15 @@ export default function Dashpage({ isOpened }) {
     const [overall, setOverall] = useState([])
     const [info, setInfo] = useState([])
 
+    const {id} = useParams();
+
     const dateFormatter = date => {
         // return moment(date).unix();
         return moment(date).format('DD-MM-YY');
       };
 
     useEffect(()=>{
-        axios.get(`/history/barchart/${currentBuilding}`).then(response =>{
+        axios.get(`/history/barchart/${id}`).then(response =>{
         console.log(response.data);
         setBardash(response.data);
         })
@@ -351,7 +378,7 @@ export default function Dashpage({ isOpened }) {
   }, []);
 
     useEffect(()=>{
-        axios.get('/history/dashboard-graph/38').then(response =>{
+        axios.get(`/history/dashboard-graph/${id}`).then(response =>{
         console.log(response.data);
         setLinedash(response.data);
     })
@@ -361,7 +388,7 @@ export default function Dashpage({ isOpened }) {
 }, []);
 
 useEffect(()=>{
-    axios.get("/history/barchart-info/38")
+    axios.get(`/history/barchart-info/${id}`)
     .then(response =>{
     console.log(response.data);
     setInfo(response.data);
@@ -375,7 +402,7 @@ console.log('Error data: ' + error);
 
     useEffect(()=>{
         //axios.get(`/history/room/${currentBuilding}`)
-        axios.get(`/history/room/38`)
+        axios.get(`/history/room/${id}`)
         .then(response =>{
         console.log(response.data);
         setVacants(response.data);
@@ -400,7 +427,7 @@ console.log('Error data: ' + error);
                         <div className={classes.mainfame}>
                             <Paper className={classes.Yfame}>
 
-                            <div>
+                            {/*<div>
                                     <div className={classes.textDrop}>
                                         Building
                                     </div>
@@ -411,8 +438,10 @@ console.log('Error data: ' + error);
                                         setCurrentBuilding(currentBuilding)}
                                 />
 
-                                </div>
-                                <div className={classes.normaltext} style={{ height: 283.5, width: "150%" }}>                    
+                                    </div>*/}
+                                <div className={classes.normaltext} style={{ height: 283.5, width: "150%" }}>     
+                                              <h5 className={classes.textBar}> Distribute Revenue</h5> 
+                                {/*<h3 className={classes.textLindchart} style={{marginLeft: 56, marginTop: 15}}>Revenue <p className={classes.Currency} style={{marginLeft: 97, marginTop: -18}}>(THB)</p> </h3>*/}
                                 <BarChart
                                       width={380}
                                       height={290}
@@ -426,6 +455,7 @@ console.log('Error data: ' + error);
                                         
                                         />
                                         <YAxis />
+                                       
                                         <Bar
                                             dataKey="electricity"
                                             dataKey2="water"
@@ -446,7 +476,7 @@ console.log('Error data: ' + error);
                                 <div style={{ height: 283.5, width: "100%"}}>
                                
                                     <div style={{ position: 'absolute', marginTop: 130, width: '100%'}}>
-                                        <div className={classes.textDash} style={{position:'absolute', top: -100, left: 120}}>
+                                        <div className={classes.textDash} style={{position:'absolute', top: -50, left: 120}}>
                                             Overall of Revenue
                                             </div>
                                             
@@ -455,35 +485,35 @@ console.log('Error data: ' + error);
                                       
                                             <div className={classes.circleborder} style={{ backgroundColor: "#3BC045" }} />
                                       
-                                            <div className={classes.normaltext} > Rent </div>
+                                            <div className={classes.normaltext}> Rent </div>
                                            
                                              
-                                            <div className={classes.normaltext}>{info.rent}</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 75}}>{info.rent}</div>
                                      
-                                            <div className={classes.normaltext} >THB</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
                                           
                                        
                                         </div>
 
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#5256C1" }} />
-                                            <div className={classes.normaltext}>Electricity</div>
-                                            <div className={classes.normaltext} >{info.electricity}</div>
-                                            <div className={classes.normaltext} >THB</div>
+                                            <div className={classes.normaltext} >Electricity</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 25}}>{info.electricity}</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
                                         </div>
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#FFD800" }} />
 
                                             <div className={classes.normaltext}>Water</div>
-                                            <div className={classes.normaltext} >{info.water}</div>
-                                            <div className={classes.normaltext} >THB</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 50}}>{info.water}</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
                                         </div>
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#C03B3B" }} />
 
                                             <div className={classes.normaltext}>Others</div>
-                                            <div className={classes.normaltext} >{info.other}</div>
-                                            <div className={classes.normaltext} >THB</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 45}} >{info.other}</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
                                         </div>
                                     </div>
                                   
@@ -513,15 +543,18 @@ console.log('Error data: ' + error);
                                     </div>
                                        ))}   
                                     <div className={classes.normaltext} style={{ paddingLeft: 20, paddingTop: 20 }}>
-                                        Vacant Room
+                                        Vacant Rooms
                                     </div>
                                 </Paper>       
                             </div>
                                 <Paper className={classes.Xfame} style={{ marginTop: 25 }}>
                                 <div className={classes.normaltextMonth}>
+
+                                    <h3 className={classes.textLindchart} style={{marginLeft: 56, marginTop: 15}}>Revenue <p className={classes.Currency} style={{marginLeft: 97, marginTop: -18}}>(THB)</p> </h3>
                                     <LineChart
-                                        width={700} height={340} data={linedash}
-                                        margin={{top: 15,right: 10,left: 50,bottom: -5}}>
+                                       
+                                        width={700} height={360} data={linedash}
+                                        margin={{top: 60,right: 10,left: 50,bottom: -12}}>
                                     <CartesianGrid strokeDasharray="1 1" />
                                       <XAxis dataKey="dateTime"
                                       tickFormatter={dateFormatter} 

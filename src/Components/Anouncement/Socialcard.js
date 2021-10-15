@@ -279,7 +279,7 @@ function Social() {
       "ImageUrl": url,
       "Likes": 0,
       "Comments": 0,
-      "StaffId": 2
+      "StaffId": 1
     })
     window.location.href = '/announce';
   }

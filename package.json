@@ -3,7 +3,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://66fb-2001-fb1-8a-4e25-4064-384b-a729-7ec7.ngrok.io/api/v1",
+  "proxy": "https://habitat1.azurewebsites.net/api/v1",
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",

@@ -346,7 +346,7 @@ export default function Initialize(props) {
  
                                                     type="date"
                                                     data-date-format="dd/MM/yy"
-                                                    value="2021-21-06"
+                                                    //value="2021-21-06"
                                                     onChange={e => { setAddDate(e.target.value); handlesubmit() }}
                                                 />
 

@@ -214,7 +214,7 @@ function App2() {
 
         <div className='main' style={{ backgroundColor: "#F3F7FC", position: 'relative' }}>
         <Route exact path="/bill/:id" exact={true} render={(props) => <Billpage isOpened={word} {...props} />} />
-          <Route exact path="/announce/:id" exact={true} render={(props) => <Announcep isOpened={word} {...props} />} />
+        <Route exact path="/announce/:id" exact={true} render={(props) => <Announcep isOpened={word} {...props} />} />
 
           {/* <Route exact path="/" exact={true} component={Socialcard}/> */}
           <Route exact path="/expense/:id" exact={true} render={(props) => <Expensepage isOpened={word} {...props} />} />
@@ -247,7 +247,7 @@ function App2() {
           <Route path="/addbuilding" exact={true} render={(props) => <Createbuilding isOpened={word} {...props} />} />
           <Route path="/feetype_sp/:id" exact={true} render={(props) => <CreateFeetype getId={thisBuildingId => setThisBuildingID(thisBuildingId)} isOpened={word} {...props} />} />
           <Route path="/detailpage" exact={true} render={(props) => <Detailpage isOpened={word} {...props} />} />
-          <Route path="/petitionpage:id" exact={true} render={(props) => <Petitionpage isOpened={word} {...props} />} />
+          <Route path="/petitionpage/:id" exact={true} render={(props) => <Petitionpage isOpened={word} {...props} />} />
           <Route path="/notedetails/:id" exact={true} render={(props) => <Petitiondetails isOpened={word} {...props} />} />
 
           <Route path="/stCreateFloor/:id" exact={true} render={(props) => <CreateFloor keptArray={arrayFloor => setArrayFloor(arrayFloor)} />} />

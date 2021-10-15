@@ -210,17 +210,17 @@ export default function Verifypage({ isOpened }) {
     }, []);
 
     function getAlltrans(data) {
-        setAllTransaction([])
+        // setAllTransaction([])
         for (var i = 0; i < data.floors.length; i++) {
 
             for (var j = 0; j < data.floors[i].rooms.length; j++) {
                 for (var e = 0; e < data.floors[i].rooms[j].userRentingTransactionIds.length; e++) {
 
                     allTransaction.push(data.floors[i].rooms[j].userRentingTransactionIds[e])
-                    console.log(data.floors[i].rooms[j].userRentingTransactionIds[e])
+                    console.log("i sus " + data.floors[i].rooms[j].userRentingTransactionIds[e])
                 }
                 // allTransaction.push(data.floors[i].rooms[j].userRentingTransactionIds)
-                console.log(j)
+                // console.log(j)
             }
 
         }
@@ -231,9 +231,9 @@ export default function Verifypage({ isOpened }) {
 
     const sureVeuify = async () => {
 
-        console.log("all trans")
-        console.log(allTransaction)
-        console.log(rentTrans)
+        console.log("all trans" + allTransaction)
+        console.log("all transs"+rentTrans)
+
         let res = await axios({
             url: `/rentingtransaction/verify-electricity-water-expenses`,
             method: 'post',
@@ -246,6 +246,10 @@ export default function Verifypage({ isOpened }) {
 
         }).then(response => {
             alert("post success")
+            console.log(response)
+            console.log(allTransaction)
+            console.log("postsuccess")
+
             // window.location.href = `/feetype_sp/${id}`;
         })
             .catch(error => {
@@ -290,8 +294,8 @@ export default function Verifypage({ isOpened }) {
 
                             <div className={classes.title2bl}>
                                 <div style={{ display: 'flex' }}>
-                                    <div style={{marginRight: 20, textDecorationLine: 'underline', }}
-                                    onClick={()=> window.location.href = `/expense/${id}` }
+                                    <div style={{ marginRight: 20, textDecorationLine: 'underline' }}
+                                        onClick={() => window.location.href = `/expense/${id}`}
                                     >
                                         back
                                     </div>
@@ -352,8 +356,12 @@ export default function Verifypage({ isOpened }) {
                                                         </div>
                                                         <div className={classes.newdetext} style={{ left: 196 }}>
                                                             {/* 27/03/21-27/03/21 */}
-                                                            {moment(room.startTime).format("DD/MM/YYYY")}-{moment(room.endTime).format("DD/MM/YYYY")}
-
+                                                            {/* {moment(room.startTime).format("DD/MM/YYYY")}-{moment(room.endTime).format("DD/MM/YYYY")} */}
+                                                            {room.isBedAvailable[0] == false ?
+                                                                moment(room.startTime).format("DD/MM/YYYY") + "-" + moment(room.endTime).format("DD/MM/YYYY")
+                                                                :
+                                                                "-"
+                                                            }
 
                                                         </div>
                                                         <div className={classes.newdetext} style={{ left: 422 }}>
@@ -361,17 +369,37 @@ export default function Verifypage({ isOpened }) {
                                                             {/* {room.previousDate} */}
                                                             {/* {moment(room.previousDate.replace(/[^a-zA-Z0-9]/g, "")).format("L")} */}
 
-                                                            {moment(room.previousDate).format("DD/MM/YYYY")}
+                                                            {/* {moment(room.previousDate).format("DD/MM/YYYY")} */}
+                                                            {room.isBedAvailable[0] == false ?
+                                                                moment(room.previousDate).format("DD/MM/YYYY")
+                                                                :
+                                                                "-"
+                                                            }
 
                                                         </div>
                                                         <div className={classes.newdetext} style={{ right: 441 }}>
-                                                            {currentSelect == 0 ? room.electricityPreviousReading : room.waterPreviousReading}
+                                                            {room.isBedAvailable[0] == false ?
+                                                                currentSelect == 0 ? room.electricityPreviousReading : room.waterPreviousReading
+                                                                :
+                                                                "-"
+                                                            }
+                                                            {/* {currentSelect == 0 ? room.electricityPreviousReading : room.waterPreviousReading} */}
                                                         </div>
                                                         <div className={classes.inputbox} style={{ right: 154 }}>
-                                                            {currentSelect == 0 ? room.electricityCurrentReading : room.waterCurrentReading}
+                                                            {room.isBedAvailable[0] == false ?
+                                                                currentSelect == 0 ? room.electricityCurrentReading : room.waterCurrentReading
+                                                                :
+                                                                "-"
+                                                            }
+                                                            {/* {currentSelect == 0 ? room.electricityCurrentReading : room.waterCurrentReading} */}
                                                         </div>
                                                         <div className={classes.newdetext} style={{ right: 74 }}>
-                                                            {currentSelect == 0 ? room.electricityUsage : room.waterUsage}
+                                                            {room.isBedAvailable[0] == false ?
+                                                                currentSelect == 0 ? room.electricityUsage : room.waterUsage
+                                                                :
+                                                                "-"
+                                                            }
+                                                            {/* {currentSelect == 0 ? room.electricityUsage : room.waterUsage} */}
                                                         </div>
 
                                                     </Paper>
@@ -391,7 +419,7 @@ export default function Verifypage({ isOpened }) {
                 </div >
             </ScrollView >
 
-            <div style={{ position: 'absolute', width: '100%', height: 200, top: 555 }}>
+            <div style={{ position: 'absolute', width: '100%', height: 200, top: 655 }}>
                 <Button
                     onClick={sureVeuify}
                     style={{

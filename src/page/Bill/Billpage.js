@@ -365,7 +365,7 @@ export default function Billpage({ isOpened }) {
         console.log("am hereee")
         console.log(getDate)
         const fetchData = () => {
-        axios.get('/bill/bills/1/date/10-14-2021')
+        axios.get('/bill/bills/1/date/10-15-2021')
         .then(r => {
         setBill(r.data)
         console.log(r.data)
@@ -485,12 +485,8 @@ export default function Billpage({ isOpened }) {
                                             setFloorUrl(`/dropdown/floors/${building}`)
 
                                         }}
-
-
                                     />
-
                                 </div>
-
                                 {/* <div style={{ width: 12 }} />
                                 <div>
                                     <div className={classes.textDrop}>
@@ -503,7 +499,6 @@ export default function Billpage({ isOpened }) {
                                 </div> */}
 
                                 <div style={{ width: 12 }} />
-
 
                                 <div>
                                     <div className={classes.textDrop}>

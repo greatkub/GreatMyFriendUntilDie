@@ -149,7 +149,6 @@ export default function Roompage({ isOpened }) {
                         </div>
 
                         <div style={{ display: "flex", position: "absolute", bottom: 70, width: '100%' }}>
-
                             <div style={{ position: 'relative', width: 161 }}>
                                 <div className={classes.textDrop}>
                                     Search
@@ -170,7 +169,8 @@ export default function Roompage({ isOpened }) {
                                 <div style={{ height: 4 }} />
 
                                 <DropBuilding
-                                    save={currentBuilding => setCurrentBuilding(currentBuilding)}
+                                    save={currentBuilding => 
+                                        setCurrentBuilding(currentBuilding)}
                                 />
 
                             </div>
