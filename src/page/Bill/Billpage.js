@@ -1,4 +1,3 @@
-
 import React from 'react'
 import Datetoday from '../../Components/AllComponent/Datetoday.js'
 import { ScrollView } from 'react-native';
@@ -20,6 +19,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import DropBuilding from '../../Components/Dropdown/DropBuilding';
 import DropFloor from '../../Components/Dropdown/DropFloor';
 import DropStatus from '../../Components/Dropdown/DropStatus.js';
+import { useParams } from 'react-router';
 
 
 
@@ -351,10 +351,14 @@ export default function Billpage({ isOpened }) {
     const [bill, setBill] = useState([]);
     const [search, setSearch] = useState("")
     const [dropdown, setDropdown] = useState([])
-    const [building, setBuildingFromDrop] = useState()
+    const [building, setBuildingFromDrop] = useState("AddMi")
     const [floorUrl, setFloorUrl] = useState(`/dropdown/floors/${building}`)
     const [thisStatus, setThisStatus] = useState("Paid")
-    const [getDate, setupDate] = useState('05-12-2021')
+    const [getDate, setupDate] = useState(
+        moment().format('MM-DD-YY')
+    )
+    const { id } = useParams()
+
 
     const dateFormatter = date => {
         // return moment(date).unix();
@@ -363,16 +367,31 @@ export default function Billpage({ isOpened }) {
 
     useEffect(() => {
         console.log("am hereee")
+
         console.log(getDate)
         const fetchData = () => {
-        axios.get('/bill/bills/1/date/10-15-2021')
-        .then(r => {
-        setBill(r.data)
-        console.log(r.data)
-        })
+            // axios.get('/bill/bills/38/date/05-12-2021')
+            //     .then(r => {
+            //         setBill(r.data)
+            //         console.log(r.data)
+            //     })
+            axios.get(`/bill/bills/${id}/date/${getDate}`)
+                .then(r => {
+                    setBill(r.data)
+                    console.log(r.data)
+                    console.log(r.data.length)
+                    // alert(moment().format('DD-MM-YY'))
+
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
         }
         fetchData()
-        })
+    }, [setupDate])
+
+
+
     console.log(bill)
 
     React.useEffect(() => {
@@ -408,7 +427,11 @@ export default function Billpage({ isOpened }) {
         const a = []
         for (var i = 0; i < bill[0].floors.length; i++) {
             for (var j = 0; j < bill[0].floors[i].rooms.length; j++) {
-                a.push(bill[0].floors[i].rooms[j].expenses[0].rentingTransactionId)
+                // a.push(bill[0].floors[i].rooms[j].expenses[0].rentingTransactionId)
+                if (bill[0].floors[i].rooms[j].expenses.length > 0) {
+                    a.push(bill[0].floors[i].rooms[j].expenses[0].rentingTransactionId)
+                    console.log(bill[0].floors[i].rooms[j].expenses[0].rentingTransactionId)
+                }
 
             }
         }
@@ -423,8 +446,8 @@ export default function Billpage({ isOpened }) {
 
         }).then(response => {
             alert("post success")
-            // window.location.href = `/feetype_sp/${id}`;
-            console.log(a)
+            window.location.href = `/bill/${id}`;
+            console.log(response)
         })
             .catch(error => {
                 alert("post fail")
@@ -433,6 +456,111 @@ export default function Billpage({ isOpened }) {
 
     }
 
+    // function DropBuilding() {
+
+
+    //     const [buildings, setBuilding] = useState([]);
+
+    //     const api = axios.create({
+    //         baseURL: '/dropdown/buildings'
+    //         // 'https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/testimnew'
+    //         // baseURL: '/announcement/type-announcements'
+    //     })
+
+
+    //     const getType = async () => {
+    //         let data = await api.get('/').then(({ data }) => data);
+    //         // this.setState({ news: data })
+    //         setBuilding(data)
+
+    //     }
+
+    //     useEffect(() => {
+
+    //         getType();
+
+    //     }, []);
+
+    //     const handleChange = (event) => {
+    //         // console.log(event.target.value);
+    //         // props.save(event.target.value)
+    //         setBuildingFromDrop(event.target.value)
+    //     }
+
+
+    //     return (
+    //         <div style={{ display: 'flex' }}>
+    //             <select onChange={handleChange} style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A' }} >
+
+    //                 <option >Not Specify</option>
+
+    //                 {buildings.map(buildings =>
+    //                     <option  value={buildings.text}>{buildings.text}</option>
+    //                 )}
+
+    //             </select>
+    //             {/* <ArrowDropDownIcon style={{ color: "#000000", position: 'absolute', left: 130, top: 67 }} /> */}
+
+    //         </div>
+    //     );
+
+    // }
+
+
+
+
+    // function DropFloor() {
+
+
+    //     const [floors, setFloors] = useState([]);
+
+    //     const api = axios.create({
+    //         // baseURL: props.url
+
+    //         // 'https://536a20dd-fe69-4914-8458-6ad1e9b3ce18.mock.pstmn.io/testimnew'
+    //         baseURL: `/dropdown/floors/${building}`
+
+
+    //     })
+
+
+    //     const getType = async () => {
+    //         let data = await api.get('/').then(({ data }) => data);
+    //         // this.setState({ news: data })
+    //         setFloors(data)
+
+    //     }
+
+    //     useEffect(() => {
+
+    //         getType();
+
+    //     }, []);
+
+    //     const handleChange = (event) => {
+    //         // console.log(event.target.value);
+    //         // props.save(event.target.value)
+    //     }
+
+
+    //     return (
+    //         <div style={{ display: 'flex' }}>
+    //             <select onChange={handleChange} style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A' }} >
+
+    //                 <option >Not Specify</option>
+
+    //                 {floors.map(f =>
+    //                     <option value={f.text}>Floor {f.text}</option>
+    //                 )}
+
+    //             </select>
+
+    //         </div>
+    //     );
+
+    // }
+
+
     return (
         <div style={{ width: '100%' }}>
             <ScrollView>
@@ -440,29 +568,18 @@ export default function Billpage({ isOpened }) {
                     <div>
                         <div className={classes.frame}>
                             <Datetoday />
-                        
+
                             <h5 className={classes.Billheadd} id="newannouncetitle">  Bill </h5>
 
                             <div style={{ display: "flex", position: "absolute", top: 110, width: '100%' }}>
+
                                 <div style={{ position: 'relative', width: 161 }}>
-                                <div className={classes.textDrop}>
+                                    <div className={classes.textDrop}>
                                         Search
-                                    </div>            
-                                {/* <BootstrapInput
-                                        style={{ backgroundColor: 'white', height: 20.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute', top: '200' }}
-                                        type="text"
-                                        //size="small"
-                                        variant="outlined" 
-                                        //label="Date"     
-                                        placeholder="search"
-                                            onChange={(e)=>{
-                                                setSearch(e.target.value);
-                                                    }}                  
-                                                />*/}
-           
+                                    </div>
                                     <div style={{ height: 4 }} />
 
-                                <input 
+                                    <input 
                                     style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
                                     placeholder="" type="text" 
                                     onChange={(e)=>{
@@ -485,8 +602,12 @@ export default function Billpage({ isOpened }) {
                                             setFloorUrl(`/dropdown/floors/${building}`)
 
                                         }}
+
+
                                     />
+
                                 </div>
+
                                 {/* <div style={{ width: 12 }} />
                                 <div>
                                     <div className={classes.textDrop}>
@@ -500,6 +621,7 @@ export default function Billpage({ isOpened }) {
 
                                 <div style={{ width: 12 }} />
 
+
                                 <div>
                                     <div className={classes.textDrop}>
                                         Date
@@ -510,9 +632,8 @@ export default function Billpage({ isOpened }) {
                                     {/* <DropBuilding
                                     // save={currentBuilding => setCurrentBuilding(currentBuilding)}
                                     /> */}
-                                    <input placeholder="" 
-                                     defaultValue="2021-10-15"
-                                    type="date" style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
+                                    <input placeholder="" type="date" style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
+                                        value={getDate}
                                         onChange={e => { setupDate(e.target.value) }}
                                     >
 
@@ -563,7 +684,7 @@ export default function Billpage({ isOpened }) {
                                                         <h4 className={classes.headfloors}>Floor{f.floorName}</h4>
                                                         <div className={classes.headfloor}>
                                                             <div style={{ position: 'absolute', paddingTop: '6px', width: '100%' }}>
-                                                                <div className={classes.floortext} style={{ marginRight: 72 }}>
+                                                            <div className={classes.floortext} style={{ marginRight: 72 }}>
                                                                     Room
                                                                     <div className={classes.minitext} style={{ paddingLeft: '295px' }}></div>
                                                                 </div>
@@ -627,16 +748,26 @@ export default function Billpage({ isOpened }) {
                                                                             {/* tickFormatter={dateFormatter} */}
                                                                             {/* 27/03/21-27/04/2021 */}
                                                                             {/* {moment(x.billPeriod).format("L")} */}
-                                                                            {moment(n.expenses[0].startTime).format("DD/MM/YYYY")}-{moment(n.expenses[0].endtime).format("DD/MM/YYYY")}
+                                                                            {n.expenses.length > 0 ?
+                                                                                moment(n.expenses[0].startTime).format("DD/MM/YYYY") + "-" + moment(n.expenses[0].endtime).format("DD/MM/YYYY")
+
+                                                                                : "-"}
 
 
                                                                         </div>
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 791, top: 18 }}>
-                                                                            <NumberFormat
+                                                                            {n.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={n.expenses[0].rent.toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                                                                : "-"}
+                                                                            {/* <NumberFormat
                                                                                 value={n.expenses[0].rent.toFixed(2)}
                                                                                 displayType="text"
                                                                                 thousandSeparator={true}
-                                                                                decimalScale={2} />
+                                                                                decimalScale={2} /> */}
                                                                             {/* {n.expenses[0].rent.toFixed(2)} */}
 
 
@@ -644,52 +775,92 @@ export default function Billpage({ isOpened }) {
                                                                         </div>
 
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 650, top: 18 }}>
-                                                                            <NumberFormat
+                                                                            {n.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={n.expenses[0].electricity.toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                                                                : "-"}
+                                                                            {/* <NumberFormat
                                                                                 value={n.expenses[0].electricity.toFixed(2)}
                                                                                 displayType="text"
                                                                                 thousandSeparator={true}
-                                                                                decimalScale={2} />
+                                                                                decimalScale={2} /> */}
                                                                             {/* {n.expenses[0].electricity} */}
 
                                                                         </div>
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 532, top: 18 }}>
-                                                                            <NumberFormat
+                                                                            {n.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={n.expenses[0].waterPrice.toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                                                                : "-"}
+                                                                            {/* <NumberFormat
                                                                                 value={n.expenses[0].waterPrice.toFixed(2)}
                                                                                 displayType="text"
                                                                                 thousandSeparator={true}
-                                                                                decimalScale={2} />
+                                                                                decimalScale={2} /> */}
 
                                                                             {/* {n.expenses[0].waterPrice} */}
 
                                                                         </div>
 
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 408, top: 18 }}>
-                                                                            <NumberFormat
+                                                                            {n.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={n.expenses[0].other.toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                                                                : "-"}
+                                                                            {/* <NumberFormat
                                                                                 value={n.expenses[0].other.toFixed(2)}
                                                                                 displayType="text"
                                                                                 thousandSeparator={true}
-                                                                                decimalScale={2} />
+                                                                                decimalScale={2} /> */}
                                                                             {/* {n.expenses[0].other} */}
 
                                                                         </div>
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 295, top: 18 }}>
-                                                                            <NumberFormat
+                                                                            {n.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={n.expenses[0].totalPrice.toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                                                                : "-"}
+                                                                            {/* <NumberFormat
                                                                                 value={n.expenses[0].totalPrice.toFixed(2)}
                                                                                 displayType="text"
                                                                                 thousandSeparator={true}
-                                                                                decimalScale={2} />
+                                                                                decimalScale={2} /> */}
                                                                             {/* {n.expenses[0].totalPrice} */}
 
                                                                         </div>
 
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 174, top: 18 }}>
-                                                                            {n.statusInfo}
+                                                                            {n.expenses.length > 0 ?
+                                                                                n.statusInfo
+                                                                                : "-"}
+                                                                            {/* {n.statusInfo} */}
                                                                         </div>
 
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 60, top: 16 }}>
-                                                                            <Link to={`/billdetails/${n.roomId}`}>
+                                                                            {n.expenses.length > 0 ?
+                                                                                <Link to={`/billdetails/${n.roomId}`}>
+                                                                                    <InfoOutlinedIcon style={{ color: "#485D84" }} />
+                                                                                </Link>
+                                                                                :
+
                                                                                 <InfoOutlinedIcon style={{ color: "#485D84" }} />
-                                                                            </Link>
+                                                                             
+                                                                            }
+                                                                            {/* <Link to={`/billdetails/${n.roomId}`}>
+                                                                                <InfoOutlinedIcon style={{ color: "#485D84" }} />
+                                                                            </Link> */}
                                                                         </div>
 
 
@@ -716,11 +887,11 @@ export default function Billpage({ isOpened }) {
 
             </ScrollView>
 
-            {bill.length > 0 && bill[0].floors[0].rooms[0].expenses[0].isClosed[0] &&
+            {bill.length > 0 && bill[0].floors[0].rooms[0].expenses[0].isClosed == false &&
 
                 <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
 
-                    <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 540, top: 40 }}
+                    <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 540, top: 20 }}
                         // onClick={() => window.location.href = `/setting2/${id}`}
                         onClick={() => getBillId()}
 

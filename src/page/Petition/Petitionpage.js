@@ -180,7 +180,7 @@ import { Button } from 'react-bootstrap';
 import InputBase from '@material-ui/core/InputBase';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import {BrowserRouter as Router, Route, Link, NavLink, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Link, NavLink, Switch, useParams} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -439,10 +439,11 @@ export default function Petitionpage({ isOpened }) {
   //const [status, setStatus] = useState(true)
   const [ ispetitionload, setIspetitionload] = useState(false);
   const [isloading, setIsloading] = useState(false);
+  const {id} = useParams();
 
  
   useEffect(() => {
-    axios('/petition/petitions')
+    axios("/petition/petitions")
       .then(response => {
       console.log("hi" + response.data)
       setNote(response.data);
@@ -468,7 +469,7 @@ export default function Petitionpage({ isOpened }) {
       "PetitionIds": selected
     
     }).then((response)=>{
-      window.location.href = '/petitionpage'
+      window.location.href = `/petitionpage/${id}`
       console.log(response);
     })
 };
@@ -479,7 +480,7 @@ const Petitionstatus =() => {
     "Status": true
   
   }).then((response)=>{
-    window.location.href = '/petitionpage'
+    window.location.href = `/petitionpage/${id}`
     console.log(response);
   })
 };

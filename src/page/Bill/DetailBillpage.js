@@ -317,8 +317,17 @@ export default function Exdetailpage({ isOpened }) {
   const [bill, setBill] = useState([]);
   const { id } = useParams();
   const [billdetails, setBilldetails] = useState([])
+  const [buildName, setBuildName] = useState("")
 
-  useEffect(() => {
+  useEffect(async () => {
+    await axios(`/user/user-building/${id}`)
+    .then(response => {
+        setBuildName(response.data)
+        console.log(response.data)
+
+        // setIsLoading(true)
+
+    })
     axios("/bill/bills-detail/" + id)
       .then(response => {
         console.log(response.data)
@@ -353,7 +362,8 @@ export default function Exdetailpage({ isOpened }) {
           <div className={classes.frame}>
             <Datetoday />
             <div className={classes.title2}>
-              Expense History Detail
+            {buildName.length > 0 && `${buildName[0].buildingName}`}
+
 
             </div>
           </div>

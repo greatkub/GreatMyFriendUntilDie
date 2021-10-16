@@ -121,7 +121,7 @@ export default function Comment(props) {
                 "StaffId": 2
             },
         ]);
-        window.location.href = `/detailpage/${id}`;
+        //window.location.href = `/detailpage/${id}`;
         //props.isLog(false)
     });
     

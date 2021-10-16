@@ -186,6 +186,8 @@ import { BarChart, LineChart, Line, Bar, Cell, XAxis, YAxis, CartesianGrid, Tool
 import { scaleOrdinal } from "d3-scale";
 import { schemeCategory10 } from "d3-scale-chromatic";
 import axios from "axios";
+import NumberFormat from 'react-number-format';
+
 import DropBuilding from '../../Components/Dropdown/DropBuilding';
 import { BrowserRouter as Rounter, Route, Link, NavLink, Switch, useParams, useLocation } from 'react-router-dom';
 
@@ -497,22 +499,31 @@ console.log('Error data: ' + error);
 
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#5256C1" }} />
-                                            <div className={classes.normaltext} >Electricity</div>
-                                            <div className={classes.normaltext} style={{marginLeft: 25}}>{info.electricity}</div>
+                                            <div className={classes.normaltext}>Electricity</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 39}}>
+
+                                                                            <NumberFormat
+                                                                                    value={info.electricity.toFixed()}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                              
+                                                
+                                            </div>
                                             <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
                                         </div>
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#FFD800" }} />
 
                                             <div className={classes.normaltext}>Water</div>
-                                            <div className={classes.normaltext} style={{marginLeft: 50}}>{info.water}</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 65}}>{info.water}</div>
                                             <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
                                         </div>
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#C03B3B" }} />
 
                                             <div className={classes.normaltext}>Others</div>
-                                            <div className={classes.normaltext} style={{marginLeft: 45}} >{info.other}</div>
+                                            <div className={classes.normaltext} style={{marginLeft: 60}} >{info.other}</div>
                                             <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
                                         </div>
                                     </div>

@@ -419,13 +419,13 @@ export default function Verifypage({ isOpened }) {
                 </div >
             </ScrollView >
 
-            <div style={{ position: 'absolute', width: '100%', height: 200, top: 655 }}>
+            <div style={{ position: 'absolute', width: '100%', height: 200, top: 595 }}>
                 <Button
                     onClick={sureVeuify}
                     style={{
                         backgroundColor: "#485D84", width: 406,
                         height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1,
-                        position: 'absolute', left: 540, top: 40
+                        position: 'absolute', left: 640, top: 30
                     }}>
                     SUBMIT
                 </Button>

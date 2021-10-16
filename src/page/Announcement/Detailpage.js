@@ -70,7 +70,7 @@ export default function Detailpage({ isOpened, props }) {
                             <Detail
                                 id={item.id}
                                 title={item.title}
-                                announceDate={moment(item.announceDate).format("DD/MM/yyyy hh:mm")}
+                                announceDate={moment(item.announceDate).format("DD/MM/yyyy")}
                                 type={item.type}
                                 imageUrl={item.imageUrl}
                                 likes={item.likes}

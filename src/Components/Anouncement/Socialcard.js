@@ -27,6 +27,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import { Update } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import PublishIcon from "@material-ui/icons/Publish";
+import { BrowserRouter as Router, Switch, Route, useParams } from 'react-router-dom'
 
 //import DropFloor from '../Dropdown/DropFloor';
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -166,6 +167,7 @@ function Social() {
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState("");
   const [progress, setProgress] = useState(0);
+  const {id} = useParams();
 
   const handleChange = e => {
     if (e.target.files[0]) {
@@ -281,7 +283,7 @@ function Social() {
       "Comments": 0,
       "StaffId": 1
     })
-    window.location.href = '/announce';
+    window.location.href = `/announce/${id}`;
   }
 
   const deleteAnnounce =(id)=>{

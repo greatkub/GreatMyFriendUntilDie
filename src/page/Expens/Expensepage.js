@@ -1154,7 +1154,7 @@ export default function Verifypage({ isOpened }) {
                 </div>
 
 
-                <div style={{ position: 'absolute', right: 175 }}>
+                {/*<div style={{ position: 'absolute', right: 175 }}>
                   <div style={{ fontSize: '16px', color: '#4A4A4A' }}>
                     Building
                   </div>
@@ -1171,7 +1171,7 @@ export default function Verifypage({ isOpened }) {
                   <div style={{ height: 11 }} />
 
                   <DropBuilding />
-                </div>
+              </div>*/}
 
 
 
