@@ -884,6 +884,8 @@ import moment from 'moment';
 import NumberFormat from 'react-number-format';
 import InputBase from '@material-ui/core/InputBase';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import { useParams } from 'react-router';
+
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -1222,18 +1224,31 @@ export default function Exhistorypage({ isOpened }) {
     const [search, setSearch] = useState("")
     const [dropdown, setDropdown] = useState([])
     const [building, setBuilding] = useState([])
+    const { id } = useParams()
+    const [buildName, setBuildName] = useState("")
+    const [getDate, setupDate] = useState(
+        moment().format('MM-DD-YY')
+    )
+
     const dateFormatter = date => {
         // return moment(date).unix();
         return moment(date).format('DD-MM-YY');
     };
 
-    React.useEffect(() => {
-        const fetchData = () => {
-            axios.get('/history/expense-history/Great1111/date/05-12-2021')
-                .then(r =>
-                    setBill(r.data))
-        }
-        fetchData()
+    useEffect(async () => {
+    
+        await axios.get(`/history/expense-history/6pm/date/${getDate}`)
+            .then(r =>
+                setBill(r.data))
+            .catch(error => {
+                console.log('Error getting fake data: ' + error);
+
+            })
+
+        // const fetchData = () => {
+
+        // }
+        // fetchData()
     }, [])
     console.log(bill)
 
@@ -1380,7 +1395,7 @@ export default function Exhistorypage({ isOpened }) {
                                                             <TableCell className={classes.tablefont} align="center">Room</TableCell>
                                                             <TableCell className={classes.tablefont} align="center" style={{ position: 'relative' }}>
 
-                                                                <div style={{ position: 'absolute', left: -34.5, top: 16, width: 380}}>
+                                                                <div style={{ position: 'absolute', left: -34.5, top: 16, width: 380 }}>
                                                                     Billed Period
                                                                 </div>
                                                             </TableCell>
@@ -1397,17 +1412,50 @@ export default function Exhistorypage({ isOpened }) {
                                                                     <TableCell className={classes.intablefont} align="center">{sub.roomNumber}</TableCell>
                                                                     <TableCell className={classes.intablefont} style={{ position: 'relative' }} align="center">
                                                                         <div >
-                                                                            {moment(sub.expenses[0].startTime).format("DD/MM/YYYY")}-{moment(sub.expenses[0].endTime).format("DD/MM/YYYY")}
+                                                                            {sub.expenses.length > 0 ?
+                                                                                moment(sub.expenses[0].startTime).format("DD/MM/YYYY") + "-" + moment(sub.expenses[0].endtime).format("DD/MM/YYYY")
+
+                                                                                : "-"}
+
+                                                                            {/* {moment(sub.expenses[0].startTime).format("DD/MM/YYYY")}-{moment(sub.expenses[0].endTime).format("DD/MM/YYYY")} */}
 
                                                                         </div>
 
 
                                                                     </TableCell>
-                                                                    <TableCell className={classes.intablefont} align="center">{sub.occupant}</TableCell>
+                                                                    <TableCell className={classes.intablefont} align="center">
+                                                                        {sub.expenses.length > 0 ?
+                                                                            sub.occupant
+                                                                            : "-"}
+                                                                        {/* {sub.occupant} */}
+                                                                    </TableCell>
                                                                     <TableCell className={classes.intablefont} style={{ position: 'relative' }} align="center">
 
                                                                         <div style={{ position: 'absolute', top: 20, right: 50 }}>
+                                                                            {sub.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={sub.expenses[0].totalPrice.toFixed(2)}
 
+                                                                                    thousandSeparator={true}
+                                                                                    displayType="text"
+
+                                                                                />
+                                                                                : "-"}
+
+
+                                                                        </div>
+
+                                                                        {/* {sub.expenses[0].totalPrice} */}
+
+                                                                    </TableCell>
+                                                                    <TableCell className={classes.intablefont} align="center">
+
+                                                                        {sub.expenses.length > 0 ?
+                                                                            sub.statusInfo
+                                                                            : "-"}
+                                                                    </TableCell>
+                                                                    <TableCell className={classes.intablefont} align="center">
+                                                                        {sub.expenses.length > 0 ?
                                                                             <NumberFormat
                                                                                 value={sub.expenses[0].totalPrice.toFixed(2)}
 
@@ -1415,16 +1463,12 @@ export default function Exhistorypage({ isOpened }) {
                                                                                 displayType="text"
 
                                                                             />
-                                                                        </div>
+                                                                            : "-"}
 
-                                                                        {/* {sub.expenses[0].totalPrice} */}
-
-                                                                    </TableCell>
-                                                                    <TableCell className={classes.intablefont} align="center">{sub.statusInfo}</TableCell>
-                                                                    <TableCell className={classes.intablefont} align="center">
-                                                                        <Link to={`/billdetails/${sub.roomId}`}>
+                                                                        {/* <Link to={`/billdetails/${sub.roomId}`}>
                                                                             <InfoOutlinedIcon style={{ color: "#485D84" }} />
-                                                                        </Link></TableCell>
+                                                                        </Link>*/}
+                                                                    </TableCell>
                                                                 </TableRow>
                                                             )
                                                         })}

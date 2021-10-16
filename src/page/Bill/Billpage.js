@@ -82,6 +82,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import DropBuilding from '../../Components/Dropdown/DropBuilding';
 import DropFloor from '../../Components/Dropdown/DropFloor';
 import DropStatus from '../../Components/Dropdown/DropStatus.js';
+import { useParams } from 'react-router';
 
 
 
@@ -416,7 +417,11 @@ export default function Billpage({ isOpened }) {
     const [building, setBuildingFromDrop] = useState("AddMi")
     const [floorUrl, setFloorUrl] = useState(`/dropdown/floors/${building}`)
     const [thisStatus, setThisStatus] = useState("Paid")
-    const [getDate, setupDate] = useState('15-10-2021')
+    const [getDate, setupDate] = useState(
+        moment().format('MM-DD-YY')
+    )
+    const { id } = useParams()
+
 
     const dateFormatter = date => {
         // return moment(date).unix();
@@ -425,6 +430,7 @@ export default function Billpage({ isOpened }) {
 
     useEffect(() => {
         console.log("am hereee")
+
         console.log(getDate)
         const fetchData = () => {
             // axios.get('/bill/bills/38/date/05-12-2021')
@@ -432,19 +438,20 @@ export default function Billpage({ isOpened }) {
             //         setBill(r.data)
             //         console.log(r.data)
             //     })
-            axios.get(`/filter/filter-bill-building/${building}/date/${getDate}`)
+            axios.get(`/bill/bills/${id}/date/${getDate}`)
                 .then(r => {
                     setBill(r.data)
                     console.log(r.data)
                     console.log(r.data.length)
+                    // alert(moment().format('DD-MM-YY'))
+
                 })
                 .catch(error => {
                     console.log(error.response)
-                    alert("fail ")
                 })
         }
         fetchData()
-    })
+    }, [setupDate])
 
 
 
@@ -483,7 +490,11 @@ export default function Billpage({ isOpened }) {
         const a = []
         for (var i = 0; i < bill[0].floors.length; i++) {
             for (var j = 0; j < bill[0].floors[i].rooms.length; j++) {
-                a.push(bill[0].floors[i].rooms[j].expenses[0].rentingTransactionId)
+                // a.push(bill[0].floors[i].rooms[j].expenses[0].rentingTransactionId)
+                if (bill[0].floors[i].rooms[j].expenses.length > 0) {
+                    a.push(bill[0].floors[i].rooms[j].expenses[0].rentingTransactionId)
+                    console.log(bill[0].floors[i].rooms[j].expenses[0].rentingTransactionId)
+                }
 
             }
         }
@@ -498,8 +509,8 @@ export default function Billpage({ isOpened }) {
 
         }).then(response => {
             alert("post success")
-            // window.location.href = `/feetype_sp/${id}`;
-            console.log(a)
+            window.location.href = `/bill/${id}`;
+            console.log(response)
         })
             .catch(error => {
                 alert("post fail")
@@ -620,7 +631,7 @@ export default function Billpage({ isOpened }) {
                     <div>
                         <div className={classes.frame}>
                             <Datetoday />
-                        
+
                             <h5 className={classes.Billheadd} id="newannouncetitle">  Bill </h5>
 
                             <div style={{ display: "flex", position: "absolute", top: 110, width: '100%' }}>
@@ -684,6 +695,7 @@ export default function Billpage({ isOpened }) {
                                     // save={currentBuilding => setCurrentBuilding(currentBuilding)}
                                     /> */}
                                     <input placeholder="" type="date" style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
+                                        value={getDate}
                                         onChange={e => { setupDate(e.target.value) }}
                                     >
 
@@ -796,16 +808,26 @@ export default function Billpage({ isOpened }) {
                                                                             {/* tickFormatter={dateFormatter} */}
                                                                             {/* 27/03/21-27/04/2021 */}
                                                                             {/* {moment(x.billPeriod).format("L")} */}
-                                                                            {moment(n.expenses[0].startTime).format("DD/MM/YYYY")}-{moment(n.expenses[0].endtime).format("DD/MM/YYYY")}
+                                                                            {n.expenses.length > 0 ?
+                                                                                moment(n.expenses[0].startTime).format("DD/MM/YYYY") + "-" + moment(n.expenses[0].endtime).format("DD/MM/YYYY")
+
+                                                                                : "-"}
 
 
                                                                         </div>
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 791, top: 18 }}>
-                                                                            <NumberFormat
+                                                                            {n.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={n.expenses[0].rent.toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                                                                : "-"}
+                                                                            {/* <NumberFormat
                                                                                 value={n.expenses[0].rent.toFixed(2)}
                                                                                 displayType="text"
                                                                                 thousandSeparator={true}
-                                                                                decimalScale={2} />
+                                                                                decimalScale={2} /> */}
                                                                             {/* {n.expenses[0].rent.toFixed(2)} */}
 
 
@@ -813,52 +835,92 @@ export default function Billpage({ isOpened }) {
                                                                         </div>
 
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 650, top: 18 }}>
-                                                                            <NumberFormat
+                                                                            {n.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={n.expenses[0].electricity.toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                                                                : "-"}
+                                                                            {/* <NumberFormat
                                                                                 value={n.expenses[0].electricity.toFixed(2)}
                                                                                 displayType="text"
                                                                                 thousandSeparator={true}
-                                                                                decimalScale={2} />
+                                                                                decimalScale={2} /> */}
                                                                             {/* {n.expenses[0].electricity} */}
 
                                                                         </div>
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 532, top: 18 }}>
-                                                                            <NumberFormat
+                                                                            {n.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={n.expenses[0].waterPrice.toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                                                                : "-"}
+                                                                            {/* <NumberFormat
                                                                                 value={n.expenses[0].waterPrice.toFixed(2)}
                                                                                 displayType="text"
                                                                                 thousandSeparator={true}
-                                                                                decimalScale={2} />
+                                                                                decimalScale={2} /> */}
 
                                                                             {/* {n.expenses[0].waterPrice} */}
 
                                                                         </div>
 
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 408, top: 18 }}>
-                                                                            <NumberFormat
+                                                                            {n.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={n.expenses[0].other.toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                                                                : "-"}
+                                                                            {/* <NumberFormat
                                                                                 value={n.expenses[0].other.toFixed(2)}
                                                                                 displayType="text"
                                                                                 thousandSeparator={true}
-                                                                                decimalScale={2} />
+                                                                                decimalScale={2} /> */}
                                                                             {/* {n.expenses[0].other} */}
 
                                                                         </div>
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 295, top: 18 }}>
-                                                                            <NumberFormat
+                                                                            {n.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={n.expenses[0].totalPrice.toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                                                                : "-"}
+                                                                            {/* <NumberFormat
                                                                                 value={n.expenses[0].totalPrice.toFixed(2)}
                                                                                 displayType="text"
                                                                                 thousandSeparator={true}
-                                                                                decimalScale={2} />
+                                                                                decimalScale={2} /> */}
                                                                             {/* {n.expenses[0].totalPrice} */}
 
                                                                         </div>
 
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 174, top: 18 }}>
-                                                                            {n.statusInfo}
+                                                                            {n.expenses.length > 0 ?
+                                                                                n.statusInfo
+                                                                                : "-"}
+                                                                            {/* {n.statusInfo} */}
                                                                         </div>
 
                                                                         <div style={{ position: 'absolute', fontSize: '13px', color: '#4A4A4A', right: 60, top: 16 }}>
-                                                                            <Link to={`/billdetails/${n.roomId}`}>
+                                                                            {n.expenses.length > 0 ?
+                                                                                <Link to={`/billdetails/${n.roomId}`}>
+                                                                                    <InfoOutlinedIcon style={{ color: "#485D84" }} />
+                                                                                </Link>
+                                                                                :
+
                                                                                 <InfoOutlinedIcon style={{ color: "#485D84" }} />
-                                                                            </Link>
+                                                                             
+                                                                            }
+                                                                            {/* <Link to={`/billdetails/${n.roomId}`}>
+                                                                                <InfoOutlinedIcon style={{ color: "#485D84" }} />
+                                                                            </Link> */}
                                                                         </div>
 
 
@@ -885,7 +947,7 @@ export default function Billpage({ isOpened }) {
 
             </ScrollView>
 
-            {bill.length > 0 && bill[0].floors[0].rooms[0].expenses[0].isClosed[0] &&
+            {bill.length > 0 && bill[0].floors[0].rooms[0].expenses[0].isClosed == false &&
 
                 <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
 
