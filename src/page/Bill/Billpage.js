@@ -889,9 +889,9 @@ export default function Billpage({ isOpened }) {
 
             {bill.length > 0 && bill[0].floors[0].rooms[0].expenses[0].isClosed == false &&
 
-                <div style={{ position: 'absolute', width: '100%', height: 200, top: 620 }}>
+                <div style={{ position: 'absolute', width: '100%', height: 200, top: 600 }}>
 
-                    <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 540, top: 20 }}
+                    <Button style={{ backgroundColor: "#485D84", width: 406, height: 42.87, color: "#FFFFFF", fontSize: 21, zIndex: 1, position: 'absolute', left: 630, top: 20 }}
                         // onClick={() => window.location.href = `/setting2/${id}`}
                         onClick={() => getBillId()}
 

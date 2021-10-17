@@ -319,7 +319,7 @@ export default function Petitiondetails({ isOpened }) {
                                         </TableRow>
                                         <TableRow>
                                         <TableCell >
-                                            <Avatar className={classes.Avatarpro}/>
+                                            <Avatar className={classes.Avatarpro}   src={x.userProfile}/>
                                             </TableCell>
                                             
                                             <TableCell className={classes.heder}>

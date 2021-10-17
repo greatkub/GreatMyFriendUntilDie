@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
         height: "730px",
         width: '100%',
         margin: 'auto',
+        //marginTop:120,
         paddingLeft: 172,
         transition: 'all 0.5s ease',
     },
@@ -60,8 +61,9 @@ export default function Detailpage({ isOpened, props }) {
 
     if (isdetailLoading){
     return (
+        
         <ScrollView>
-            <div></div>
+            
             <div className={isOpened ? classes.scrollspace202 : classes.scrollspace280}>
                 <div style={{ width: "1169.8px", background: "red", position: "relative" }}>
                     <div style={{ position: "absolute", left: 0 }} >
@@ -88,7 +90,9 @@ export default function Detailpage({ isOpened, props }) {
                     </div>
                 </div>
             </div>
+           
         </ScrollView>
+    
         )
     } else {
         return (

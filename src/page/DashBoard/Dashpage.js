@@ -366,7 +366,7 @@ export default function Dashpage({ isOpened }) {
 
     const dateFormatter = date => {
         // return moment(date).unix();
-        return moment(date).format('DD-MM-YY');
+        return moment(date).format('DD/MM/YY');
       };
 
     useEffect(()=>{
@@ -489,10 +489,16 @@ console.log('Error data: ' + error);
                                       
                                             <div className={classes.normaltext}> Rent </div>
                                            
-                                             
-                                            <div className={classes.normaltext} style={{marginLeft: 75}}>{info.rent}</div>
+                                            <div className={classes.normaltext} style={{ position: 'absolute', color: '#4A4A4A', right: 155}} >
+                                            <NumberFormat
+                                                                                    value={parseInt(info.rent).toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                            
+                                            </div>
                                      
-                                            <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
+                                            <div className={classes.normaltext} style={{ position: 'absolute', color: '#4A4A4A', right: 94}} >THB</div>
                                           
                                        
                                         </div>
@@ -500,31 +506,45 @@ console.log('Error data: ' + error);
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#5256C1" }} />
                                             <div className={classes.normaltext}>Electricity</div>
-                                            <div className={classes.normaltext} style={{marginLeft: 39}}>
+                                            <div className={classes.normaltext} style={{ position: 'absolute', color: '#4A4A4A', right: 155}}  >
 
-                                                                            <NumberFormat
-                                                                                    value={info.electricity.toFixed()}
+                                                                           <NumberFormat
+                                                                                    value={parseInt(info.electricity).toFixed(2)}
                                                                                     displayType="text"
                                                                                     thousandSeparator={true}
                                                                                     decimalScale={2} />
                                               
                                                 
                                             </div>
-                                            <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
+                                            <div className={classes.normaltext} style={{ position: 'absolute', color: '#4A4A4A', right: 94}} >THB</div>
                                         </div>
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#FFD800" }} />
 
                                             <div className={classes.normaltext}>Water</div>
-                                            <div className={classes.normaltext} style={{marginLeft: 65}}>{info.water}</div>
-                                            <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
+                                            <div className={classes.normaltext} style={{ position: 'absolute', color: '#4A4A4A', right: 155}}  >
+                                                                            <NumberFormat
+                                                                                    
+                                                                                    value={parseInt(info.water).toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />
+                                            
+                                            </div>
+                                            <div className={classes.normaltext} style={{ position: 'absolute', color: '#4A4A4A', right: 94}} >THB</div>
                                         </div>
                                         <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: 4 }}>
                                             <div className={classes.circleborder} style={{ backgroundColor: "#C03B3B" }} />
 
                                             <div className={classes.normaltext}>Others</div>
-                                            <div className={classes.normaltext} style={{marginLeft: 60}} >{info.other}</div>
-                                            <div className={classes.normaltext} style={{marginLeft: 65}}>THB</div>
+                                            <div className={classes.normaltext} style={{ position: 'absolute', color: '#4A4A4A', right: 155}} >
+                                                                                <NumberFormat                               
+                                                                                    value={parseInt(info.other).toFixed(2)}
+                                                                                    displayType="text"
+                                                                                    thousandSeparator={true}
+                                                                                    decimalScale={2} />       
+                                            </div>
+                                            <div className={classes.normaltext} style={{ position: 'absolute', color: '#4A4A4A', right: 94}} >THB</div>
                                         </div>
                                     </div>
                                   

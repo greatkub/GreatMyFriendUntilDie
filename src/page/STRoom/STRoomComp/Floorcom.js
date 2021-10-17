@@ -128,12 +128,14 @@ export default function Floorcom(props) {
 
     function handelerBoth() {
         // handlerClick()
+
         props.getcurrentSelect2(allSelect2)
         props.getcurrentSelect(allSelect)
         props.setTrigger(true)
     }
 
     function handlerCheck() {
+        
         console.log("this")
 
         console.log(allSelect)
@@ -193,16 +195,24 @@ export default function Floorcom(props) {
                     <div className={classes.floortext}>
                         Floor {props.floorName}
                     </div>
-                    <div style={{ display: 'flex', position: 'absolute', top: 28, right: 0 }}>
-                        <Button className={classes.btblue}
+                    <div style={{position: 'absolute', top: 28, right: 0 }}>
+                        {/* <Button className={classes.btblue}
                         // onClick={() => handlerClick()}
                         >
                             Select All
                         </Button>
-                        <div style={{ width: '11.8px' }} />
-                        <Button className={classes.btwhite} >
+                        <div style={{ width: '11.8px' }} /> */}
+                        {/* <Button className={classes.btwhite} >
                             Deselect All
+                        </Button> */}
+                        <div className={classes.btgray} style={{right: 20}}
+                        onClick={() => handelerBoth()}
+                        >
+                        <Button className={handlerCheck() ?
+                            classes.btlightblue : classes.btgray}>
+                            Set Room Type
                         </Button>
+                    </div>
                         <div style={{ width: '21.8px' }} />
 
                     </div>
@@ -233,14 +243,14 @@ export default function Floorcom(props) {
 
 
                     ))}
-                    <div className={classes.btgray}
+                    {/* <div className={classes.btgray}
                         onClick={() => handelerBoth()}
                     >
                         <Button className={handlerCheck() ?
                             classes.btlightblue : classes.btgray}>
                             Set Room Type
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
                 <div style={{ height: '21.8px' }}></div>
 

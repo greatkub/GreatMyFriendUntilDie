@@ -460,7 +460,7 @@ export default function Exdetailpage({ isOpened }) {
                     <div className={classes.newdetext} style={{ left: 45 }}>
                       {/* {props.roomid} */}
                       {/* {item.room[0].beds[0].firstName} {item.room[0].beds[0].lastName} */}
-                      Krittamet Chuwongworaphinit
+                      {item.room[0].beds[0].firstName}  {item.room[0].beds[0].lastName}
                     </div>
                     <div className={classes.newdetext} style={{ left: 255.5 }}>
                       {item.room[0].beds[0].bedName}
