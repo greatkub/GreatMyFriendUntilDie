@@ -109,11 +109,13 @@ export default function BuildingDialog() {
               </div>
 
               <div className="Province">
-                <label htmlFor="Province">Province</label>
+                <label htmlFor="Province">District</label>
+                
                 <input   
                   placeholder="Province"
                   type="Province"
                   name="Province"
+                  maxlength= "5"
                   noValidate           
                 />    
               </div>
@@ -129,7 +131,7 @@ export default function BuildingDialog() {
               </div>
 
               <div className="District">
-                <label htmlFor="District">District</label>
+                <label htmlFor="District">Province</label>
                 <input   
                   placeholder="District"
                   type="District"

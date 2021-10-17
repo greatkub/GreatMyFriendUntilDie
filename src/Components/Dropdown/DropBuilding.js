@@ -45,9 +45,8 @@ function DropBuilding(props) {
     return (
         <div style={{ display: 'flex' }}>
             <select onChange={handleChange} style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A' }} >
-
-                
-            {/*<option >Not Specify</option>*/}
+ 
+            <option >Not Specify</option>
                 {buildings.map(buildings =>
                     <option  value={buildings.text}>{buildings.text}</option>
                 )}

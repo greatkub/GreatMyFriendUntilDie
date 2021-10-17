@@ -207,8 +207,6 @@
 //     )
 // }
 
-
-
 import React from 'react'
 import Datetoday from '../../Components/AllComponent/Datetoday.js'
 import { ScrollView } from 'react-native';
@@ -228,7 +226,8 @@ import moment from 'moment';
 import NumberFormat from 'react-number-format';
 import InputBase from '@material-ui/core/InputBase';
 import NativeSelect from '@material-ui/core/NativeSelect';
-import DropBuilding from '../../Components/Dropdown/DropBuilding';
+import { useParams } from 'react-router';
+
 
 const useStyles = makeStyles((theme) => ({
     frame: {
@@ -321,7 +320,8 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '13px',
         color: '#4A4A4A',
 
-    },
+    }
+    ,
 
     headfloor: {
         // display: 'block',
@@ -391,7 +391,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: -7,
         marginTop: 10,
         '& > * + *': {
-            marginTop: theme.spacing(2),
+            marginTop: theme.spacing(0),
         },
     },
 
@@ -400,7 +400,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '8px',
         width: 200,
         marginBottom: 40,
-        marginLeft: -70,
+        marginLeft: -380,
         marginTop: 10,
         '& > * + *': {
             marginTop: theme.spacing(2),
@@ -427,7 +427,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: -150,
         marginTop: 10,
         '& > * + *': {
-            marginTop: theme.spacing(2),
+            marginTop: theme.spacing(0),
         },
     },
 
@@ -484,7 +484,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         fontSize: '16px',
         posiotion: 'absolute',
-        marginLeft: '20px',
+        marginLeft: '50px',
         paddingTop: '18px',
         width: '100%'
     },
@@ -492,7 +492,7 @@ const useStyles = makeStyles((theme) => ({
     headBuilding: {
 
         marginLeft: '-25px',
-        paddingTop: '14px'
+        marginTop: '-65px'
     },
 
     Billheadd: {
@@ -522,12 +522,7 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 36,
         transition: 'all 0.5s ease'
 
-    },
-    textDrop: {
-        fontSize: 16,
-        color: "#4A4A4A"
-
-    },
+    }
 }));
 
 const BootstrapInput = withStyles((theme) => ({
@@ -570,22 +565,32 @@ export default function Exhistorypage({ isOpened }) {
     const [bill, setBill] = useState([]);
     const [search, setSearch] = useState("")
     const [dropdown, setDropdown] = useState([])
-    const [building, setBuildingFromDrop] = useState()
-    const [floorUrl, setFloorUrl] = useState(`/dropdown/floors/${building}`)
-    const [getDate, setupDate] = useState('05-12-2021')
-   
+    const [building, setBuilding] = useState([])
+    const { id } = useParams()
+    const [buildName, setBuildName] = useState("")
+    const [getDate, setupDate] = useState(
+        moment().format('MM-DD-YY')
+    )
+
     const dateFormatter = date => {
         // return moment(date).unix();
         return moment(date).format('DD-MM-YY');
     };
 
-    React.useEffect(() => {
-        const fetchData = () => {
-            axios.get('/history/expense-history/Great1111/date/05-12-2021')
-                .then(r =>
-                    setBill(r.data))
-        }
-        fetchData()
+    useEffect(async () => {
+    
+        await axios.get(`/history/expense-history/${id}/date/${getDate}`)
+            .then(r =>
+                setBill(r.data))
+            .catch(error => {
+                console.log('Error getting fake data: ' + error);
+
+            })
+
+        // const fetchData = () => {
+
+        // }
+        // fetchData()
     }, [])
     console.log(bill)
 
@@ -654,9 +659,9 @@ export default function Exhistorypage({ isOpened }) {
                                 Expense History
                             </h5>
 
-                            {/*<div className="row align-items-start">
+                            <div className="row align-items-start">
 
-                                <div  style={{ display: "flex", position: "absolute", top: 110, width: '100%' }}>
+                                <div className="col">
                                     <Paper component="form" className={classes.Searchstyle}>
                                         <BootstrapInput
                                             type="text"
@@ -670,24 +675,20 @@ export default function Exhistorypage({ isOpened }) {
                                         />
                                     </Paper>
                                 </div>
-                                <div>
-                                    <div className={classes.textDrop}>
-                                        Date
-                                    </div>
-                                    <div style={{ height: 4 }} />
+                                <div className="col">
+                                    <Paper component="form" className={classes.Searchbuilding}>
+                                        <BootstrapInput
+                                            type="date"
+                                            size="small"
+                                            variant="outlined"
+                                            label="Date"
+                                            placeholder="Date"
 
-                                    <input 
-                                        placeholder="" 
-                                        type="date" 
-                                        style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
-                                        onChange={e => { setupDate(e.target.value) }}
-                                    >
-
-                                    </input>
-
+                                        />
+                                    </Paper>
                                 </div>
 
-                               {/* <div className="col">
+                                {/*<div className="col">
                                     <Paper component="form" className={classes.Searchbuilding2}>
                                         <NativeSelect
                                             className={classes.dropdown}
@@ -708,80 +709,18 @@ export default function Exhistorypage({ isOpened }) {
                                     </Paper>
                                             </div>*/}
 
-                                {/*<div>
-                                    <div className={classes.textDrop}>
-                                        Building
-                                    </div>
-                                    <div style={{ height: 4 }} />
-
-                                    <DropBuilding
-                                        save={building => {
-                                            setBuildingFromDrop(building)
-                                            setFloorUrl(`/dropdown/floors/${building}`)
-                                        }}
-                                    />
-                                </div>
-
-                                <div className="col align-self-end">
+                                {/*<div className="col align-self-end">
                                     <Button
                                         className={classes.Searchbuilding2}
                                         variant="contained" color="primary" disableElevation
                                         style={{ backgroundColor: '#485D84' }}>
                                         Search</Button>
-                                </div>
-                            </div>*/}
-                            <div style={{ display: "flex", position: "absolute", top: 180, width: '100%' }}>
-                                <div style={{ position: 'relative', width: 161 }}>
-                                    <div className={classes.textDrop}>
-                                        Search
-                                    </div>            
-                                
-                                <div style={{ height: 4 }} />
-                                    <input 
-                                        placeholder="" type="text" 
-                                        style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
-                                        onChange={(e)=>{
-                                            setSearch(e.target.value);
-                                            }}>
-                                    </input>
-                                </div>
-
-                                <div style={{ width: 12 }} />
-                                <div>
-                                    <div className={classes.textDrop}>
-                                        Building
-                                    </div>
-                                    <div style={{ height: 4 }} />
-                                        <DropBuilding
-                                            save={building => {
-                                                setBuildingFromDrop(building)
-                                                setFloorUrl(`/dropdown/floors/${building}`)
-                                        }}
-                                    />
-                                </div>
-
-                                <div style={{ width: 12 }} />
-                                    <div>
-                                        <div className={classes.textDrop}>
-                                            Date
-                                        </div>
-
-                                    <div style={{ height: 4 }} />
-
-                                    <input 
-                                        placeholder="" 
-                                        type="date" 
-                                        style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}
-                                            onChange={e => 
-                                                { setupDate(e.target.value) 
-                                                }}
-                                            >
-                                    </input>
-                                </div>
+                                            </div>*/}
                             </div>
                         </div>
 
                         <div>
+
                             <div>
                                 {/* {bill.map((rows) => {
                                     return ( */}
@@ -798,7 +737,7 @@ export default function Exhistorypage({ isOpened }) {
                                                             <TableCell className={classes.tablefont} align="center">Room</TableCell>
                                                             <TableCell className={classes.tablefont} align="center" style={{ position: 'relative' }}>
 
-                                                                <div style={{ position: 'absolute', left: -34.5, top: 16, width: 380}}>
+                                                                <div style={{ position: 'absolute', left: -34.5, top: 16, width: 380 }}>
                                                                     Billed Period
                                                                 </div>
                                                             </TableCell>
@@ -823,17 +762,50 @@ export default function Exhistorypage({ isOpened }) {
                                                                     <TableCell className={classes.intablefont} align="center">{sub.roomNumber}</TableCell>
                                                                     <TableCell className={classes.intablefont} style={{ position: 'relative' }} align="center">
                                                                         <div >
-                                                                            {moment(sub.expenses[0].startTime).format("DD/MM/YYYY")}-{moment(sub.expenses[0].endTime).format("DD/MM/YYYY")}
+                                                                            {sub.expenses.length > 0 ?
+                                                                                moment(sub.expenses[0].startTime).format("DD/MM/YYYY") + "-" + moment(sub.expenses[0].endtime).format("DD/MM/YYYY")
+
+                                                                                : "-"}
+
+                                                                            {/* {moment(sub.expenses[0].startTime).format("DD/MM/YYYY")}-{moment(sub.expenses[0].endTime).format("DD/MM/YYYY")} */}
 
                                                                         </div>
 
 
                                                                     </TableCell>
-                                                                    <TableCell className={classes.intablefont} align="center">{sub.occupant}</TableCell>
+                                                                    <TableCell className={classes.intablefont} align="center">
+                                                                        {sub.expenses.length > 0 ?
+                                                                            sub.occupant
+                                                                            : "-"}
+                                                                        {/* {sub.occupant} */}
+                                                                    </TableCell>
                                                                     <TableCell className={classes.intablefont} style={{ position: 'relative' }} align="center">
 
                                                                         <div style={{ position: 'absolute', top: 20, right: 50 }}>
+                                                                            {sub.expenses.length > 0 ?
+                                                                                <NumberFormat
+                                                                                    value={sub.expenses[0].totalPrice.toFixed(2)}
 
+                                                                                    thousandSeparator={true}
+                                                                                    displayType="text"
+
+                                                                                />
+                                                                                : "-"}
+
+
+                                                                        </div>
+
+                                                                        {/* {sub.expenses[0].totalPrice} */}
+
+                                                                    </TableCell>
+                                                                    <TableCell className={classes.intablefont} align="center">
+
+                                                                        {sub.expenses.length > 0 ?
+                                                                            sub.statusInfo
+                                                                            : "-"}
+                                                                    </TableCell>
+                                                                    <TableCell className={classes.intablefont} align="center">
+                                                                        {sub.expenses.length > 0 ?
                                                                             <NumberFormat
                                                                                 value={sub.expenses[0].totalPrice.toFixed(2)}
 
@@ -841,22 +813,50 @@ export default function Exhistorypage({ isOpened }) {
                                                                                 displayType="text"
 
                                                                             />
-                                                                        </div>
+                                                                            : "-"}
 
-                                                                        {/* {sub.expenses[0].totalPrice} */}
-
-                                                                    </TableCell>
-                                                                    <TableCell className={classes.intablefont} align="center">{sub.statusInfo}</TableCell>
-                                                                    <TableCell className={classes.intablefont} align="center">
-                                                                        <Link to={`/billdetails/${sub.roomId}`}>
+                                                                        {/* <Link to={`/billdetails/${sub.roomId}`}>
                                                                             <InfoOutlinedIcon style={{ color: "#485D84" }} />
-                                                                        </Link></TableCell>
+                                                                        </Link>*/}
+                                                                    </TableCell>
                                                                 </TableRow>
                                                             )
                                                         })}
 
 
-                                                   
+                                                        {/* <div style={{ position: 'absolute', paddingTop: '6px', width: '100%' }}>
+                                                                <div className={classes.floortext} style={{ marginRight: 72 }}>
+                                                                    Room
+                                                                    <div className={classes.minitext} style={{ paddingLeft: '1px' }}>  </div>
+                                                                </div>
+                                                                <div className={classes.floortext} style={{ marginRight: 92 }}>
+                                                                    Bill period
+                                                                    <div className={classes.minitext} style={{ paddingLeft: '1px' }}>  </div>
+                                                                </div>
+                                                                <div className={classes.floortext} style={{ paddingLeft: '32px' }}>
+                                                                    Rent
+                                                                    <div className={classes.minitext} style={{ paddingLeft: '292px' }}>(THB) </div>
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Electricity
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Water
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Others
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Total
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Status
+                                                                </div>
+                                                                <div className={classes.floortext}>
+                                                                    Detail
+                                                                    <div className={classes.minitext} style={{ paddingLeft: '3px' }}> </div>
+                                                                </div>
+                                                            </div> */}
                                                     </TableBody>
 
                                                 </Table>
@@ -945,6 +945,8 @@ export default function Exhistorypage({ isOpened }) {
                             </div>
                         </div>
                     </div>
+
+
                 </div>
 
             </ScrollView>

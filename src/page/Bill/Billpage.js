@@ -644,7 +644,7 @@ export default function Billpage({ isOpened }) {
                                 <div style={{ width: 12 }} />
 
 
-                                <div style={{ paddingLeft: 128 }}>
+                                {/*<div style={{ paddingLeft: 128 }}>
                                     <div className={classes.textDrop}>
                                         Status
                                     </div>
@@ -654,21 +654,15 @@ export default function Billpage({ isOpened }) {
                                     // save={currentBuilding => setCurrentBuilding(currentBuilding)}
                                     /> */}
 
-                                    <DropFloor
+                                    {/*<DropFloor
                                         url={`/dropdown/floors/${building}`}
 
                                     />
 
-                                </div>
+                                    </div>*/}
 
                                 <div style={{ width: 12 }} />
-
-
-
-
-
-                            </div>
-
+                          </div>
                         </div>
 
                         <div>

@@ -369,20 +369,20 @@ export default function Personalinfopage({ isOpened }) {
             url: `/user/edit-user/room/${id}/user/${currentUserId}`,
             method: 'post',
             data: {
-                "Address": "11/22 M.3 Soi 9/9",
-                "District": "Bang Bo",
-                "SubDistrict": "Bang Bo",
-                "Province": "Bangkok",
-                "ZipCode": "54321",
-                "Email": "u6113112@au.edu",
-                "PhoneNumber": "0819999896",
+                "Address": addAddress,
+                "District": addDistrict,
+                "SubDistrict": addSubDistrict,
+                "Province": addProvince,
+                "ZipCode":  addZip,
+                "Email":  addEmail,
+                "PhoneNumber": addPhone,
                 "User": {
-                    "FirstName": "Jame",
-                    "LastName": addFirstName,
-                    "GenderId": 1,
-                    "BirthDate": "1999-02-20",
-                    "IdentificationNo": "1234567890987",
-                    "ProfileUrl": "https://firebasestorage.googleapis.com/v0/b/habitat-34ee0.appspot.com/o/16473212_1918745521679927_8257466333135884922_n.jpeg?alt=media&token=a4da4376-5f9b-4657-a5fd-1cc0b4f7993d%22"
+                    "FirstName": addFirstName,
+                    "LastName": addLastName,
+                    "GenderId": parseInt(addGender),
+                    "BirthDate":addDateBirth,
+                    "IdentificationNo": addIdCard,
+                    "ProfileUrl": url
                 },
                 "Bed": {
                     "RoomId": parseInt(id)
@@ -525,7 +525,6 @@ export default function Personalinfopage({ isOpened }) {
             console.error('The err: ', error)
             setSave(true)
             setEdit(true)
-
 
         }
 
@@ -913,7 +912,8 @@ export default function Personalinfopage({ isOpened }) {
     } else {
         return (
             <div>
-                Loading . . .
+                
+                <CircularProgress style={{marginLeft: "43%", marginTop: "28%"}} />
             </div>
         )
     }

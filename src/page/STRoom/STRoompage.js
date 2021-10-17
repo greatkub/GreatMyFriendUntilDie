@@ -152,11 +152,13 @@ export default function STRoompage({ isOpened,props }) {
                                 Room Types
                             </div>
 
-                            <div style={{ display: "flex", position: "absolute", bottom: 70, width: '100%' }}>
+                           {/* <div style={{ display: "flex", position: "absolute", bottom: 70, width: '100%' }}>
+                                
                                 <div>
                                     <div className={classes.textDrop}>
                                         Floor
                                     </div>
+
                                     <div style={{ height: 4 }} />
 
                                     <DropFloor
@@ -165,7 +167,6 @@ export default function STRoompage({ isOpened,props }) {
                                 </div>
 
                                 <div style={{ width: 12 }} />
-
                                 <div>
                                     <div className={classes.textDrop}>
                                         Type
@@ -175,9 +176,9 @@ export default function STRoompage({ isOpened,props }) {
                                     <DropStatus />
                                 </div>
 
-                            </div>
+    </div>*/}
 
-                            <div className={classes.titleText} style={{ position: 'absolute', bottom: 0 }}>
+                            <div className={classes.titleText} style={{ position: 'absolute', bottom: 75 }}>
                                 {allFloor.length > 0 ? allFloor[0].buildingName : ""}
                             </div>
 
@@ -188,7 +189,7 @@ export default function STRoompage({ isOpened,props }) {
                         <div style={{ height: '20px' }}>
 
                         </div>
-                        <div>
+                        <div style={{marginTop: -75}}>
                             {/* {allFloor.filter(floor => floor.floorName == '2').map((item, index) => ( */}
                             {true ?
                                 allFloor.map((item, index) => (

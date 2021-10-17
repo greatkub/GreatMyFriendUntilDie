@@ -87,6 +87,7 @@ export default function Roompage({ isOpened }) {
     const [isLoadingLV1, setIsLoadingLV1] = useState(false)
 
     const [currentBuilding, setCurrentBuilding] = useState("")
+    const [search, setSearch] = useState("")
     const [floorUrl, setFloorUrl] = useState(`/dropdown/floors/${currentBuilding}`)
 
 
@@ -149,13 +150,18 @@ export default function Roompage({ isOpened }) {
                         </div>
 
                         <div style={{ display: "flex", position: "absolute", bottom: 70, width: '100%' }}>
+
                             <div style={{ position: 'relative', width: 161 }}>
                                 <div className={classes.textDrop}>
                                     Search
                                 </div>
                                 <div style={{ height: 4 }} />
 
-                                <input placeholder="" type="text" style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}>
+                                <input 
+                                onChange={(e)=>{
+                                    setSearch(e.target.value);
+                                    }}
+                                placeholder="" type="text" style={{ backgroundColor: 'white', height: 31.5, width: 161, fontSize: 16, color: '#4A4A4A', position: 'absolute' }}>
 
                                 </input>
                             </div>
@@ -169,15 +175,14 @@ export default function Roompage({ isOpened }) {
                                 <div style={{ height: 4 }} />
 
                                 <DropBuilding
-                                    save={currentBuilding => 
-                                        setCurrentBuilding(currentBuilding)}
+                                    save={currentBuilding => setCurrentBuilding(currentBuilding)}
                                 />
 
                             </div>
 
                             <div style={{ width: 12 }} />
 
-                            <div>
+                            {/*<div>
                                 <div className={classes.textDrop}>
                                     Floor
                                 </div>
@@ -188,7 +193,7 @@ export default function Roompage({ isOpened }) {
                                     // save={currentFloor => setCurrentFloor(currentFloor)}
                                 />
             
-                            </div>
+                            </div>*/}
 
                             <div style={{ width: 12 }} />
 
@@ -220,7 +225,21 @@ export default function Roompage({ isOpened }) {
                     <div>
                         <div style={{ height: 20 }} />
                         {isLoading &&
-                            allFloor.map((item, index) => (
+                            allFloor.filter(val => {
+                                if (search == '') {
+                                  
+                                    return val;
+                                } else if (
+                                    // val.roomNumber.toLowerCase().includes(search.toLowerCase())
+                                    val.floorName.toLowerCase().includes(search.toLocaleLowerCase())
+                                    // val.rooms[0].roomNumber.includes(search.toLowerCase())
+                                )
+                                 {
+                                    console.log("GREAT: ")
+                                    console.log(val.rooms[0])
+                                    return val.rooms[0]
+                                }
+                            }).map((item, index) => (
 
                                 <Floorsection
 
@@ -228,8 +247,11 @@ export default function Roompage({ isOpened }) {
                                     allFloor={allFloor[index].rooms}
                                     numBed={numBed[index]}
                                     numPeople={numPeople[index]}
+                                    
                                 />
+
                             ))
+
                         }
 
                     </div>

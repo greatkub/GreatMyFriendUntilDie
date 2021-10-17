@@ -295,7 +295,6 @@ const useStyles = makeStyles((theme) => ({
 
     },
 
-
 }));
 
 //const colors = scaleOrdinal(schemeCategory10)
@@ -453,6 +452,8 @@ console.log('Error data: ' + error);
                                         <CartesianGrid strokeDasharray="3 3" />
                                         <XAxis 
                                         dataKey="dataTime" 
+                                        dataKey2= "dataTime" 
+
                                         tickFormatter={dateFormatter} 
                                         
                                         />
@@ -461,8 +462,8 @@ console.log('Error data: ' + error);
                                         <Bar
                                             dataKey="electricity"
                                             dataKey2="water"
-                                            dataKey3="rent"
-                                            other="other"
+                                            //dataKey3="rent"
+                                            //other="other"
                                             //fill="#8884d8"
                                             //shape={<TriangleBar />}
                                             //label={{ position: "top" }}

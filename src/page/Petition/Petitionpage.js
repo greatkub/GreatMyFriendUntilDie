@@ -311,7 +311,7 @@ const useStyles = makeStyles((theme) => ({
       height:10,
       marginBottom: 11,
       marginLeft:"-0.3%",
-      marginTop: "7%",
+      marginTop: "2%",
       '& > * + *': {
         marginTop: theme.spacing(1),
       },
@@ -533,10 +533,10 @@ const Petitionstatus =() => {
             </Paper>
               </div>
                 <div className="col align-self-end">    
-                <Button className={classes.SearchBtn}
+                {/*<Button className={classes.SearchBtn}
                         style={{ backgroundColor: '#485D84'}}>
                   Search
-                </Button>
+                </Button>*/}
             </div>
         </div> 
       </div>

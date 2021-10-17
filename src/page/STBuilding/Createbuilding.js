@@ -180,11 +180,11 @@ export default function Createbuilding(props) {
 
                             <input
                                 className={classes.setrow2}
-                                placeholder="Province"
+                                placeholder="Disdrict"
                                 type="text"
                                 //name="Province"
                                 onChange={(event) => {
-                                    setProvince(event.target.value);
+                                    setDistrict(event.target.value);
                                 }} />
 
                         </div>
@@ -194,7 +194,7 @@ export default function Createbuilding(props) {
 
                             <input
                                 className={classes.setrow2}
-                                placeholder="Disdrict"
+                                placeholder="Sub-disdrict"
                                 type="text"
                                 //name="Province"
                                 onChange={(event) => {
@@ -209,13 +209,17 @@ export default function Createbuilding(props) {
                             <input
 
                                 className={classes.setrow2}
-                                placeholder="Sub-disdrict"
+                                placeholder="Province"
                                 type="text"
                                 //name="Province"
                                 onChange={(event) => {
-                                    setDistrict(event.target.value);
+                                    setProvince(event.target.value);
                                 }} />
                         </div>
+
+
+                        
+                        
 
                         <div style={{ width: "12px" }}></div>
 
@@ -226,6 +230,7 @@ export default function Createbuilding(props) {
                                 placeholder="Zipcode"
                                 type="text"
                                 //name="Zipcode"
+                                maxlength="5"
                                 onChange={(event) => {
                                     setZipcode(event.target.value);
                                 }} />

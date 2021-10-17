@@ -1290,6 +1290,7 @@ export default function Verifypage({ isOpened }) {
                                 {currentSelect == 0 &&
                                   <input className={classes.inputbox} style={{ right: 58, border: '0.75px solid #AAAAAA', borderRadius: 4 }}
                                     value={room["electricityCurrentReading"]}
+                                    maxlength="4"
                                     onChange={e => {
                                       room["electricityCurrentReading"] = e.target.value
                                       setElec(e.target.value)
@@ -1307,6 +1308,7 @@ export default function Verifypage({ isOpened }) {
                                   <input className={classes.inputbox} style={{ right: 58, border: '0.75px solid #AAAAAA', borderRadius: 4 }}
                                     // onChange={e => room["waterCurrentReading"] = e.target.value}
                                     // value={room["waterCurrentReading"]}
+                                    maxlength="4"
                                     value={room["waterCurrentReading"]}
                                     onChange={e => {
                                       room["waterCurrentReading"] = e.target.value
